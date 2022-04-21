@@ -11,7 +11,7 @@ proc_neo_get_coord <-
         
         # get all dataset_ids
         datase_id_table <- 
-          .x$sites$datasets %>% 
+          .x$site$datasets %>% 
           purrr::map(
             .f = ~ {
               tibble::tibble(
@@ -22,7 +22,7 @@ proc_neo_get_coord <-
         
         # full coordinates string
         coord_string <- 
-          .x$sites$site$geography
+          .x$site$geography
         
         # extract just coordinates
         coord <- 
