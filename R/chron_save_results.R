@@ -110,7 +110,7 @@ chron_save_results <-
             "bchron_mod")))
     
     # save
-    # do not use the `fossilpol::util.save.if.latest` as it cannot handle large files
+    # do not use the `util_save_if_latests` as it cannot handle large files
     readr::write_rds(
       x = models_full,
       file = paste0(

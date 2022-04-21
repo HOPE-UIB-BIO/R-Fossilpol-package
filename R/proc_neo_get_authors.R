@@ -97,7 +97,7 @@ proc_neo_get_authors <-
         as.numeric() %>% 
         sort()
       
-      fossilpol::util_output_comment(
+      util_output_comment(
         msg = "Start to download Neotoma author data")
       
       # download all into about authors
