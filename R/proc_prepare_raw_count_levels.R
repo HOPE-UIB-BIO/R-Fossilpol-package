@@ -142,8 +142,23 @@ proc_prepare_raw_count_levels <-
     util_output_comment(
       msg = "Replacing 'NA' with '0' for all taxa")
     
+   suppressWarnings(
+     data_raw_counts_all_numeric <-
+       data_raw_counts_filtered %>% 
+       dplyr::mutate(
+         raw_counts = purrr::map(
+           .x = raw_counts,
+           .f = ~ .x %>% 
+             dplyr::mutate(
+               dplyr::across(
+                 !dplyr::contains("sample_id"),
+                 ~ as.numeric(.x)
+               ))
+         ))
+   )
+    
     data_raw_counts_no_NA <-
-      data_raw_counts_filtered %>% 
+      data_raw_counts_all_numeric %>% 
       dplyr::mutate(
         raw_counts = purrr::map(
           .x = raw_counts,
