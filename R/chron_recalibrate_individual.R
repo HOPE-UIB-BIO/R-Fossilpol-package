@@ -78,7 +78,7 @@ chron_recalibrate_individual <-
     time_to_stop <- 
       data_source_batch %>% 
       dplyr::mutate(
-        time_per_sequence = time_to_stop/batch_size) %>% 
+        time_per_sequence = time_to_stop) %>% 
       purrr::pluck("time_per_sequence") %>% 
       mean()
     
