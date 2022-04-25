@@ -240,7 +240,7 @@ chron_recalibrate_ad_models <-
         
       } else {
         
-        bchron_output <- chron_output_batch
+        chron_output_individual <- NULL
         
       }
     }
