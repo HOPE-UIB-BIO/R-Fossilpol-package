@@ -24,7 +24,7 @@ util_clean_chron_temp <-
         stringr::str_replace(., ".rds", "")
       
       if(
-        length(pre_batch) > 0
+        length(pres_batch) > 0
       ) {
         purrr::walk(
           .x = pres_batch,
