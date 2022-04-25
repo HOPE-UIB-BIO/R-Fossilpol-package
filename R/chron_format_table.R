@@ -55,10 +55,10 @@ chron_format_table <-
           chroncontrolid = use_default_thickness)
     }
     
-    util_check_col_names("data_source", "no_value")
+    util_check_col_names("data_source", "chroncontrolid")
     
     
-    util_check_class("use_default_error", "no_value")  
+    util_check_class("use_default_error", "numeric")  
     
     if(missing(max_error)){
       max_error <- Inf
