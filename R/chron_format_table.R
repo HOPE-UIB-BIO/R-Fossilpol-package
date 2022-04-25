@@ -46,7 +46,19 @@ chron_format_table <-
     
     util_check_col_names("data_source", "thickness")
     
-    util_check_class("use_default_error", "numeric")  
+    
+    # make sure that there is a column name 'chroncontrolid'
+    if (any(names(data_source) == "chroncontrolid") == FALSE) {
+      data_source <- 
+        data_source %>% 
+        dplyr::mutate(
+          chroncontrolid = use_default_thickness)
+    }
+    
+    util_check_col_names("data_source", "no_value")
+    
+    
+    util_check_class("use_default_error", "no_value")  
     
     if(missing(max_error)){
       max_error <- Inf
@@ -82,6 +94,8 @@ chron_format_table <-
       dplyr::filter(!is.na(depth)) %>%
       # sort table by depth
       dplyr::arrange(depth) %>%
+      dplyr::mutate(
+        chroncontrolid = tidyr::replace_na(chroncontrolid, "no_value")) %>% 
       # replace missing `thickness` with a default one
       dplyr::mutate(
         thickness = tidyr::replace_na(thickness, use_default_thickness)) %>% 
