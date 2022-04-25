@@ -23,19 +23,29 @@ util_clean_chron_temp <-
           pattern = "batch.") %>% 
         stringr::str_replace(., ".rds", "")
       
-      purrr::walk(
-        .x = pres_batch,
-        .f = ~ file.remove(
-          paste0(dir, temp_path, .x, ".rds")
-        ))
+      if(
+        length(pre_batch) > 0
+      ) {
+        purrr::walk(
+          .x = pres_batch,
+          .f = ~ file.remove(
+            paste0(dir, temp_path, .x, ".rds")
+          ))
+      }
       
-      suppressMessages(
-        suppressWarnings(
-          try(
-            file.remove(
-              paste0(dir, temp_path, "chron_result_batch.rds")),
-            silent = TRUE)
-        )
-      )
+      if(
+        length(
+          list.files(
+            paste0(dir, temp_path), 
+            pattern = "chron_result_batch.rds")) > 0
+      ) {
+        suppressMessages(
+          suppressWarnings(
+            try(
+              file.remove(
+                paste0(dir, temp_path, "chron_result_batch.rds")),
+              silent = TRUE)
+          ))
+      }
     }
   }
