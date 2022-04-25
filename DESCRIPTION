@@ -1,0 +1,51 @@
+Package: RFossilpol
+Title: Tools for FOSSILPOL workflow
+Version: 0.0.1
+Authors@R: 
+    person("Ondrej", "Mottl", , "ondrej.mottl@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-9796-5081"))
+Description: This package provides tools for FOSSILPOL workflow, which
+    process global palaeoecological pollen data.
+License: MIT + file LICENSE
+URL: https://hope-uib-bio.github.io/FOSSILPOL-website/
+Imports:
+    assertthat,
+    Bchron,
+    cli,
+    dplyr,
+    furrr,
+    future,
+    ggplot2,
+    glue,
+    grDevices,
+    here,
+    httr,
+    IntCal,
+    janitor,
+    lifecycle,
+    magrittr,
+    methods,
+    plyr,
+    purrr,
+    R.utils,
+    raster,
+    rcarbon,
+    readr (>= 2.0.0),
+    readxl,
+    rioja,
+    rlang,
+    sf,
+    sp,
+    stats,
+    stringr,
+    tibble,
+    tidyr,
+    tidyselect,
+    usethis,
+    utils,
+    withr
+Encoding: UTF-8
+Language: en-GB
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
