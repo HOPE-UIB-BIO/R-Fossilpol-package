@@ -30,10 +30,12 @@ util_clean_chron_temp <-
         ))
       
       suppressMessages(
-        try(
-          file.remove(
-            paste0(dir, temp_path, "chron_result_batch.rds")),
-          silent = TRUE)
+        suppressWarnings(
+          try(
+            file.remove(
+              paste0(dir, temp_path, "chron_result_batch.rds")),
+            silent = TRUE)
+        )
       )
     }
   }
