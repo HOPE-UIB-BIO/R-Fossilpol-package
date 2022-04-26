@@ -11,8 +11,15 @@
 #' `thin` to keep the ratio between them same
 #' @param set_seed User-defined seed for randomisations
 #' @param dir Path to the data storage folder
-#' @param batch_attemps  Number of tries each batch should be considered 
+#' @param batch_attemps Number of tries each batch should be considered 
 #' before skipping it
+#' @param time_per_sequecne Time (in sec) dedicated for each sequence to estimate 
+#' age-depth model. If it takes computer longer that selected value, estimation 
+#' is considered as unsuccessful and skipped. The time value is mutliplied by 
+#' `iteration_multiplier` as more itiration required more time. Time for whole 
+#' batch is calculated as `time_per_sequecne` multiplied by `iteration_multiplier` 
+#' multiplied by the number of sequences per batch (which is estimated based on 
+#' `number_of_cores`)    
 #' @export
 chron_recalibrate_ad_models <-
   function(data_source,
@@ -23,7 +30,8 @@ chron_recalibrate_ad_models <-
            default_thin = 8,
            iteration_multiplier = 5,
            set_seed = 1234,
-           batch_attemps = 3, 
+           batch_attemps = 3,
+           time_per_sequecne = 120,
            dir) {
     
     util_check_class("data_source", "data.frame")
@@ -113,7 +121,7 @@ chron_recalibrate_ad_models <-
           .x = sequence_list,
           .f = length),
         # set a value for the process to wait (in seconds) for each batch
-        time_to_stop = (batch_size * 60) * max(c((floor(iteration_multiplier/2)), 1)), 
+        time_to_stop = (batch_size * time_per_sequecne) * max(c((floor(iteration_multiplier/2)), 1)), 
         done = FALSE, 
         .rows = number_of_batches)
     
