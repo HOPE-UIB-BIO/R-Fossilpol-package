@@ -188,7 +188,7 @@ chron_recalibrate_in_batches <-
       if(all(data_source_batch$done) == TRUE) break
       
       # if cycle runs more times than it is a maximum number, break
-      if(loop_counter => maximum_number_of_loops) break
+      if(loop_counter >= maximum_number_of_loops) break
       
       # loop is finished, increase loop counter
       loop_counter <- loop_counter + 1
