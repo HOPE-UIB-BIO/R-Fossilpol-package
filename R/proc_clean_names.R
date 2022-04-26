@@ -17,7 +17,9 @@ proc_clean_names <-
       data_source %>% 
       stringr::str_replace_all(
         .,
-        c("\u2264" = "_smaller_than_",
+        c( "\\-type" = "_type",
+           "\\-t" = "_t",
+          "\u2264" = "_smaller_than_",
           "\u2265" = "_bigger_than_",
           "\u003c" = "_smaller_than_",
           "\u003e" = "_bigger_than_",
@@ -26,8 +28,6 @@ proc_clean_names <-
           "\\+" = "_plus_",
           "\\-" = "_minus_",
           "\\-" = "_",
-          "\\-type" = "_type",
-          "\\-t" = "_t",
           "\u00EB" = "e",
           "\u00EB" = "e",
           "\u00E4" = "a",
