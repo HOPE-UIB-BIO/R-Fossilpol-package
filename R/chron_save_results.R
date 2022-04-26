@@ -58,7 +58,7 @@ chron_save_results <-
       msg = "Saving Chronology outputs. This can take a while.")  
     
     if(
-      current_state$setting_state == "TRUE-FALSE" & 
+      stringr::str_detect(current_state$setting_state, "FALSE-*") & 
       stringr::str_detect(current_state$latest_ad_present, "TRUE-*")
     ) {
       
@@ -124,7 +124,7 @@ chron_save_results <-
       msg = "Saving predicted ages")  
     
     if( 
-      stringr::str_detect(current_state$setting_state, "TRUE") & 
+      stringr::str_detect(current_state$setting_state, "FALSE") & 
       stringr::str_detect(current_state$latest_ad_present, ".*-TRUE")
     ) {
       
@@ -136,10 +136,10 @@ chron_save_results <-
             dir, "/Data/Processed/Chronology/Predicted_ages"))
       
       util_check_if_loaded(
-        file_name = "chron_predicted_ages",
+        file_name = "previous_age_prediction",
         env = current_env)
       
-      util_check_class("chron_predicted_ages", "data.frame")
+      util_check_class("previous_age_prediction", "data.frame")
       
       previous_age_prediction_sub <-
         previous_age_prediction %>% 
