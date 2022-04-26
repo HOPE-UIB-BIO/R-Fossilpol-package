@@ -52,7 +52,7 @@ chron_format_table <-
       data_source <- 
         data_source %>% 
         dplyr::mutate(
-          chroncontrolid = use_default_thickness)
+          chroncontrolid = paste0("ID_not_specified_", dplyr::row_number()))
     }
     
     util_check_col_names("data_source", "chroncontrolid")
@@ -94,8 +94,14 @@ chron_format_table <-
       dplyr::filter(!is.na(depth)) %>%
       # sort table by depth
       dplyr::arrange(depth) %>%
+      # replace missing `chroncontrolid` with dummy unique values
       dplyr::mutate(
-        chroncontrolid = tidyr::replace_na(chroncontrolid, "no_value")) %>% 
+        chroncontrolid_dummy = paste0("ID_not_specified_", dplyr::row_number()),
+        chroncontrolid = ifelse(is.na(chroncontrolid), chroncontrolid_dummy, chroncontrolid)) %>% 
+      dplyr::select(-chroncontrolid_dummy) %>% 
+      # remove any duplicated values from `chroncontrolid` as Bchron does not 
+      # allow duplicated values
+      dplyr::distinct(chroncontrolid, .keep_all = TRUE) %>% 
       # replace missing `thickness` with a default one
       dplyr::mutate(
         thickness = tidyr::replace_na(thickness, use_default_thickness)) %>% 
