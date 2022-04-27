@@ -41,7 +41,7 @@ chron_format_table <-
       data_source <- 
         data_source %>% 
         dplyr::mutate(
-          thickness = use_default_thickness)
+          thickness = as.double(use_default_thickness))
     }
     
     util_check_col_names("data_source", "thickness")
@@ -104,7 +104,8 @@ chron_format_table <-
       dplyr::distinct(chroncontrolid, .keep_all = TRUE) %>% 
       # replace missing `thickness` with a default one
       dplyr::mutate(
-        thickness = tidyr::replace_na(thickness, use_default_thickness)) %>% 
+        thickness = tidyr::replace_na(thickness, use_default_thickness) %>% 
+          as.double()) %>% 
       #calculate the mean error
       dplyr::mutate(
         error = round((agelimitolder - agelimityounger)/2)) %>% 
