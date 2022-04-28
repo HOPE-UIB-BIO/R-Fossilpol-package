@@ -218,7 +218,7 @@ proc_save_references <-
         recursive = TRUE)
     
     utils::zip(
-      zipfile = paste0(refference_path,"reproducibility_package.zip"),
+      zipfile = paste0(refference_path,"reproducibility_bundle.zip"),
       files = c(config_file, stop_check_tables, harm_tables, spatial_files)
     )
     
