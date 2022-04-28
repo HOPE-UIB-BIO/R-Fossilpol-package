@@ -14,7 +14,7 @@ chron_recalibrate_ad_models(
   iteration_multiplier = 5,
   set_seed = 1234,
   batch_attempts = 3,
-  time_per_sequecne = 120,
+  time_per_sequence = 120,
   dir
 )
 }
@@ -41,11 +41,11 @@ the burnin used by Bchron}
 \item{batch_attempts}{Number of tries each batch should be considered
 before skipping it}
 
-\item{time_per_sequecne}{Time (in sec) dedicated for each sequence to estimate
+\item{time_per_sequence}{Time (in sec) dedicated for each sequence to estimate
 age-depth model. If it takes computer longer that selected value, estimation
 is considered as unsuccessful and skipped. The time value is mutliplied by
 \code{iteration_multiplier} as more itiration required more time. Time for whole
-batch is calculated as \code{time_per_sequecne} multiplied by \code{iteration_multiplier}
+batch is calculated as \code{time_per_sequence} multiplied by \code{iteration_multiplier}
 multiplied by the number of sequences per batch (which is estimated based on
 \code{number_of_cores})}
 
