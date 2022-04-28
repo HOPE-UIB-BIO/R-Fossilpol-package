@@ -13,7 +13,7 @@ chron_recalibrate_ad_models(
   default_thin = 8,
   iteration_multiplier = 5,
   set_seed = 1234,
-  batch_attemps = 3,
+  batch_attempts = 3,
   time_per_sequecne = 120,
   dir
 )
@@ -38,7 +38,7 @@ the burnin used by Bchron}
 
 \item{set_seed}{User-defined seed for randomisations}
 
-\item{batch_attemps}{Number of tries each batch should be considered
+\item{batch_attempts}{Number of tries each batch should be considered
 before skipping it}
 
 \item{time_per_sequecne}{Time (in sec) dedicated for each sequence to estimate

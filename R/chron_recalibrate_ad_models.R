@@ -11,7 +11,7 @@
 #' `thin` to keep the ratio between them same
 #' @param set_seed User-defined seed for randomisations
 #' @param dir Path to the data storage folder
-#' @param batch_attemps Number of tries each batch should be considered 
+#' @param batch_attempts Number of tries each batch should be considered 
 #' before skipping it
 #' @param time_per_sequecne Time (in sec) dedicated for each sequence to estimate 
 #' age-depth model. If it takes computer longer that selected value, estimation 
@@ -30,7 +30,7 @@ chron_recalibrate_ad_models <-
            default_thin = 8,
            iteration_multiplier = 5,
            set_seed = 1234,
-           batch_attemps = 3,
+           batch_attempts = 3,
            time_per_sequecne = 120,
            dir) {
     
@@ -177,8 +177,8 @@ chron_recalibrate_ad_models <-
         util_output_comment( 
           paste(
             "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
-            "Each batch will be have", batch_attemps, "attemps to calculate.",
-            "In the case that the whole bach is unsuccessful all", batch_attemps, "times,",
+            "Each batch will be have", batch_attempts, "attempts to calculate.",
+            "In the case that the whole bach is unsuccessful all", batch_attempts, "times,",
             "another subroutine can be used to calculate age-depth models",
             "for each sequences individually."))
         
@@ -192,7 +192,7 @@ chron_recalibrate_ad_models <-
             n_thin = n_thin,
             number_of_cores = number_of_cores,
             set_seed = set_seed,
-            maximum_number_of_loops = batch_attemps)
+            maximum_number_of_loops = batch_attempts)
       } else {
         
         chron_result_batch <-
