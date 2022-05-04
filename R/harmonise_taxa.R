@@ -1,6 +1,6 @@
 #' @title Harmonise the taxa to a certain taxonomic level
 #' @param data_source Table containing the raw pollen count
-#' @param harmonisation_table Table including taxon original names 
+#' @param harmonisation_table Table including original names of taxa
 #' (`original_name`) as well as harmonised (`harm_name`)
 #' @param original_name Character. Name of the column in harmonisation table 
 #' of original counts 
@@ -66,12 +66,12 @@ harmonise_taxa <-
     missing_taxa <- 
       taxon_names_data[taxon_names_data %in% taxon_names_table]
     
-    # check if there are all taxa present
+    # check if all taxa are present
     assertthat::assert_that(
       all(taxon_names_data %in% taxon_names_table),
       msg = paste(
-        "The following taxons are presnet in the 'data_source'", 
-        "but not the 'harmonisation_table':",
+        "The following taxa are present in the 'data_source'", 
+        "but not in the 'harmonisation_table':",
         util_paste_as_vector(missing_taxa)))
     
     # computation
@@ -81,7 +81,7 @@ harmonise_taxa <-
       dplyr::mutate(
         dplyr::across(!dplyr::any_of("sample_id"),
                       ~ tidyr::replace_na(., 0))) %>%
-      # turn into log format
+      # turn into long format
       tidyr::pivot_longer(
         cols = -sample_id,
         names_to = "original_name",
@@ -135,7 +135,7 @@ harmonise_taxa <-
           current_frame <- sys.nframe()
           current_env <- sys.frame(which = current_frame)
           
-          # try to calcuate the pollen sums
+          # try to calculate the pollen sums
           try(
             n_pollen <-  
               sum(x %>%

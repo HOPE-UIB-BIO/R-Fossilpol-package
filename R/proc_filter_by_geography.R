@@ -31,7 +31,7 @@ proc_filter_by_geography <-
     
     data_filter <- data_source
     
-    # if there is specification of criterium, use it to filter out by
+    # if a criterium is specified, use it to filter out by
     if ("long" %in% names(data_source)) {
       
       if (!is.na(long_max)) {

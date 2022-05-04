@@ -93,7 +93,7 @@ stopcheck_table <-
         paste0(
           "Please open file '", file_name, "' in folder ", dir,".",
           msg,
-          " Then proceed and then re-run this whole script"))
+          " Then proceed and re-run this whole script"))
       
       # open the folder
       util_open_dir(dir)
@@ -162,7 +162,7 @@ stopcheck_table <-
           # Output message
           usethis::ui_info(
             paste0(
-              "The table has been replaces, please proceed and then re-run this whole script"))
+              "The table has been replaced, please proceed and re-run this whole script"))
           
           
         } else {

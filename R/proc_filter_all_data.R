@@ -222,10 +222,10 @@ proc_filter_all_data <-
           isFALSE(),
         false_msg = paste(
           "There are some missing data for 'young_age' and 'old_age',",
-          "which are needed for selected filetring.",
+          "which are needed for selected filtering.",
           "Please revise the 'regional_age_limits' table in ",
           paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run from '03_Merging_and_geography'"),
+          "Then re-run script from '03_Merging_and_geography'"),
         true_msg = paste("All data have a age criterium"))
       
       # test if each sequence fulfil the criteria
@@ -277,10 +277,10 @@ proc_filter_all_data <-
           isFALSE(),
         false_msg = paste(
           "There are some missing data for 'young_age' and 'old_age',",
-          "which are needed for selected filetring.",
+          "which are needed for selected filtering.",
           "Please revise the 'regional_age_limits' table in ",
           paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run from '03_Merging_and_geography'"),
+          "Then re-run script from '03_Merging_and_geography'"),
         true_msg = paste("All data have a age criterium"))
       
       data_age_filtered <-
@@ -366,10 +366,10 @@ proc_filter_all_data <-
           isFALSE(),
         false_msg = paste(
           "There are some missing data for 'end_of_interest_period',",
-          "which are needed for selected filetring.",
+          "which are needed for selected filtering.",
           "Please revise the 'regional_age_limits' table in ",
           paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run from '03_Merging_and_geography'"),
+          "Then re-run script from '03_Merging_and_geography'"),
         true_msg = paste("All data have a age criterium"))
       
       data_age_limit_filtered <-

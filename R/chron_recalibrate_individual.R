@@ -1,12 +1,12 @@
 #' @title Recalibrate age-depth models for individual sequences
 #' @param data_source_chron  Data.frame containing `dataset_id` and `chron_control_format`
 #' @param data_source_batch Data.frame with the description of the status
-#' of individual batches 
+#' of the individual batches 
 #' @param n_iterations The number of iterations used by Bchron 
 #' @param n_burn The number of starting iterations to discard used by Bchron 
 #' @param n_thin he step size for every iteration to keep beyond 
 #' the burnin used by Bchron 
-#' @param time_to_stop Time to wait until save the sequence's `dataset_id` into 
+#' @param time_to_stop Time to wait until saving the sequence's `dataset_id` into 
 #' `Crash_file`as unsuccessfully, due to freeze of calculation
 #' @param dir Path to the data storage folder
 chron_recalibrate_individual <- 
@@ -57,7 +57,7 @@ chron_recalibrate_individual <-
     crash_file_path <-
       paste0(dir, "/Data/Input/Chronology_setting/Bchron_crash/")
     
-    # extract dataset_id of datasets, which were not present in 
+    # extract dataset_id of datasets that are not present in 
     #   successful batch
     broken_sites_vec <- 
       data_source_batch %>% 

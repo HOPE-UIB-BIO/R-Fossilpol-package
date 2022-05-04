@@ -12,7 +12,7 @@ proc_add_region_age_limits <-
     util_check_class("dir", "character")
     
     util_output_comment(
-      msg = "Checking region age-limit definition")
+      msg = "Checking regional age-limit definition")
     
     region_age_limit_path <-
       paste0(dir, "/Data/Input/Regional_age_limits/")
@@ -22,7 +22,7 @@ proc_add_region_age_limits <-
       data_source %>% 
       dplyr::distinct(region)
     
-    # load/crete criteria for age limits of period of interest
+    # load/create criteria for age limits of period of interest
     regional_age_limits <-
       stopcheck_table(
         data_source = data_regions,
@@ -30,10 +30,10 @@ proc_add_region_age_limits <-
         dir = region_age_limit_path,
         sel_method = "age_limits",
         msg = paste(
-          "Adjust the age limitation for each region.",
-          "'young_age' = younges age the sequecne has to have.",
-          "'old_age' = oldest age the the sequecne has to have.",
-          "'end_of_interest_period' = levels beyind this age will be omitted.") )
+          "Adjust age limits for each region.",
+          "'young_age' = the youngest age the sequence has to have.",
+          "'old_age' = the oldest age the the sequence has to have.",
+          "'end_of_interest_period' = levels beyond this age will be omitted.") )
     
     util_open_dir_if_not(
       c(regional_age_limits$young_age, 
@@ -42,12 +42,12 @@ proc_add_region_age_limits <-
         any() %>% 
         isFALSE(),
       dir = region_age_limit_path,
-      msg = paste("Some of the region in the data has been",
+      msg = paste("Some of the regions in the data has",
                   "'NA' values among 'young_age' or 'old_age'.",
                   paste0(
                     "Please open file 'regional_age_limits' in folder ", 
                     region_age_limit_path,".",
-                    " Then proceed and then re-run this whole script"))
+                    " Then proceed and re-run this whole script"))
     )
     
     # merge criteria with the data

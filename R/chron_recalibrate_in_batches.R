@@ -2,7 +2,7 @@
 #' computation
 #' @param data_source_chron Data.frame containing `dataset_id` and `chron_control_format`
 #' @param data_source_batch Data.frame with the description of the status
-#' of individual batches 
+#' of the individual batches 
 #' @param dir Path to the data storage folder 
 #' @param n_iterations The number of iterations used by Bchron 
 #' @param n_burn The number of starting iterations to discard used by Bchron 
@@ -74,7 +74,7 @@ chron_recalibrate_in_batches <-
       data_source_batch[data_source_batch$batch_name %in% prev_batch, ]$done <- TRUE
     }
     
-    # create a loop counter, which started at 1
+    # create a loop counter, which starts at 1
     loop_counter <- 1
     
     number_of_batches <- 
@@ -209,7 +209,7 @@ chron_recalibrate_in_batches <-
     
     util_output_comment(
       msg = paste(
-        "Chronology was succesfuly calculated for", number_of_successes, "batches"))
+        "Chronology was successfully calculated for", number_of_successes, "batches"))
     
     # merge all successfully batches together
     bchron_output <-
@@ -223,7 +223,7 @@ chron_recalibrate_in_batches <-
     
     util_stop_if_not(
       exists("bchron_output", envir = current_env),
-      true_msg = "All batches were succesfully merged together",
+      true_msg = "All batches were successfully merged together",
       false_msg = "there has been an issue with loading of individual batch files"
     )
     
@@ -235,14 +235,14 @@ chron_recalibrate_in_batches <-
         nm = c("bchron_output", "batch_success_table")
       )
     
-    util_output_comment("Saving temporarly output")
+    util_output_comment("Saving temporarily output")
     
     readr::write_rds(
       x = chron_result_batch,
       file = paste0(dir, temp_path, "chron_result_batch.rds")
     )
     
-    util_output_comment("Deleting temporarly batches output")
+    util_output_comment("Deleting temporarily batches output")
     
     # delete all the batch files
     purrr::walk(

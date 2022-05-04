@@ -1,4 +1,4 @@
-#' @title Save all age depth models by regions
+#' @title Save all age-depth models by regions
 #' @param dir Path to the data_storage folder
 #' @param date Date to be used for making folders
 #' @param text_size Text size

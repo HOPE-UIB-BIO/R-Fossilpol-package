@@ -1,7 +1,7 @@
-#' @title Save all reference tables of the data assembly
+#' @title Save all the reference tables of the data assembly
 #' @param data_source Data.frame with `dataset_id` and other variables
 #' @param project_database Project dataset database 
-#' @param user_sel_variables Vector with variables, which have to present in the 
+#' @param user_sel_variables Vector with variables, which have to be present in the 
 #' final data assembly 
 #' @param dir Path to the data storage folder
 #' @export
@@ -28,7 +28,7 @@ proc_save_references <-
       paste0(dir, "/Outputs/Tables/Meta_and_references/")
     
     util_output_comment(
-      msg = "Saving meta-infomation about data assembly")
+      msg = "Saving meta-information about data assembly")
     
     data_assembly_meta <-
       data_source %>% 

@@ -42,7 +42,7 @@ harm_get_all_tables <-
               dir = paste0(
                 dir, "/Data/Input/Harmonisation_tables/"),
               sel_method = "harm_table",
-              msg = "Harmonise taxons to same taxonomic level (column 'level_1').",
+              msg = "Harmonise taxa to the same taxonomic level (column 'level_1').",
               stop_session = FALSE) 
             
           }))
@@ -51,7 +51,7 @@ harm_get_all_tables <-
       "harmonisation_tables",
       c("harmonisation_region","harm_table"))
     
-    #  check if all tables are databrames (loaded properly)
+    #  check if all tables are dataframes (loaded properly)
     if( purrr::map_lgl(
       .x = harmonisation_tables$harm_table,
       .f = ~ !is.data.frame(.x)) %>% 
@@ -62,7 +62,7 @@ harm_get_all_tables <-
     }
     
     util_output_comment(
-      "All harmonisation tables loaded properly")
+      "All harmonisation tables are loaded properly")
     
     return(harmonisation_tables)
     

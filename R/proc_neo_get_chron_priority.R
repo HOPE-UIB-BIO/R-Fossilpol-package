@@ -62,7 +62,7 @@ proc_neo_get_chron_priority <-
       selected_chronology <-
         chronology_list[[selected_chronology_id]]$chroncontrols
       
-      # crate a result table and nest it in dataset_id
+      # create a result table and nest it in dataset_id
       result_chron <- 
         tibble::tibble(
           depth =  purrr::map_dbl(

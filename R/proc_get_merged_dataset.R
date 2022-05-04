@@ -86,7 +86,7 @@ proc_get_merged_dataset <-
       
       util_check_class("data_full", "data.frame")
       
-      util_output_comment("eotoma data was loanded")
+      util_output_comment("Neotoma data was loaded")
     
     }
     

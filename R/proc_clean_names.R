@@ -1,6 +1,6 @@
 #' @title Clean the names of the columns 
 #' @param data_source Vector with names (characters)
-#' @param additional_patterns User defined patterns so be used for name changes
+#' @param additional_patterns User defined patterns to be used for name changes
 #' @return Vector with new names
 #' @description First, change special characters to text and then 
 #' use janitor package to clean the rest.

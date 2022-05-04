@@ -8,15 +8,15 @@
 #' @param default_thin The step size for every iteration to keep beyond 
 #' the burnin used by Bchron 
 #' @param iteration_multiplier Value to be used to multiply `iteration`, `burn`,
-#' `thin` to keep the ratio between them same
+#' `thin` to keep the ratio between them the same
 #' @param set_seed User-defined seed for randomisations
 #' @param dir Path to the data storage folder
 #' @param batch_attempts Number of tries each batch should be considered 
 #' before skipping it
 #' @param time_per_sequence Time (in sec) dedicated for each sequence to estimate 
 #' age-depth model. If it takes computer longer that selected value, estimation 
-#' is considered as unsuccessful and skipped. The time value is mutliplied by 
-#' `iteration_multiplier` as more itiration required more time. Time for whole 
+#' is considered as unsuccessful and skipped. The time value is multiplied by 
+#' `iteration_multiplier` as more iteration required more time. Time for whole 
 #' batch is calculated as `time_per_sequence` multiplied by `iteration_multiplier` 
 #' multiplied by the number of sequences per batch (which is estimated based on 
 #' `number_of_cores`)    
@@ -116,7 +116,7 @@ chron_recalibrate_ad_models <-
         sequence_vec = purrr::map_chr(
           .x = sequence_list,
           .f = ~ util_paste_as_vector(.x, sep = "")),
-        # nubmer of sequecnes in each batch
+        # number of sequences in each batch
         batch_size = purrr::map_dbl(
           .x = sequence_list,
           .f = length),
@@ -152,10 +152,10 @@ chron_recalibrate_ad_models <-
             "This is done by splitting the sequences into batches, with each",
             "batch containing a certain number of sequences", "\n",
             "\n",
-            "individual = age-depth models for sequencesare estimated one by one","\n",
+            "individual = age-depth models for sequences are estimated one by one","\n",
             "\n",
-            "both = Workflow will try to estimate age-deptj models in batches",
-            "and then are “failed” batches estimated one by one.",
+            "both = Workflow will try to estimate age-depth models in batches",
+            "and then the “failed” batches are estimated one by one.",
             "\n"
           )),
         "both", "batches", "individual")
@@ -168,7 +168,7 @@ chron_recalibrate_ad_models <-
         util_confirm_based_on_presence(
           dir = paste0(dir, temp_path),
           file_name = "chron_result_batch",
-          msg = "Detected previsous batch results, do you want to rerun them?")
+          msg = "Detected previous batch results, do you want to rerun them?")
       
       if(
         rerun_batches == TRUE
@@ -177,10 +177,10 @@ chron_recalibrate_ad_models <-
         util_output_comment( 
           paste(
             "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
-            "Each batch will be have", batch_attempts, "attempts to calculate.",
-            "In the case that the whole bach is unsuccessful all", batch_attempts, "times,",
+            "Each batch will have", batch_attempts, "attempts to calculate.",
+            "In case that the whole bach is unsuccessful all", batch_attempts, "times,",
             "another subroutine can be used to calculate age-depth models",
-            "for each sequences individually."))
+            "for each sequence individually."))
         
         chron_result_batch <-
           chron_recalibrate_in_batches(

@@ -54,7 +54,7 @@ proc_prepare_raw_count_levels <-
         .f = ~ any(names(.x) %in% "sample_id")) %>% 
         all(),
       false_msg = "Some datasets does not have 'sample_id'",
-      true_msg = "All dataset have 'sample_id'")
+      true_msg = "All datasets have 'sample_id'")
     
     #--------------------------------------------------#
     # 2. Fixing sample_id type ----
@@ -132,8 +132,8 @@ proc_prepare_raw_count_levels <-
           same_n = n_counts == n_depth) %>% 
         purrr::pluck("same_n") %>% 
         all(),
-      false_msg = "Some datasets still do not have same number of levels in counts and depth",
-      true_msg = "All datasets have same number of levels in counts and depth columns")
+      false_msg = "Some datasets still do not have the same number of levels in counts and depth",
+      true_msg = "All datasets have the same number of levels in counts and depth columns")
     
     #--------------------------------------------------#
     # 4. Replace NA with zeros  ----

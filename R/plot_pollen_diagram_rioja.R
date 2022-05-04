@@ -1,4 +1,4 @@
-#' @title Plot a pollen diagram using rioja package
+#' @title Plot a pollen diagram using the rioja package
 #' @param data_percentages Data.frame pollen percentages 
 #' @param levels Data.frame with level information
 #' @param y_var The name of the variable to be used as Y-axis in the chart
@@ -61,7 +61,7 @@ plot_pollen_diagram_rioja <-
     #replace all NA with zeros 
     data_percentages_work[is.na(data_percentages_work)] <- 0
     
-    # selected only taxa which has minimal number occurrences
+    # select only taxa which have a minimal number occurrences
     data_percentages_sel <- 
       data_percentages_work[ , colSums(data_percentages_work > 0) > min_n_occur]
     

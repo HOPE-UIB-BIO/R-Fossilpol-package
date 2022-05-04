@@ -2,7 +2,7 @@
 #' @param data_source Data.frame with nested `sample_detail`
 #' @param sel_var_element Character with selected variable element
 #' @param sel_eco_group Vector with selected ecological groups 
-#' @return Data.frame for each of the dataset with the pollen counts
+#' @return Data.frame for each of the dataset with pollen counts
 #' @description Will create data set with count data that should 
 #' contain pollen types within `sel_eco_group`. The default provide 
 #' the counts for the pollen data. 

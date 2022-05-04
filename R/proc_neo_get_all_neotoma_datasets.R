@@ -62,7 +62,7 @@ proc_neo_get_all_neotoma_datasets <-
     
     util_check_class("allds_filtered", "data.frame")
     
-    util_output_comment("List of Neotoma sequences was succesfully obtained.")
+    util_output_comment("List of Neotoma sequences was successfully obtained.")
     
     util_check_data_table(allds_filtered)
     

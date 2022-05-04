@@ -78,14 +78,14 @@ chron_fix_pmc <-
             dir =  potential_pmc_path,
             sel_method = "default",
             msg = paste(
-              "Select which chron control point should should be", 
+              "Select which chron control point should be", 
               "back-transformed from percentages ('include' = TRUE/FALSE).",
               "This can be decided based on decimal places in 'chroncontrolage'",
               "column with values around 100 and some type of radiocarbon",
               "('chroncontroltype' column)."))
         
         # subset unique values of dataset_id and chroncontrolid for those, 
-        #   which were marked as to fix
+        #   which are marked as to fix
         pmc_to_backtransform <-
           potential_pmc %>% 
           dplyr::filter(include == TRUE) %>% 
@@ -97,7 +97,7 @@ chron_fix_pmc <-
                       util_paste_as_vector(pmc_to_backtransform$chroncontrolid)))
         
         # add new variable 'need_to_correct' which is present for those point,  
-        #   which were confirmed by user to back-transform
+        #   which are confirmed by user to back-transform
         potential_pmc_marked <-
           potential_pmc_test %>% 
           dplyr::mutate(

@@ -4,7 +4,7 @@
 #' @param suffix A character, which would add to all new IDs 
 #' (dataset, authors, affiliations, etc).
 #' @description The function will source all datasets from selected `dir_files` 
-#' folder and compare it will all datasets in project database (object 
+#' folder and will compare it with all datasets in project database (object 
 #' of class `proj_db_class`) from `dir`. It will automatically
 #' update the database if needed and use information from the database in 
 #' case that the dataset/author/affiliation is already present. 

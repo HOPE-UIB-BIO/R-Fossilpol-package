@@ -1,7 +1,7 @@
 #' @title Filter Neotoma sequences by the selected depositional environments
 #' @param data_source Data.frame with sequences and their depositional environments
 #' @param data_storage_path Path to the data storage folder
-#' @description The function will obtain the all depositional environments from 
+#' @description The function will obtain all the depositional environments from 
 #' Neotoma. Next, it will filter the sequences based on the selected 
 #' depositional environments.
 #' @export

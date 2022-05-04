@@ -21,7 +21,7 @@ extract_dataset_from_excel <-
     util_check_class("project_db", "proj_db_class")
     
     #----------------------------------------------------------#
-    # 0. Check if dataset already in database -----
+    # 0. Check if dataset is already in database -----
     #----------------------------------------------------------#
     
     # define the required variables
@@ -288,7 +288,7 @@ extract_dataset_from_excel <-
       util_check_class("affiliation_sheet", "data.frame")
       util_check_col_names("affiliation_sheet", affiliation_sheet_var_sel)
       
-      # create transform table
+      # create translation table
       tranlation_table <- 
         author_sheet %>% 
         dplyr::distinct(author_number, affiliation) %>% 

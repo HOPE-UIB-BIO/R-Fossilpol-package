@@ -34,7 +34,7 @@ proc_filter_by_dep_env <-
         file_name = "depositional_environment_selection",
         dir = folder_dir,
         sel_method = "default",
-        msg = "Select which depositional environemt should be kept ('include' = TRUE/FALSE).")
+        msg = "Select which depositional environment should be kept ('include' = TRUE/FALSE).")
     
     # create a list of valid dep.env
     dep_envt_types_transform_filter <- 
@@ -47,7 +47,7 @@ proc_filter_by_dep_env <-
       length(dep_envt_types_transform_filter) > 0,
       dir = folder_dir,
       msg = paste(
-        "There is no  depositional environment included.",
+        "There is no depositional environment included.",
         "Please review the latest file in:",
         folder_dir)
     )

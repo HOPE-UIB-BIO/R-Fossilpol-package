@@ -1,11 +1,11 @@
 #' @title Assign geographical value to a dataset
 #' @param data_source Data.frame with `lat` and `long` coordinates to be assign a 
 #' value
-#' @param dir Directory of the source of information. 
+#' @param dir Directory of the source of information 
 #' @param sel_method What is the format of the source of information.
 #' Could be either `shapefile` or `tif`
 #' @param file_name Name of the layer for shapefile or tif file
-#' @param var Which variable should be extracted from source of information.
+#' @param var Which variable should be extracted from source of information?
 #' Note that it is set as "raster_values" as it is default for tifs
 #' @param var_name Optional name of the new variable for extracted data
 #' @param tif_fill_na Logical. For tif only. If `TRUE`, function will search 
@@ -102,9 +102,9 @@ geo_assign_value <-
     util_stop_if_not(
       var_name %in% names(res),
       true_msg = paste(
-        "Data.frame containse the prefered values in variable:", var_name), 
+        "Data.frame contains the preferred values in variable:", var_name), 
       false_msg = paste(
-        "Data.frame does not contain the prefered values in variable:", var_name)
+        "Data.frame does not contain the preferred values in variable:", var_name)
     )
     
     return(res)

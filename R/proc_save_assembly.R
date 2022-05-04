@@ -2,7 +2,7 @@
 #' @param data_source Data.frame with `dataset_id` and other variables
 #' @param select_final_variables Logical. Should the final variables be selected
 #' by interactively via R console? If FALSE, all variables will be selected
-#' @param user_sel_variables Vector with variables, which have to present in the 
+#' @param user_sel_variables Vector with variables, which have to be present in the 
 #' final data assembly 
 #' @param dir Path to the data storage folder
 #' @export
@@ -29,7 +29,7 @@ proc_save_assembly <-
     if (select_final_variables == TRUE) {
       
       util_output_message(
-        msg = "Start selection of variables data")
+        msg = "Start selection of data variables")
       
       full_var_list <- 
         data_source %>% 

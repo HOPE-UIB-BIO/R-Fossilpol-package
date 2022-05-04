@@ -1,4 +1,4 @@
-#' @title Check the presence of variable sin data.frame
+#' @title Check the presence of variables in data.frame
 #' @param data_source Name of the data.frame to check
 #' @param var_list Vector with names
 #' @description Function will test the presence of ALL names in `var_list`
@@ -19,6 +19,6 @@ util_check_col_names <-
     
     assertthat::assert_that(
       all(var_list %in% names(data_source_obj)),
-      msg = paste0("'", data_source, "' must contans following columns: ", 
+      msg = paste0("'", data_source, "' must contains following columns: ", 
                    util_paste_as_vector(var_list)))
   }

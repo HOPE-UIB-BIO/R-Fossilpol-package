@@ -1,7 +1,7 @@
 #' @title Change name of a columns id data.frame
 #' @param data_source Data.frame to fix
-#' @param old_name Character. old name of column 
-#' @param new_name Character. new name of column 
+#' @param old_name Character. Old name of column 
+#' @param new_name Character. New name of column 
 #' @return Data.frame with new name
 #' @description Detect if table has a column with `old_name` and replace
 #' it with `new_name`

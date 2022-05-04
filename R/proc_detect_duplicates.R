@@ -1,21 +1,21 @@
 utils::globalVariables("where")
 #' @title Detect and exclude duplicates
 #' @param data_source Data.frame with sequences
-#' @param source_var Character. name of a column that indicates source of data 
+#' @param source_var Character. Name of a column that indicates source of data 
 #' @param n_subgroups Number of subgroups to split the data based on the
 #' geography. Sequences within subgroup will be tested only if subgroup
 #' contains sequences form different `source_var` 
-#' @param maximal_distance Maximal euclidean distance between two sequences to 
+#' @param maximal_distance Maximal Euclidean distance between two sequences to 
 #' consider them as material for comparison 
 #' @return Data.frame with the suggested duplicates of sequences 
-#' `distance` = euclidean distance between sequences
-#' `similarity` = mean number of exactly same columns
+#' `distance` = Euclidean distance between sequences
+#' `similarity` = mean number of the exactly same columns
 #' @description  Function will split sequences based on their geographic 
 #' location into `n_subgroups`. If subgroup contains data from multiple sources,
-#' euclidean `distance` between all sequences combination will be calculated.
+#' Euclidean `distance` between all sequences combination will be calculated.
 #' Only combination with the distance up to `maximal_distance` will be kept.
-#' Next, selected columns will be compared between sequences and the average number of 
-#' exact same columns is returned `similarity`.  
+#' Next, selected columns will be compared between sequences and the average number of
+#' the exact same columns is returned `similarity`.  
 proc_detect_duplicates <- 
   function(
     data_source, 
@@ -64,7 +64,7 @@ proc_detect_duplicates <-
     
     util_check_col_names("data_w", "subgroup")
     
-    # detect the all possible sources of data
+    # detect all the possible sources of data
     source_var_levels <- 
       data_w %>% 
       dplyr::select(
@@ -101,7 +101,7 @@ proc_detect_duplicates <-
       
       util_output_comment(
         msg = paste0(
-          "Detected potentinal regions of duplicates, N = ",
+          "Detected potential regions of duplicates, N = ",
           length(intresting_subgroups)))
       
       for (i in 1:length(intresting_subgroups)) {
@@ -263,7 +263,7 @@ proc_detect_duplicates <-
       
       util_output_comment(
         msg = paste0(
-          "Returning ", nrow(final_result), " of potentinal duplicates"))
+          "Returning ", nrow(final_result), " of potential duplicates"))
       
       final_result %>% 
         dplyr::arrange(dplyr::desc(similarity), distance) %>% 
@@ -273,7 +273,7 @@ proc_detect_duplicates <-
     } else {
       
       util_output_comment(
-        msg = "Did not detect any potentinal duplicates")
+        msg = "Did not detect any potential duplicates")
       
       return(NA)
       

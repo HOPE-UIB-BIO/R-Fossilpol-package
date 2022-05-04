@@ -61,7 +61,7 @@ proc_neo_get_metadata_with_samples <-
         "There are 0 sequences based on the selected Criteria",
         "Please change the geographical criteria."),
       true_msg = paste(
-        "Extracted meta meta information for",
+        "Extracted meta information for",
         nrow(neotoma_sites_meta_data_filtered),
         "sequences"))
     

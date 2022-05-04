@@ -30,7 +30,7 @@ proc_neo_get_raw_counts <-
         file_name = "eco_group",
         dir =  eco_group_path,
         sel_method = "default",
-        msg = "Please select which ecological group types should be kept ('include' = TRUE/FALSE)")
+        msg = "Please select which types of ecological groups should be kept ('include' = TRUE/FALSE)")
     
     # extract only those flagged as to include
     sel_eco_group <-
@@ -41,12 +41,12 @@ proc_neo_get_raw_counts <-
     util_open_dir_if_not(
       length(sel_eco_group) > 0,
       dir = eco_group_path,
-      msg = paste("None of the ecological group present in the data has been",
+      msg = paste("None of the ecological groups present in the data has been",
                   "selected to be included.",
                   paste0(
                     "Please open file 'eco_group' in folder ", 
                     eco_group_path,".",
-                    " Then proceed and then re-run this whole script")))
+                    " Then proceed and re-run this whole script")))
     
     util_output_comment(
       msg = paste("There has been", length(sel_eco_group), "selected",

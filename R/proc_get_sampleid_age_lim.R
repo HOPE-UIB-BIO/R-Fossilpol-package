@@ -2,13 +2,13 @@
 #' @param data_source Data.frame with ages of levels 
 #' @param age_limit Maximum age value, marking the end of interest period for
 #' selected site
-#' @param current_year_cuttof should cut off levels beyond current year? 
+#' @param current_year_cuttof should cut off levels be beyond current year? 
 #' @param current_year_cuttof_value year value of current year
 #' @param test_quantiles Test quantiles of age prediction?
 #' @param bookend Keep one extra level beyond the limit?
 #' @return Vector with valid sample_ids
 #' @description Exclude levels which are beyond the `age_limit` 
-#' Use can use age quantiles instead of set ages using `test_quantiles` or
+#' User can use age quantiles instead of set ages using `test_quantiles` or
 #' keep one level beyond the age extra i.e. `bookend`
 proc_get_sampleid_age_lim <- 
   function(data_source,

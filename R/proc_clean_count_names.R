@@ -1,7 +1,7 @@
 #' @title Clean names for count datasets
 #' @param data_source Data.frame containing `raw_counts` column which contains 
 #' raw counts
-#' @param additional_patterns User defined patterns so be used for name changes
+#' @param additional_patterns User defined patterns to be used for name changes
 #' @export
 proc_clean_count_names <- 
   function(data_source, additional_patterns = NULL) {

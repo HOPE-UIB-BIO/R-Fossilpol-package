@@ -85,7 +85,7 @@ harmonise_all_regions <-
       all(
         purrr::map_dbl(data_harmonised$counts_harmonised, nrow) ==
           purrr::map_dbl(data_harmonised$raw_counts, nrow)),
-      false_msg = "Harmonisation unsuccesfull. Detected changes in number of levels",
+      false_msg = "Harmonisation unsuccessfull. Detected changes in number of levels",
       true_msg = paste(
         "Not detected any changes in number of levels between before",
         "and after harmonisation."))

@@ -1,4 +1,4 @@
-#' @title Check and adjust samples for sample and raw count data
+#' @title Check and adjust samples of depth-age levels and raw count data
 #' @param data_source Data.frame with `sample_depth` and `raw_counts` information
 #' @export
 proc_neo_check_final_assembly <- 
@@ -9,7 +9,7 @@ proc_neo_check_final_assembly <-
     util_check_col_names("data_source", 
                          c("sample_depth", "raw_counts"))
     
-    # subset the sample count data to result in same number of samples
+    # subset the samples of count data to result in same number of depth-ages levels
     sample_counts_filtered <-
       data_source %>% 
       dplyr::mutate(
@@ -31,8 +31,8 @@ proc_neo_check_final_assembly <-
     util_stop_if_not(
       all(sample_counts_filtered$n_sample_depth == 
             sample_counts_filtered$n_sample_counts),
-      false_msg = "Sample dataset and count dataset have different number of levels",
-      true_msg = "Sample dataset and count dataset have been checked")
+      false_msg = "Depth-age dataset and count dataset have different number of levels",
+      true_msg = "Depth-age dataset and count dataset have been checked")
     
     # prepare final table only selecting sequences with both sample_depth and
     #   raw_counts

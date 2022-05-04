@@ -4,7 +4,7 @@
 #' re-calibrated 'de novo'
 #' @param predict_ages_denovo Setting to define if ages should be predicted from
 #' last models 'de novo'
-#' @return Named list congaing the summary of the presence of previous results and current settings
+#' @return Named list containing the summary of the presence of previous results and current settings
 #' @export
 chron_get_current_state <-
   function(dir,
@@ -33,7 +33,7 @@ chron_get_current_state <-
       msg = paste(
         "Current setting:", "\n",
         "Re-calibrate age-depth models 'de novo' = ", calc_AD_models_denovo, "\n",
-        "Predict all ages for leves 'de novo' = ", predict_ages_denovo))
+        "Predict ages for all levels 'de novo' = ", predict_ages_denovo))
     
     if(setting_state == "FALSE-FALSE" & latest_ad_present == "FALSE-FALSE" |
        setting_state == "FALSE-TRUE" & stringr::str_detect(latest_ad_present, "FALSE-*") |
@@ -41,7 +41,7 @@ chron_get_current_state <-
       
       util_output_comment(
         msg = paste(
-          "The selected setting does not alling with the presene of previosus data.","\n",
+          "The selected setting does not align with the presence of previous data.","\n",
           "Please review the setting.",
           "The setting recommended for the first-time run of the Workflow is:", "\n",
           "'calc_AD_models_denovo' == TRUE\n",

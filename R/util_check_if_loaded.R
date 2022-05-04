@@ -22,7 +22,7 @@ util_check_if_loaded <-
         silent == TRUE,
         "",
         paste(
-          util_paste_as_vector(file_name), "was succesfuly loaded")
+          util_paste_as_vector(file_name), "was successfully loaded")
       )
     )
 

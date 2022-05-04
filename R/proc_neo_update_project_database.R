@@ -1,7 +1,7 @@
 #' @title Update the project database with information from Neotoma
 #' @param neotoma_sites_authors Data.frame with extracted information about 
 #' authors form Neotoma
-#' @param neotoma_meta_samples Data.frame with datasets presnet in data c
+#' @param neotoma_meta_samples Data.frame with datasets present in data
 #' compilation
 #' @param dir Path to the data storage folder
 #' @export

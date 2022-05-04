@@ -1,7 +1,7 @@
-#' @title Subset the chronology control tables base don the presence of previous AD models
+#' @title Subset the chronology control tables based on the presence of the previous AD models
 #' @param data_source Data.frame with `dataset_id` and `chron_control`
 #' @param dir Path to the data storage folder
-#' @param rerun_ad Logical. Should be age-depth models re-run 'de novo' for 
+#' @param rerun_ad Logical. Should age-depth models be re-run 'de novo' for 
 #' sequences where we have previous age-depth model result?
 #' @param sites_to_rerun Optional vector with `dataset_id`s, which should be 
 #' re-run disregard of the presence of previous results 
@@ -27,7 +27,7 @@ chron_subset_previous_sequences <-
     
     res <- data_source
     
-    # check if AD models were already calculated 
+    # check if AD models are already calculated 
     latest_bchron <-
       util_check_the_latest_file(
         file_name = "chron_predicted_ages",
@@ -39,7 +39,7 @@ chron_subset_previous_sequences <-
     # assume that user does (not) want to run AD de novo 
     run_AD_denovo_confirm <- rerun_ad
     
-    # if user wants to ren it de novo and there is a previous version of AD models,
+    # if user wants to run it de novo and there is a previous version of AD models,
     #   confirm that action
     if(rerun_ad == TRUE & previous_AD_present == TRUE) { # [config_criteria]
       
@@ -57,7 +57,7 @@ chron_subset_previous_sequences <-
       util_output_comment(
         msg = paste(
           "Cannot use the previous AD models as there is no 'bchon_output'",
-          "Will re-calibrate all age-depth model 'de novo'"))
+          "Will you re-calibrate all age-depth model 'de novo'"))
       
       # switch to calcultion de novo
       run_AD_denovo_confirm <- TRUE
@@ -97,7 +97,7 @@ chron_subset_previous_sequences <-
     } else {
       
       util_output_comment(
-        msg = "AD models will be created de novo")
+        msg = "AD models will be created 'de novo'")
       
     }
     

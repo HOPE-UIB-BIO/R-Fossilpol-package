@@ -82,7 +82,7 @@ proc_neo_get_authors <-
         util_confirm_based_on_presence(
           file_name = "neotoma_author_data",
           dir = author_data_path,
-          msg = "Detected previous download of Author information, do you want to re-done it?"
+          msg = "Detected previous download of Author information, do you want to re-do it?"
         )
     }
     

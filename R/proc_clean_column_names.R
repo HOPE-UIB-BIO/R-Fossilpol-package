@@ -1,9 +1,9 @@
 #' @title Clean the names of the columns 
 #' @param data_source Data frame with names to be fixed
-#' @param additional_patterns User defined patterns so be used for name changes
+#' @param additional_patterns User defined patterns to be used for name changes
 #' @return Data frame with new names
 #' @description This is a wrapper function for a `proc_clean_names` function.
-#' Clean names function first, change special characters to text an then 
+#' Clean names function first, change special characters to text and then 
 #' use janitor package to clean the rest.
 #' @export
 proc_clean_column_names <- 

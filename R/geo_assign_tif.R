@@ -1,7 +1,7 @@
 #' @title Extract data from TIF file and add as points
 #' @param data_source  Data.frame containing `long` and `lat`
 #' @param tif_file_name Name of a shape file to use
-#' @param fill_na Logical. If TRUE, function will search for most common value
+#' @param fill_na Logical. If TRUE, function will search for the most common value
 #'  in the increasing distance of 'distance_step'
 #' @param na_as_value Use for values of tiff file, which should be treated as 
 #'  NA for the purposes of looking for additional value.  
@@ -39,7 +39,7 @@ geo_assign_tif <-
       
       assertthat::assert_that(
         round(n_max_step) == n_max_step,
-        msg = "'n_max_step' must be a whole number")  
+        msg = "'n_max_step' must be an integer")  
     } else {
       assertthat::assert_that(
         is.null(na_as_value), 
