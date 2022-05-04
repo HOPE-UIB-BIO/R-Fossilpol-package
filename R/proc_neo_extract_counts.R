@@ -26,7 +26,7 @@ proc_neo_extract_counts <-
     counts <- 
       data_source %>% 
       tidyr::unnest(sample_detail) %>% 
-      dplyr::filter(elementtype == sel_var_element) %>%
+      dplyr::filter(elementtype %in% sel_var_element) %>%
       dplyr::filter(ecologicalgroup %in% sel_eco_group) %>%
       dplyr::group_by(sample_id, variablename) %>% 
       dplyr::summarise(.groups = "drop", value = sum(value)) %>% 
