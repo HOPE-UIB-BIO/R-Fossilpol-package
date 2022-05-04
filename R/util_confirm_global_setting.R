@@ -14,7 +14,7 @@ util_confirm_global_setting <-
     
     user_confirm <- 
       util_confirm(
-        msg = paste("Please select your prefered setting for",
+        msg = paste("Please select your preferred setting for",
                     util_paste_as_vector(setting_name)))
     
     util_output_comment(

@@ -24,13 +24,13 @@ util_load_latest_file <-
     
     if(any(names(data_object) == "data")){
       usethis::ui_done(
-        paste("Automaticaly loaded file", file_name,
+        paste("Automatically loaded file", file_name,
               "with date", data_object$setting$date))
       
       data_object <- data_object$data 
     } else {
       usethis::ui_done(
-        paste("Automaticaly loaded file", file_name))
+        paste("Automatically loaded file", file_name))
     }
     
     return(data_object)

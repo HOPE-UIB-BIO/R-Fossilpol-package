@@ -1,4 +1,4 @@
-#' @title Testing any criteria and either stop of produce msg
+#' @title Testing any criteria and either stop or produce msg
 #' @param ... Unnamed expressions that describe the conditions to be tested
 #' @param env The environment in which to evaluate the test
 #' @param false_msg Error message to be printed when stopping

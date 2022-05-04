@@ -8,7 +8,7 @@
 #' @return NULL
 #' @description Look into the folder and find the version of the file with
 #'  the most recent name. Compare the last saved file and selected file and
-#'   save file is something changed since recent
+#'   save file if something changed since recent
 #' @export
 util_save_if_latests <- function(
   file_name,

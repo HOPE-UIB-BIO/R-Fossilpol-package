@@ -1,4 +1,4 @@
-#' @title Check the presence of previous results of chronology estimation
+#' @title Check the presence of previous results of the chronology estimation
 #' @param dir Path to the data storage folder
 #' @return Named vector with a summary of presence of previous chronologies and
 #' predicted ages
@@ -16,7 +16,7 @@ util_check_presence_of_lastest_chronology <-
     
     is_latest_chron_present <- !is.na(latest_chron_file)
     
-    # look fo the chron info file
+    # look for the chron info file
     latest_pred_ages_file <-
       util_check_the_latest_file(
         file_name = "chron_predicted_ages",

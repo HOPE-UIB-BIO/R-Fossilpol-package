@@ -9,7 +9,7 @@ util_load_chron_crashfile <-
     crash_file_path <-
       paste0(dir, "/Data/Input/Chronology_setting/Bchron_crash/")
     
-    # make empty file if neede
+    # make empty file if needed
    util_make_chron_crashfile(crash_file_path)
     
     # load crash file         
