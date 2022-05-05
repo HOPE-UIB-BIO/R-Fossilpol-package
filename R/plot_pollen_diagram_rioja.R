@@ -46,10 +46,13 @@ plot_pollen_diagram_rioja <-
     
     data_percentages_work <-
       data_percentages %>%
+      dplyr::filter(sample_id %in% levels$sample_id) %>% 
       dplyr::select(
         !dplyr::any_of("sample_id"))
     
-    if(ncol(data_percentages_work) < 1){
+    if(
+      ncol(data_percentages_work) < 1
+    ) {
       
       util_output_comment(
         msg = paste0("WARNING: Dataset ", dataset_id, " not valid - not saved"))
@@ -76,10 +79,12 @@ plot_pollen_diagram_rioja <-
       
     }
     
-    ages <- levels$age %>% 
+    ages <- 
+      levels$age %>% 
       round(., 0)
     
-    depths <- levels$depth
+    depths <- 
+      levels$depth
     
     switch(y_var,
            "age" =  {
