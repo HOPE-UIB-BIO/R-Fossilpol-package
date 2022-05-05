@@ -47,8 +47,8 @@ geo_assign_by_list <-
         # Harmonisation regions
         "harmonisation_region",
         "shapefile",
-        paste0(dir,"/Data/Input/Spatial/Harmonization_regions_shapefile"),
-        "Harmonization_regions",
+        paste0(dir,"/Data/Input/Spatial/Harmonisation_regions_shapefile"),
+        "Harmonisation_regions",
         "harm_reg",
         
         # Calibration curves
