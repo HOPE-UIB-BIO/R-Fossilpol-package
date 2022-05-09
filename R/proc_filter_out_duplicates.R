@@ -66,23 +66,35 @@ proc_filter_out_duplicates <-
           n_subgroups = n_subgroups,
           #maximal distance to potential duplicate
           maximal_distance = max_degree_distance)
+      
+      # if there are some duplicates
+      if(all(is.na(potential_duplicates_data)) == FALSE){
+        
+        # load/create table with potential duplicates
+        potential_duplicates <- 
+          stopcheck_table(
+            data_source = potential_duplicates_data,
+            file_name = "potential_duplicates",
+            dir = file_dir,
+            sel_method = "duplicates",
+            msg = paste(
+              "Select which dataset should be deleted in each pair by flagging",
+              "'1' or '2' in the 'delete' column. '0' will leave both datasets in."
+            ))
+      }
+      
+      
     } else {
-      potential_duplicates_data <-
-        tibble::tibble(
-          dataset_A = NA_character_,
-          dataset_B = NA_character_,
-          distance = NA_real_,
-          similarity = NA_real_,
-          .rows = 0)
-    }
-    
-    # if there are some duplicates
-    if(all(is.na(potential_duplicates_data)) == FALSE){
       
       # load/create table with potential duplicates
       potential_duplicates <- 
         stopcheck_table(
-          data_source = potential_duplicates_data,
+          data_source = tibble::tibble(
+            dataset_A = NA_character_,
+            dataset_B = NA_character_,
+            distance = NA_real_,
+            similarity = NA_real_,
+            .rows = 0),
           file_name = "potential_duplicates",
           dir = file_dir,
           sel_method = "duplicates",
@@ -90,6 +102,12 @@ proc_filter_out_duplicates <-
             "Select which dataset should be deleted in each pair by flagging",
             "'1' or '2' in the 'delete' column. '0' will leave both datasets in."
           ))
+      
+      
+    }
+    
+    # if there are some duplicates
+    if(exists("potential_duplicates", envir = current_env)){
       
       # extract vector with for datasets to be excluded as duplicates
       dataset_id_tobe_excluded <-
