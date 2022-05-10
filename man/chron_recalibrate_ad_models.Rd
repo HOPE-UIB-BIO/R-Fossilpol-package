@@ -34,7 +34,7 @@ batch using parallel computation}
 the burnin used by Bchron}
 
 \item{iteration_multiplier}{Value to be used to multiply \code{iteration}, \code{burn},
-\code{thin} to keep the ratio between them same}
+\code{thin} to keep the ratio between them the same}
 
 \item{set_seed}{User-defined seed for randomisations}
 
@@ -43,8 +43,8 @@ before skipping it}
 
 \item{time_per_sequence}{Time (in sec) dedicated for each sequence to estimate
 age-depth model. If it takes computer longer that selected value, estimation
-is considered as unsuccessful and skipped. The time value is mutliplied by
-\code{iteration_multiplier} as more itiration required more time. Time for whole
+is considered as unsuccessful and skipped. The time value is multiplied by
+\code{iteration_multiplier} as more iteration required more time. Time for whole
 batch is calculated as \code{time_per_sequence} multiplied by \code{iteration_multiplier}
 multiplied by the number of sequences per batch (which is estimated based on
 \code{number_of_cores})}

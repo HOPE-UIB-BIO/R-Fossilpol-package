@@ -1,6 +1,7 @@
 #' @title Open selected directory
 #' @param dir Path to the directory
 #' @return NULL
+#' @export
 util_open_dir <-
   function(dir){
     

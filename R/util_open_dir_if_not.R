@@ -4,6 +4,7 @@
 #' @param msg Error message to be printed
 #' @param dir Path to the selected folder
 #' @description Test a selected criteria an open selected directory if not true
+#' @export
 util_open_dir_if_not <- 
   function(...,
            env = parent.frame(),

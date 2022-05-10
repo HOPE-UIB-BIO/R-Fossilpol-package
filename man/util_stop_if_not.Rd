@@ -2,7 +2,7 @@
 % Please edit documentation in R/util_stop_if_not.R
 \name{util_stop_if_not}
 \alias{util_stop_if_not}
-\title{Testing any criteria and either stop of produce msg}
+\title{Testing any criteria and either stop or produce msg}
 \usage{
 util_stop_if_not(..., env = parent.frame(), false_msg = NULL, true_msg = NULL)
 }

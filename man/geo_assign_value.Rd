@@ -20,14 +20,14 @@ geo_assign_value(
 \item{data_source}{Data.frame with \code{lat} and \code{long} coordinates to be assign a
 value}
 
-\item{dir}{Directory of the source of information.}
+\item{dir}{Directory of the source of information}
 
 \item{sel_method}{What is the format of the source of information.
 Could be either \code{shapefile} or \code{tif}}
 
 \item{file_name}{Name of the layer for shapefile or tif file}
 
-\item{var}{Which variable should be extracted from source of information.
+\item{var}{Which variable should be extracted from source of information?
 Note that it is set as "raster_values" as it is default for tifs}
 
 \item{var_name}{Optional name of the new variable for extracted data}

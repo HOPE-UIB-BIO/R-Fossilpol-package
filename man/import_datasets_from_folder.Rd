@@ -20,7 +20,7 @@ Neotoma-processed style data.
 }
 \description{
 The function will source all datasets from selected \code{dir_files}
-folder and compare it will all datasets in project database (object
+folder and will compare it with all datasets in project database (object
 of class \code{proj_db_class}) from \code{dir}. It will automatically
 update the database if needed and use information from the database in
 case that the dataset/author/affiliation is already present.

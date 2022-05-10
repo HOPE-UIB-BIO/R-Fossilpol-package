@@ -14,7 +14,7 @@ proc_neo_update_project_database(
 \item{neotoma_sites_authors}{Data.frame with extracted information about
 authors form Neotoma}
 
-\item{neotoma_meta_samples}{Data.frame with datasets presnet in data c
+\item{neotoma_meta_samples}{Data.frame with datasets present in data
 compilation}
 
 \item{dir}{Path to the data storage folder}

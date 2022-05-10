@@ -18,7 +18,7 @@ geo_assign_tif(
 
 \item{tif_file_name}{Name of a shape file to use}
 
-\item{fill_na}{Logical. If TRUE, function will search for most common value
+\item{fill_na}{Logical. If TRUE, function will search for the most common value
 in the increasing distance of 'distance_step'}
 
 \item{na_as_value}{Use for values of tiff file, which should be treated as

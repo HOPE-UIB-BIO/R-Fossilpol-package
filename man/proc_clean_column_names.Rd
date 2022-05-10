@@ -9,13 +9,13 @@ proc_clean_column_names(data_source, additional_patterns = NULL)
 \arguments{
 \item{data_source}{Data frame with names to be fixed}
 
-\item{additional_patterns}{User defined patterns so be used for name changes}
+\item{additional_patterns}{User defined patterns to be used for name changes}
 }
 \value{
 Data frame with new names
 }
 \description{
 This is a wrapper function for a \code{proc_clean_names} function.
-Clean names function first, change special characters to text an then
+Clean names function first, change special characters to text and then
 use janitor package to clean the rest.
 }

@@ -19,7 +19,7 @@ proc_get_sampleid_age_lim(
 \item{age_limit}{Maximum age value, marking the end of interest period for
 selected site}
 
-\item{current_year_cuttof}{should cut off levels beyond current year?}
+\item{current_year_cuttof}{should cut off levels be beyond current year?}
 
 \item{current_year_cuttof_value}{year value of current year}
 
@@ -32,6 +32,6 @@ Vector with valid sample_ids
 }
 \description{
 Exclude levels which are beyond the \code{age_limit}
-Use can use age quantiles instead of set ages using \code{test_quantiles} or
+User can use age quantiles instead of set ages using \code{test_quantiles} or
 keep one level beyond the age extra i.e. \code{bookend}
 }

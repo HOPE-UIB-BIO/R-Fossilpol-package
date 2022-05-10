@@ -17,7 +17,7 @@ proc_save_assembly(
 \item{select_final_variables}{Logical. Should the final variables be selected
 by interactively via R console? If FALSE, all variables will be selected}
 
-\item{user_sel_variables}{Vector with variables, which have to present in the
+\item{user_sel_variables}{Vector with variables, which have to be present in the
 final data assembly}
 
 \item{dir}{Path to the data storage folder}

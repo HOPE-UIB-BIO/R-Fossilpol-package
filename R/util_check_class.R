@@ -4,6 +4,7 @@
 #' @description The function will evaluate the object of `data_source` name
 #' and test if ANY of the classes in equal to `sel_class`
 #' @return `TRUE` if class match or error message
+#' @export
 util_check_class <-
   function(data_source, sel_class){
     

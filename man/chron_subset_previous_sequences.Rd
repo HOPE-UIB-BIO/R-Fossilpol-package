@@ -2,7 +2,7 @@
 % Please edit documentation in R/chron_subset_previous_sequences.R
 \name{chron_subset_previous_sequences}
 \alias{chron_subset_previous_sequences}
-\title{Subset the chronology control tables base don the presence of previous AD models}
+\title{Subset the chronology control tables based on the presence of the previous AD models}
 \usage{
 chron_subset_previous_sequences(
   data_source,
@@ -16,12 +16,12 @@ chron_subset_previous_sequences(
 
 \item{dir}{Path to the data storage folder}
 
-\item{rerun_ad}{Logical. Should be age-depth models re-run 'de novo' for
+\item{rerun_ad}{Logical. Should age-depth models be re-run 'de novo' for
 sequences where we have previous age-depth model result?}
 
 \item{sites_to_rerun}{Optional vector with \code{dataset_id}s, which should be
 re-run disregard of the presence of previous results}
 }
 \description{
-Subset the chronology control tables base don the presence of previous AD models
+Subset the chronology control tables based on the presence of the previous AD models
 }

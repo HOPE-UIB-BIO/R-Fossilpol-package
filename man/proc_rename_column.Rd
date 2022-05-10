@@ -9,9 +9,9 @@ proc_rename_column(data_source, old_name, new_name)
 \arguments{
 \item{data_source}{Data.frame to fix}
 
-\item{old_name}{Character. old name of column}
+\item{old_name}{Character. Old name of column}
 
-\item{new_name}{Character. new name of column}
+\item{new_name}{Character. New name of column}
 }
 \value{
 Data.frame with new name

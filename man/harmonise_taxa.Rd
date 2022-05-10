@@ -16,7 +16,7 @@ harmonise_taxa(
 \arguments{
 \item{data_source}{Table containing the raw pollen count}
 
-\item{harmonisation_table}{Table including taxon original names
+\item{harmonisation_table}{Table including original names of taxa
 (\code{original_name}) as well as harmonised (\code{harm_name})}
 
 \item{original_name}{Character. Name of the column in harmonisation table

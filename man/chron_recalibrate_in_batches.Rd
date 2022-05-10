@@ -21,7 +21,7 @@ chron_recalibrate_in_batches(
 \item{data_source_chron}{Data.frame containing \code{dataset_id} and \code{chron_control_format}}
 
 \item{data_source_batch}{Data.frame with the description of the status
-of individual batches}
+of the individual batches}
 
 \item{dir}{Path to the data storage folder}
 

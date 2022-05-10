@@ -16,7 +16,7 @@ re-calibrated 'de novo'}
 last models 'de novo'}
 }
 \value{
-Named list congaing the summary of the presence of previous results and current settings
+Named list containing the summary of the presence of previous results and current settings
 }
 \description{
 The current chronology setting and state of previous results

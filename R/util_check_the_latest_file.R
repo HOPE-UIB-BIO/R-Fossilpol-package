@@ -5,6 +5,7 @@
 #' @return Object name of the most recent file
 #' @description look into the folder and find the version of the file 
 #' with the most recent name
+#' @export
 util_check_the_latest_file <- 
   function(file_name,
            dir, 

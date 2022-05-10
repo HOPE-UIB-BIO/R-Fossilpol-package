@@ -1,5 +1,6 @@
 #' @title Stop the script
 #' @description  Stop the script without producing error 
+#' @export
 util_stop_quietly <- 
   function(){
     
