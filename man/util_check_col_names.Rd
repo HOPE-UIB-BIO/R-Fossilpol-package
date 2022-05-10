@@ -2,7 +2,7 @@
 % Please edit documentation in R/util_check_col_names.R
 \name{util_check_col_names}
 \alias{util_check_col_names}
-\title{Check the presence of variable sin data.frame}
+\title{Check the presence of variables in data.frame}
 \usage{
 util_check_col_names(data_source, var_list)
 }

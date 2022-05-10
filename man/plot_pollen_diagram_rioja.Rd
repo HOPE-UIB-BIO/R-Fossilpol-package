@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_pollen_diagram_rioja.R
 \name{plot_pollen_diagram_rioja}
 \alias{plot_pollen_diagram_rioja}
-\title{Plot a pollen diagram using rioja package}
+\title{Plot a pollen diagram using the rioja package}
 \usage{
 plot_pollen_diagram_rioja(
   data_percentages,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/proc_save_references.R
 \name{proc_save_references}
 \alias{proc_save_references}
-\title{Save all reference tables of the data assembly}
+\title{Save all the reference tables of the data assembly}
 \usage{
 proc_save_references(
   data_source,
@@ -16,11 +16,11 @@ proc_save_references(
 
 \item{project_database}{Project dataset database}
 
-\item{user_sel_variables}{Vector with variables, which have to present in the
+\item{user_sel_variables}{Vector with variables, which have to be present in the
 final data assembly}
 
 \item{dir}{Path to the data storage folder}
 }
 \description{
-Save all reference tables of the data assembly
+Save all the reference tables of the data assembly
 }

@@ -18,7 +18,7 @@ chron_recalibrate_individual(
 \item{data_source_chron}{Data.frame containing \code{dataset_id} and \code{chron_control_format}}
 
 \item{data_source_batch}{Data.frame with the description of the status
-of individual batches}
+of the individual batches}
 
 \item{n_iterations}{The number of iterations used by Bchron}
 
@@ -27,7 +27,7 @@ of individual batches}
 \item{n_thin}{he step size for every iteration to keep beyond
 the burnin used by Bchron}
 
-\item{time_to_stop}{Time to wait until save the sequence's \code{dataset_id} into
+\item{time_to_stop}{Time to wait until saving the sequence's \code{dataset_id} into
 \code{Crash_file}as unsuccessfully, due to freeze of calculation}
 
 \item{dir}{Path to the data storage folder}

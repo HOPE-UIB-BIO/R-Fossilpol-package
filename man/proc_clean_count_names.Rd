@@ -10,7 +10,7 @@ proc_clean_count_names(data_source, additional_patterns = NULL)
 \item{data_source}{Data.frame containing \code{raw_counts} column which contains
 raw counts}
 
-\item{additional_patterns}{User defined patterns so be used for name changes}
+\item{additional_patterns}{User defined patterns to be used for name changes}
 }
 \description{
 Clean names for count datasets

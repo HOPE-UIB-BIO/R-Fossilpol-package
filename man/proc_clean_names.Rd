@@ -9,7 +9,7 @@ proc_clean_names(data_source, additional_patterns = NULL)
 \arguments{
 \item{data_source}{Vector with names (characters)}
 
-\item{additional_patterns}{User defined patterns so be used for name changes}
+\item{additional_patterns}{User defined patterns to be used for name changes}
 }
 \value{
 Vector with new names

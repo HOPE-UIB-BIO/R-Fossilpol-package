@@ -14,7 +14,7 @@ proc_neo_extract_counts(data_source, sel_var_element = "pollen", sel_eco_group)
 \item{sel_eco_group}{Vector with selected ecological groups}
 }
 \value{
-Data.frame for each of the dataset with the pollen counts
+Data.frame for each of the dataset with pollen counts
 }
 \description{
 Will create data set with count data that should

@@ -16,7 +16,7 @@ by \code{variable_vec}and \code{valid_id}.}
 \item{variable_vec}{Vector with names of columns which should be filtered}
 }
 \value{
-Data assembly will all level-related columns filtered by \code{valid_id}
+Data assembly with all level-related columns filtered by \code{valid_id}
 }
 \description{
 Subset data assemblage by valid \code{sample_id}

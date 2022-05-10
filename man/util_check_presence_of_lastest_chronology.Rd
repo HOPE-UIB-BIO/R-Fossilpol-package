@@ -2,7 +2,7 @@
 % Please edit documentation in R/util_check_presence_of_lastest_chronology.R
 \name{util_check_presence_of_lastest_chronology}
 \alias{util_check_presence_of_lastest_chronology}
-\title{Check the presence of previous results of chronology estimation}
+\title{Check the presence of previous results of the chronology estimation}
 \usage{
 util_check_presence_of_lastest_chronology(dir)
 }
@@ -14,5 +14,5 @@ Named vector with a summary of presence of previous chronologies and
 predicted ages
 }
 \description{
-Check the presence of previous results of chronology estimation
+Check the presence of previous results of the chronology estimation
 }

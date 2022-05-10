@@ -2,6 +2,7 @@
 #' @param msg Message to be shown with the menu
 #' @param default_value Default value of answer
 #' @return return logical
+#' @export
 util_confirm <-
   function(msg = "",
            default_value = TRUE) {

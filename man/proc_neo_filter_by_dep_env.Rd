@@ -12,7 +12,7 @@ proc_neo_filter_by_dep_env(data_source, data_storage_path)
 \item{data_storage_path}{Path to the data storage folder}
 }
 \description{
-The function will obtain the all depositional environments from
+The function will obtain all the depositional environments from
 Neotoma. Next, it will filter the sequences based on the selected
 depositional environments.
 }

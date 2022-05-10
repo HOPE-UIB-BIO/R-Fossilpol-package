@@ -2,7 +2,7 @@
 % Please edit documentation in R/chron_save_ad_figures.R
 \name{chron_save_ad_figures}
 \alias{chron_save_ad_figures}
-\title{Save all age depth models by regions}
+\title{Save all age-depth models by regions}
 \usage{
 chron_save_ad_figures(
   dir,

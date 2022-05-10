@@ -27,5 +27,5 @@ which contains a description of setting}
 \description{
 Look into the folder and find the version of the file with
 the most recent name. Compare the last saved file and selected file and
-save file is something changed since recent
+save file if something changed since recent
 }
