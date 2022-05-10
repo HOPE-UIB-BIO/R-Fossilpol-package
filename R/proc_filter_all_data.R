@@ -1,7 +1,9 @@
 #' @title Filter out levels and sequences based on the criteria
 #'
-#' @param data_source Data.frame with  `dataset_id`, `levels`, `raw_counts`, 
-#' `counts_harmonised`, and `age_uncertainty`
+#' @param data_source Data.frame with  `dataset_id`.
+#' @param variable_vec Vector with name sof columns which should be filtered.
+#' By default the columns are `levels`, `raw_counts`, `counts_harmonised`, and 
+#' `age_uncertainty`
 #' @param dir Path to the data storage folder
 #' @param filter_by_pollen_sum Logical. If true, levels and sequences will be 
 #' filtered out by `min_n_grains`, `target_n_grains`, `percentage_samples`
@@ -32,6 +34,10 @@
 proc_filter_all_data <-
   function(data_source,
            dir,
+           variable_vec = c("levels",
+                            "raw_counts",
+                            "counts_harmonised",
+                            "age_uncertainty"),
            filter_by_pollen_sum = TRUE,
            min_n_grains = 0,
            target_n_grains = 100,
@@ -47,14 +53,13 @@ proc_filter_all_data <-
     
     util_check_class("data_source", "data.frame")
     
+    util_check_class("variable_vec", "character")
+    
     util_check_col_names(
       "data_source",
       c(
         "dataset_id",
-        "levels",
-        "raw_counts",
-        "counts_harmonised",
-        "age_uncertainty"
+        variable_vec
       ))
     
     
@@ -143,7 +148,8 @@ proc_filter_all_data <-
             purrr::pluck(1))) %>% 
       # subset
       proc_subset_all_data_by_id(
-        data_source = .)
+        data_source = .,
+        variable_vec = variable_vec)
     
     util_check_if_loaded(
       file_name = "data_ages_sorted",
@@ -168,7 +174,8 @@ proc_filter_all_data <-
             purrr::pluck(1))) %>% 
       # subset
       proc_subset_all_data_by_id(
-        data_source = .)
+        data_source = .,
+        variable_vec = variable_vec)
     
     util_stop_if_not(
       purrr::map_lgl(data_ages_unique_age$levels, 
@@ -201,7 +208,8 @@ proc_filter_all_data <-
                                     0)))) %>%
         # subset
         proc_subset_all_data_by_id(
-          data_source = .) 
+          data_source = .,
+          variable_vec = variable_vec) 
       
       util_check_if_loaded(
         file_name = "data_pollen_sum_filtered",
@@ -333,7 +341,8 @@ proc_filter_all_data <-
               test_quantiles = use_age_quantiles 
             ))) %>% 
         proc_subset_all_data_by_id(
-          data_source = .)
+          data_source = .,
+          variable_vec = variable_vec)
       
       util_check_if_loaded(
         file_name = "data_extrapolation_filtered",
@@ -385,7 +394,8 @@ proc_filter_all_data <-
               bookend = use_bookend_level # [config_criteria]
             ))) %>% 
         proc_subset_all_data_by_id(
-          data_source = .)
+          data_source = .,
+          variable_vec = variable_vec)
       
       util_check_if_loaded(
         file_name = "data_age_limit_filtered",
