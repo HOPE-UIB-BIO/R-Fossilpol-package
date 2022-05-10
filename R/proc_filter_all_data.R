@@ -4,7 +4,7 @@
 #' @param variable_vec Vector with name sof columns which should be filtered.
 #' By default the columns are `levels`, `raw_counts`, `counts_harmonised`, and 
 #' `age_uncertainty`
-#' @param dir Path to the data storage folder
+#' @param msg A message to be outputted when error occur with age limits
 #' @param filter_by_pollen_sum Logical. If true, levels and sequences will be 
 #' filtered out by `min_n_grains`, `target_n_grains`, `percentage_samples`
 #' @param min_n_grains Number of individual pollen grains which each level has 
@@ -33,7 +33,7 @@
 #' @export
 proc_filter_all_data <-
   function(data_source,
-           dir,
+           msg = NA_character_,
            variable_vec = c("levels",
                             "raw_counts",
                             "counts_harmonised",
@@ -63,7 +63,7 @@ proc_filter_all_data <-
       ))
     
     
-    util_check_class("dir", "character")
+    util_check_class("msg", "character")
     
     util_check_class("filter_by_pollen_sum", "logical")
     
@@ -231,9 +231,7 @@ proc_filter_all_data <-
         false_msg = paste(
           "There are some missing data for 'young_age' and 'old_age',",
           "which are needed for selected filtering.",
-          "Please revise the 'regional_age_limits' table in ",
-          paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run script from '03_Merging_and_geography'"),
+          msg),
         true_msg = paste("All data have a age criterium"))
       
       # test if each sequence fulfil the criteria
@@ -286,9 +284,7 @@ proc_filter_all_data <-
         false_msg = paste(
           "There are some missing data for 'young_age' and 'old_age',",
           "which are needed for selected filtering.",
-          "Please revise the 'regional_age_limits' table in ",
-          paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run script from '03_Merging_and_geography'"),
+          msg),
         true_msg = paste("All data have a age criterium"))
       
       data_age_filtered <-
@@ -376,9 +372,7 @@ proc_filter_all_data <-
         false_msg = paste(
           "There are some missing data for 'end_of_interest_period',",
           "which are needed for selected filtering.",
-          "Please revise the 'regional_age_limits' table in ",
-          paste0(dir, "/Data/Input/Regional_age_limits/."),
-          "Then re-run script from '03_Merging_and_geography'"),
+          msg),
         true_msg = paste("All data have a age criterium"))
       
       data_age_limit_filtered <-
