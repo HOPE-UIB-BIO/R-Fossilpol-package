@@ -6,7 +6,8 @@
 \usage{
 proc_filter_all_data(
   data_source,
-  dir,
+  msg = NA_character_,
+  variable_vec = c("levels", "raw_counts", "counts_harmonised", "age_uncertainty"),
   filter_by_pollen_sum = TRUE,
   min_n_grains = 0,
   target_n_grains = 100,
@@ -22,10 +23,13 @@ proc_filter_all_data(
 )
 }
 \arguments{
-\item{data_source}{Data.frame with  \code{dataset_id}, \code{levels}, \code{raw_counts},
-\code{counts_harmonised}, and \code{age_uncertainty}}
+\item{data_source}{Data.frame with  \code{dataset_id}.}
 
-\item{dir}{Path to the data storage folder}
+\item{msg}{A message to be outputted when error occur with age limits}
+
+\item{variable_vec}{Vector with name sof columns which should be filtered.
+By default the columns are \code{levels}, \code{raw_counts}, \code{counts_harmonised}, and
+\code{age_uncertainty}}
 
 \item{filter_by_pollen_sum}{Logical. If true, levels and sequences will be
 filtered out by \code{min_n_grains}, \code{target_n_grains}, \code{percentage_samples}}
