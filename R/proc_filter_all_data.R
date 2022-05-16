@@ -67,15 +67,15 @@ proc_filter_all_data <-
     
     util_check_class("filter_by_pollen_sum", "logical")
     
-   if(filter_by_pollen_sum == TRUE) {
-     
-     util_check_class("min_n_grains", "numeric")
-     
-     util_check_class("target_n_grains", "numeric")
-     
-     util_check_class("percentage_samples", "numeric")
-     
-   }
+    if(filter_by_pollen_sum == TRUE) {
+      
+      util_check_class("min_n_grains", "numeric")
+      
+      util_check_class("target_n_grains", "numeric")
+      
+      util_check_class("percentage_samples", "numeric")
+      
+    }
     
     util_check_class("filter_by_age_limit", "logical")
     
@@ -308,7 +308,7 @@ proc_filter_all_data <-
       util_check_class("data_age_filtered", "data.frame")
       
       util_output_comment("All sequences were filtered out by age limits")
-    
+      
       util_check_data_table(data_age_filtered)
       
     } else {
@@ -459,30 +459,43 @@ proc_filter_all_data <-
           .x = levels,
           .f = ~ .x %>% 
             pluck("age") %>% 
-            max())) %>% 
-      dplyr::relocate(
-        dataset_id, handle, siteid, sitename,
-        long, lat, altitude, 
-        depositionalenvironment,
-        region, country, harmonisation_region,
-        levels, n_sample_counts, age_min, age_max, age_uncertainty,
-        chron_control_format, n_chron_control, chron_control_limits,
-        age_type, curve_name, postbomb_curve_name,
-        raw_counts, counts_harmonised, pollen_percentage,
-        young_age, old_age, end_of_interest_period,
-        source_of_data, data_publicity,
-        doi)
+            max())) 
+    
+    prefered_columns <-
+      c(
+        "dataset_id", "handle", "siteid", "sitename",
+        "long", "lat", "altitude", 
+        "depositionalenvironment",
+        "region", "country", "harmonisation_region",
+        "levels", "n_sample_counts", "age_min", "age_max", "age_uncertainty",
+        "chron_control_format", "n_chron_control", "chron_control_limits",
+        "age_type", "curve_name", "postbomb_curve_name",
+        "raw_counts", "counts_harmonised", "pollen_percentage",
+        "young_age", "old_age", "end_of_interest_period",
+        "source_of_data", "data_publicity",
+        "doi"
+      )
+    
+    present_columns <-
+      names(data_filtered)
+    
+    fin_columns <-
+      present_columns[present_columns %in% prefered_columns] 
+    
+    data_filtered_res <-
+      data_filtered %>% 
+      dplyr::relocate(fin_columns)
     
     util_check_if_loaded(
-      file_name = "data_filtered",
+      file_name = "data_filtered_res",
       env = current_env)
     
-    util_check_class("data_filtered", "data.frame")
+    util_check_class("data_filtered_res", "data.frame")
     
     util_output_comment("All sequences and levels were filtered out based on user's preferences")
     
-    util_check_data_table(data_filtered)
+    util_check_data_table(data_filtered_res)
     
-    return(data_filtered)
+    return(data_filtered_res)
     
   }
