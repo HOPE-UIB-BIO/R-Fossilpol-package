@@ -20,7 +20,7 @@ proc_subset_levels <-
     util_check_class("level_vector", c("character", "logical"))
     
     if (
-      length(level_vector) > nrow(data_source)
+      length(level_vector) < nrow(data_source)
     ) {
       message(
         "WARNING: 'data_source' have smaller number of samples than 'level_vector'"
