@@ -19,9 +19,13 @@ proc_subset_levels <-
     
     util_check_class("level_vector", c("character", "logical"))
     
-    assertthat::assert_that(
-      length(level_vector) <= nrow(data_source) | all(is.na(level_vector)),
-      msg = "'data_source' cannot have smaller number of samples than 'level_vector'")
+    if (
+      length(level_vector) > nrow(data_source)
+    ) {
+      message(
+        "WARNING: 'data_source' have smaller number of samples than 'level_vector'"
+      )
+    }
     
     data_work <- 
       data_source %>% 
