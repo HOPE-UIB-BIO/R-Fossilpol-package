@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# RFossilpol R-package:package:
+# Fossilpol-R-package:package:
 
 <!-- badges: start -->
 <!-- badges: end -->
