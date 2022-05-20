@@ -170,7 +170,7 @@ stopcheck_table <-
             "The current script cannot continue until all data are presnt in the table.",
             "Please alter/delete the lastet files in:",
             paste0(
-              data_storage_path, "/Data/Input/Depositional_environment/Neotoma"),
+              dir, "/Data/Input/Depositional_environment/Neotoma"),
             "and re-run this script")
           
           # open the folder
