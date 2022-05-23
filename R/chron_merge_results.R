@@ -139,22 +139,6 @@ chron_merge_results <-
           .f = ~ .x %>% 
             pluck("age") %>% 
             max())) %>% 
-      dplyr::select(
-        dplyr::any_of(
-          c(
-            "dataset_id", "handle", "siteid", "sitename",
-            "long", "lat", "altitude", 
-            "depositionalenvironment",
-            "region", "country", "harmonisation_region",
-            "levels",  "n_sample_counts", "age_min", "age_max", "age_uncertainty",
-            "chron_control_format", "n_chron_control", "chron_control_limits",
-            "age_type", "curve_name", "postbomb_curve_name",
-            "raw_counts", "pollen_percentage",
-            "young_age", "old_age", "end_of_interest_period",
-            "source_of_data", "data_publicity",
-            "doi"
-          )
-        )) %>% 
       dplyr::relocate(
         dataset_id, handle, siteid, sitename,
         long, lat, altitude, 
@@ -166,7 +150,8 @@ chron_merge_results <-
         raw_counts, pollen_percentage,
         young_age, old_age, end_of_interest_period,
         source_of_data, data_publicity,
-        doi)
+        doi, 
+        dplyr::everything())
     
     return(data_with_chronologies)
     
