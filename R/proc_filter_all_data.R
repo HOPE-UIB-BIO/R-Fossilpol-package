@@ -157,7 +157,7 @@ proc_filter_all_data <-
     
     util_check_class("data_ages_sorted", "data.frame")
     
-    util_output_comment("All levels were NOT sorted by ages")
+    util_output_comment("All levels were sorted by ages")
     
     # Filter out LEVELS with duplicated age -----
     
