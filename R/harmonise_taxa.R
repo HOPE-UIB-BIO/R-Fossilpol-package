@@ -64,7 +64,7 @@ harmonise_taxa <-
     
     # extract missing taxa
     missing_taxa <- 
-      taxon_names_data[taxon_names_data %in% taxon_names_table]
+      taxon_names_data[!taxon_names_data %in% taxon_names_table]
     
     # check if all taxa are present
     assertthat::assert_that(
