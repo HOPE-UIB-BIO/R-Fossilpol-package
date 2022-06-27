@@ -4,53 +4,58 @@
 #' @param n_burn The number of starting iterations to discard
 #' @param n_thin The step size for every iteration to keep beyond the burnin
 #' @return output `Bchron` class object
-#' @description Try to run Bchron. If not successful, return NA 
+#' @description Try to run Bchron. If not successful, return NA
 #' @export
-chron_run_bchron <- 
+chron_run_bchron <-
   function(data_source,
-           n_iterations  = 10e3, 
+           n_iterations = 10e3,
            n_burn = 2e3,
            n_thin = 8) {
-    
     util_check_class("data_source", "data.frame")
-    
+
     util_check_col_names(
-      "data_source", 
-      c("chroncontrolid",
+      "data_source",
+      c(
+        "chroncontrolid",
         "chroncontrolage",
         "error",
         "depth",
         "cal_curves",
-        "thickness"))
-    
+        "thickness"
+      )
+    )
+
     util_check_class("n_iterations", "numeric")
-    
+
     util_check_class("n_burn", "numeric")
-    
+
     util_check_class("n_thin", "numeric")
-    
+
     current_frame <- sys.nframe()
-    
+
     current_env <- sys.frame(which = current_frame)
-    
+
     try(
-      successful_result <- 
+      successful_result <-
         Bchron::Bchronology(
-          ages = data_source$chroncontrolage, 
-          ageSds = data_source$error, 
-          positions = data_source$depth, 
-          calCurves = data_source$cal_curves, 
+          ages = data_source$chroncontrolage,
+          ageSds = data_source$error,
+          positions = data_source$depth,
+          calCurves = data_source$cal_curves,
           positionThicknesses = data_source$thickness,
           ids = data_source$chroncontrolid,
           iterations = n_iterations,
           burn = n_burn,
-          thin = n_thin),
-      silent = TRUE)
-    
-    if(!exists("successful_result", envir = current_env)) {
+          thin = n_thin
+        ),
+      silent = TRUE
+    )
+
+    if (
+      !exists("successful_result", envir = current_env)
+    ) {
       successful_result <- NA_real_
-    } 
-    
+    }
+
     return(successful_result)
-    
   }

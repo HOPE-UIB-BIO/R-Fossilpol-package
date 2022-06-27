@@ -5,23 +5,26 @@
 #' @param dir Path to the selected folder
 #' @description Test a selected criteria an open selected directory if not true
 #' @export
-util_open_dir_if_not <- 
+util_open_dir_if_not <-
   function(...,
            env = parent.frame(),
            dir,
-           msg){
-    
-    res <- assertthat::see_if(..., env = env, msg = msg)
-    
-    if (!res) {
+           msg) {
+    res <-
+      assertthat::see_if(..., env = env, msg = msg)
+
+    if (
+      !res
+    ) {
       cat("\n")
       usethis::ui_oops(
-        paste("WARNING:", attr(res, "msg")))
+        paste("WARNING:", attr(res, "msg"))
+      )
       cat("\n")
-      
+
       # open the folder
       util_open_dir(dir)
-      
-      util_stop_quietly()  
-    } 
+
+      util_stop_quietly()
+    }
   }

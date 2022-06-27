@@ -5,30 +5,31 @@
 #' @export
 util_confirm_based_on_presence <-
   function(dir, file_name, msg = "") {
-    
     util_check_class("dir", "character")
-    
+
     util_check_class("file_name", "character")
-    
+
     util_check_class("msg", "character")
-    
+
     # pre-set to TRUE
     confirm <- TRUE
-    
+
     # Check if there is any previous file
-    previous_file <- 
+    previous_file <-
       list.files(
-        path = dir) %>% 
+        path = dir
+      ) %>%
       stringr::str_detect(., file_name)
-    
+
     # If there any file
-    if(any(previous_file)){
-      
-      confirm <- 
+    if (
+      any(previous_file)
+    ) {
+      confirm <-
         util_confirm(
-          msg = msg)
+          msg = msg
+        )
     }
-    
+
     return(confirm)
-    
   }
