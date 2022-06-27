@@ -3,22 +3,22 @@
 #' @param level_vector Vector of `sample_ids`
 #' @return Data.frame only including the levels in `level_vector`
 #' @export
-proc_subset_levels <- 
-  function(data_source, 
+proc_subset_levels <-
+  function(data_source,
            level_vector) {
-    
     util_check_class("data_source", "data.frame")
-    
+
     util_check_col_names("data_source", "sample_id")
-    
+
     util_check_class("data_source", "data.frame")
-    
+
     assertthat::assert_that(
       is.character(data_source$sample_id),
-      msg = "'sample_id' in 'data_source' must be 'character'")
-    
+      msg = "'sample_id' in 'data_source' must be 'character'"
+    )
+
     util_check_class("level_vector", c("character", "logical"))
-    
+
     if (
       length(level_vector) > nrow(data_source)
     ) {
@@ -26,13 +26,13 @@ proc_subset_levels <-
         "WARNING: 'data_source' have smaller number of samples than 'level_vector'"
       )
     }
-    
-    data_work <- 
-      data_source %>% 
+
+    data_work <-
+      data_source %>%
       dplyr::filter(sample_id %in% level_vector)
-    
-    data_res <- 
+
+    data_res <-
       data_work[order(match(data_work$sample_id, level_vector)), ]
-    
+
     return(data_res)
-  } 
+  }

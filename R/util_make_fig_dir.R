@@ -1,26 +1,28 @@
-#' @title Create folders for figure outputs 
+#' @title Create folders for figure outputs
 #' @param dir Path to the directory
 #' @param region_vector Vector with names of folders to create
 #' @param sel_date Date to be used
 #' @return NULL
-#' @description Create a series of folders for all `region_vector` with 
+#' @description Create a series of folders for all `region_vector` with
 #' `sel_date` inside of `dir`
-util_make_fig_dir <- 
+util_make_fig_dir <-
   function(dir, region_vector, sel_date) {
-    
     util_check_class("dir", "character")
-    
+
     util_check_class("region_vector", "character")
-    
+
     util_check_class("sel_date", "Date")
-    
+
     suppressWarnings(
       dir.create(
         paste0(
           dir,
           "/",
-          sel_date)))
-    
+          sel_date
+        )
+      )
+    )
+
     suppressWarnings(
       for (i in seq_along(region_vector)) {
         dir.create(
@@ -30,6 +32,8 @@ util_make_fig_dir <-
             sel_date,
             "/",
             region_vector[i]
-          ))
-      })
+          )
+        )
+      }
+    )
   }

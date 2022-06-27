@@ -2,9 +2,8 @@
 #' @param x Any R object
 #' @description Helper function. If `x` is `NULL` then replace with `NA`
 #' @export
-util_replace_null_with_na <- 
-  function(x){
-    
-    ifelse(is.null(x) == TRUE, NA, x) %>% 
+util_replace_null_with_na <-
+  function(x) {
+    ifelse(is.null(x) == TRUE, NA, x) %>%
       return()
   }
