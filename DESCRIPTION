@@ -25,6 +25,7 @@ Imports:
     lifecycle,
     magrittr,
     methods,
+    neotoma2,
     plyr,
     purrr,
     R.utils,
@@ -44,6 +45,8 @@ Imports:
     usethis,
     utils,
     withr
+Remotes:
+    NeotomaDB/neotoma2
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
