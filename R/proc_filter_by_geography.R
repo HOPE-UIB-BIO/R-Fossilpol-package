@@ -41,7 +41,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             long <= long_max
-          ) # [config_criteria]
+          )
       }
 
       if (
@@ -51,7 +51,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             long >= long_min
-          ) # [config_criteria]
+          )
       }
     }
 
@@ -65,7 +65,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             lat <= lat_max
-          ) # [config_criteria]
+          )
       }
 
       if (
@@ -75,7 +75,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             lat >= lat_min
-          ) # [config_criteria]
+          )
       }
     }
 
@@ -89,7 +89,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             altitude <= alt_max
-          ) # [config_criteria]
+          )
       }
 
       if (
@@ -99,7 +99,7 @@ proc_filter_by_geography <-
           data_filter %>%
           dplyr::filter(
             altitude >= alt_min
-          ) # [config_criteria]
+          )
       }
     }
 
