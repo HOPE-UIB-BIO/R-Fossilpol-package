@@ -9,7 +9,8 @@ proc_neo_get_all_neotoma_datasets(
   long_min,
   long_max,
   lat_min,
-  lat_max
+  lat_max,
+  loc
 )
 }
 \arguments{
@@ -22,8 +23,17 @@ proc_neo_get_all_neotoma_datasets(
 \item{lat_min}{Limit for the smallest latitude}
 
 \item{lat_max}{Limit for the largest latitude}
+
+\item{loc}{Argument passed to \code{neotoma2::get_sites}. See details.}
 }
 \description{
 Download all datasets from Neotoma and subset only those for
 selected \code{dataset_type} and within selected geographical limits
+}
+\details{
+The function is calling \code{neotoma2::get_sites} function to extract the
+datasets_id. This allow aditional possibilities of selection (e.g. polygon).
+}
+\seealso{
+\code{\link[neotoma2:get_sites]{neotoma2::get_sites()}}
 }
