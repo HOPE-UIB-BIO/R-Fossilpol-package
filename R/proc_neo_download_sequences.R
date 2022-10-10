@@ -10,9 +10,14 @@ proc_neo_download_sequences <-
 
     util_check_class("n_tries", "numeric")
 
-    ds_vector <- allds$dsid
+    # make a vector with all se dataset_ids
+    ds_vector <- 
+      allds  %>% 
+      purrr::pluck("dsid")  %>% 
+      sort()
 
-    rawdownload <- "https://api.neotomadb.org/v2.0/data/downloads"
+    rawdownload <- 
+      "https://api.neotomadb.org/v2.0/data/downloads"
 
     result_list <-
       purrr::map(
