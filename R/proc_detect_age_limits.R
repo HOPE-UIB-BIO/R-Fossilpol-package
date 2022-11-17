@@ -12,21 +12,21 @@ proc_detect_age_limits <-
            age_limit_young,
            age_limit_old,
            test_quantiles = FALSE) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("test_quantiles", "logical")
+    RUtilpol::check_class("test_quantiles", "logical")
 
     if (
       test_quantiles == TRUE
     ) {
-      util_check_col_names("data_source", c("upper", "lower"))
+      RUtilpol::check_col_names("data_source", c("upper", "lower"))
     } else {
-      util_check_col_names("data_source", "age")
+      RUtilpol::check_col_names("data_source", "age")
     }
 
-    util_check_class("age_limit_young", "numeric")
+    RUtilpol::check_class("age_limit_young", "numeric")
 
-    util_check_class("age_limit_old", "numeric")
+    RUtilpol::check_class("age_limit_old", "numeric")
 
 
     fulfill_criteria <- FALSE

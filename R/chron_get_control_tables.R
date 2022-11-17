@@ -6,9 +6,9 @@
 #' @export
 chron_get_control_tables <-
   function(data_source, min_n_of_control_points = 2) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -20,7 +20,7 @@ chron_get_control_tables <-
       )
     )
 
-    util_check_class("min_n_of_control_points", "numeric")
+    RUtilpol::check_class("min_n_of_control_points", "numeric")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -77,14 +77,14 @@ chron_get_control_tables <-
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "chron_control_tables",
       env = current_env
     )
 
-    util_check_class("chron_control_tables", "data.frame")
+    RUtilpol::check_class("chron_control_tables", "data.frame")
 
-    util_check_col_names("chron_control_tables", "chron_control")
+    RUtilpol::check_col_names("chron_control_tables", "chron_control")
 
     util_check_data_table(
       data_source = chron_control_tables

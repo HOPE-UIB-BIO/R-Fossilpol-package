@@ -1,10 +1,15 @@
 #' @title Open selected directory
 #' @param dir Path to the directory
 #' @return NULL
-#' @export
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
 util_open_dir <-
   function(dir) {
-    util_check_class("dir", "character")
+    lifecycle::deprecate_warn(
+      "0.0.2", "util_open_dir()", "RUtilpol::open_dir()"
+    )
+    RUtilpol::check_class("dir", "character")
 
     if (
       .Platform["OS.type"] == "windows"

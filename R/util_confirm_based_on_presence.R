@@ -3,13 +3,14 @@
 #' @param file_name Name of the file to look upon
 #' @param msg Message to be placed with the confirmation question
 #' @export
+#' @keywords internal
 util_confirm_based_on_presence <-
   function(dir, file_name, msg = "") {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("file_name", "character")
+    RUtilpol::check_class("file_name", "character")
 
-    util_check_class("msg", "character")
+    RUtilpol::check_class("msg", "character")
 
     # pre-set to TRUE
     confirm <- TRUE

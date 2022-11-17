@@ -17,3 +17,4 @@ Check the dataset for mandatory and non-mandatory
 variables. Stop the session if mandatory not present. Warn about
 non-mandatory and fill them with 'NA'
 }
+\keyword{internal}

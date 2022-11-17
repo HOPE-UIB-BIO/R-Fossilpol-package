@@ -14,10 +14,10 @@ extract_dataset_from_excel <-
            dir,
            suffix = "",
            project_db) {
-    util_check_class("selected_file", "character")
-    util_check_class("dir", "character")
-    util_check_class("suffix", "character")
-    util_check_class("project_db", "proj_db_class")
+    RUtilpol::check_class("selected_file", "character")
+    RUtilpol::check_class("dir", "character")
+    RUtilpol::check_class("suffix", "character")
+    RUtilpol::check_class("project_db", "proj_db_class")
 
     #----------------------------------------------------------#
     # 0. Check if dataset is already in database -----
@@ -47,8 +47,8 @@ extract_dataset_from_excel <-
         )
     )
 
-    util_check_class("site_meta", "data.frame")
-    util_check_col_names("site_meta", site_meta_var_sel)
+    RUtilpol::check_class("site_meta", "data.frame")
+    RUtilpol::check_col_names("site_meta", site_meta_var_sel)
 
     is_already_in_database <-
       site_meta %>%
@@ -136,8 +136,8 @@ extract_dataset_from_excel <-
           tidyr::drop_na(author_number, last_name)
       )
 
-      util_check_class("author_sheet", "data.frame")
-      util_check_col_names(
+      RUtilpol::check_class("author_sheet", "data.frame")
+      RUtilpol::check_col_names(
         "author_sheet",
         stringr::str_replace(
           author_sheet_var_sel,
@@ -159,7 +159,7 @@ extract_dataset_from_excel <-
           matching_var = vector("list", length = nrow(.))
         )
 
-      util_check_col_names("author_sheet", "author_already_in_database")
+      RUtilpol::check_col_names("author_sheet", "author_already_in_database")
 
       for (j in 1:nrow(author_sheet)) {
         database_info <-
@@ -255,7 +255,7 @@ extract_dataset_from_excel <-
         ) %>%
         dplyr::select(-order)
 
-      util_check_col_names("author_sheet", "author_id")
+      RUtilpol::check_col_names("author_sheet", "author_id")
 
       #----------------------------------------#
       # 1.1.3. Affiliation ----
@@ -302,8 +302,8 @@ extract_dataset_from_excel <-
           tidyr::drop_na(affiliation_number)
       )
 
-      util_check_class("affiliation_sheet", "data.frame")
-      util_check_col_names("affiliation_sheet", affiliation_sheet_var_sel)
+      RUtilpol::check_class("affiliation_sheet", "data.frame")
+      RUtilpol::check_col_names("affiliation_sheet", affiliation_sheet_var_sel)
 
       # create translation table
       tranlation_table <-
@@ -334,7 +334,7 @@ extract_dataset_from_excel <-
           Department = as.character(ifelse(is.na(Department) == TRUE, Company, Department))
         )
 
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "affiliation_sheet",
         c(
           "affiliations_already_in_database",
@@ -446,7 +446,7 @@ extract_dataset_from_excel <-
         dplyr::select(-order) %>%
         dplyr::relocate(affiliation_id)
 
-      util_check_col_names("affiliation_sheet", "affiliation_id")
+      RUtilpol::check_col_names("affiliation_sheet", "affiliation_id")
 
       # Adjust the translation table using the unique id's
       formated_tranlation_table <-
@@ -506,7 +506,7 @@ extract_dataset_from_excel <-
         ) %>%
         dplyr::select(dataset_id, sitename = site_name)
 
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "datasets_id_table",
         c(
           "dataset_id",
@@ -534,7 +534,7 @@ extract_dataset_from_excel <-
         ) %>%
         dplyr::relocate(dataset_id)
 
-      util_check_col_names("site_meta", "dataset_id")
+      RUtilpol::check_col_names("site_meta", "dataset_id")
 
       #--------------------------------------------------#
       # 2.1. Add publication to database -----
@@ -562,8 +562,8 @@ extract_dataset_from_excel <-
           )
       )
 
-      util_check_class("site_publication", "data.frame")
-      util_check_col_names("site_publication", site_publication_var_sel)
+      RUtilpol::check_class("site_publication", "data.frame")
+      RUtilpol::check_col_names("site_publication", site_publication_var_sel)
 
       site_publication <-
         site_publication %>%
@@ -572,7 +572,7 @@ extract_dataset_from_excel <-
         ) %>%
         dplyr::select(dataset_id, publication)
 
-      util_check_col_names("site_publication", "dataset_id")
+      RUtilpol::check_col_names("site_publication", "dataset_id")
 
       db_Dataset_pub(project_db) <-
         site_publication
@@ -589,7 +589,7 @@ extract_dataset_from_excel <-
         ) %>%
         dplyr::relocate(dataset_id)
 
-      util_check_col_names("site_meta", "dataset_id")
+      RUtilpol::check_col_names("site_meta", "dataset_id")
     }
 
 
@@ -605,7 +605,7 @@ extract_dataset_from_excel <-
         col_names = TRUE
       )
 
-    util_check_col_names("site_counts", "depth")
+    RUtilpol::check_col_names("site_counts", "depth")
 
     # create sample depth table
     sample_depth <-
@@ -616,7 +616,7 @@ extract_dataset_from_excel <-
       ) %>%
       dplyr::select(sample_id, depth)
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "sample_depth",
       c("sample_id", "depth")
     )
@@ -638,7 +638,7 @@ extract_dataset_from_excel <-
         dplyr::relocate(sample_id)
     )
 
-    util_check_col_names("raw_counts", "sample_id")
+    RUtilpol::check_col_names("raw_counts", "sample_id")
 
     #----------------------------------------------------------#
     # 3. Chronologies information -----
@@ -723,7 +723,7 @@ extract_dataset_from_excel <-
         n_chron_control = purrr::map_dbl(chron_control, nrow)
       )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "final_table",
       c(
         "sitename",

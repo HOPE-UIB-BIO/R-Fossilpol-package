@@ -6,32 +6,37 @@
 #' which contains a description of setting
 #' @param compress Should `gz` compression be applied?
 #' @return NULL
-#' @description Look into the folder and find the version of the file with
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' Look into the folder and find the version of the file with
 #'  the most recent name. Compare the last saved file and selected file and
 #'   save file if something changed since recent
-#' @export
 util_save_if_latests <- function(file_name,
                                  dir,
                                  system_setting_file = "current_setting",
                                  prefered_format = c("rds", "csv"),
                                  compress = TRUE) {
+  lifecycle::deprecate_warn(
+    "0.0.2", "util_save_if_latests()", "RUtilpol::save_latest_file()"
+  )
   current_frame <- sys.nframe()
   parent_frame <- sys.parent()
 
   current_env <- sys.frame(which = current_frame)
   parent_env <- sys.frame(which = parent_frame)
 
-  util_check_class("file_name", "character")
+  RUtilpol::check_class("file_name", "character")
 
-  util_check_class("dir", "character")
+  RUtilpol::check_class("dir", "character")
 
-  util_check_class("prefered_format", "character")
+  RUtilpol::check_class("prefered_format", "character")
 
-  util_check_vector_values("prefered_format", c("rds", "csv"))
+  RUtilpol::check_vector_values("prefered_format", c("rds", "csv"))
 
   prefered_format <- match.arg(prefered_format)
 
-  util_check_class("compress", "logical")
+  RUtilpol::check_class("compress", "logical")
 
   has_setting <- TRUE
 
@@ -48,9 +53,10 @@ util_save_if_latests <- function(file_name,
   }
 
   latest_file_name <-
-    util_check_the_latest_file(
+    RUtilpol::get_latest_file_name(
       file_name = file_name,
-      dir = dir
+      dir = dir,
+      silent = TRUE
     )
 
   if (
@@ -77,7 +83,7 @@ util_save_if_latests <- function(file_name,
 
     assign("file_to_save", file_to_save, envir = current_env)
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
       silent = TRUE
@@ -159,7 +165,7 @@ util_save_if_latests <- function(file_name,
 
     assign("file_to_save", file_to_save, envir = current_env)
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
       silent = TRUE

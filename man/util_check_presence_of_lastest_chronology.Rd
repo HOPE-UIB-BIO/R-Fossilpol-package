@@ -16,3 +16,4 @@ predicted ages
 \description{
 Check the presence of previous results of the chronology estimation
 }
+\keyword{internal}

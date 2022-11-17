@@ -11,15 +11,15 @@ chron_subset_previous_sequences <-
            dir,
            rerun_ad,
            sites_to_rerun = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("dataset_id", "chron_control"))
+    RUtilpol::check_col_names("data_source", c("dataset_id", "chron_control"))
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("rerun_ad", "logical")
+    RUtilpol::check_class("rerun_ad", "logical")
 
-    util_check_class("sites_to_rerun", c("NULL", "character"))
+    RUtilpol::check_class("sites_to_rerun", c("NULL", "character"))
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -28,7 +28,7 @@ chron_subset_previous_sequences <-
 
     # check if AD models are already calculated
     latest_bchron <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "chron_predicted_ages",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Predicted_ages"
@@ -60,7 +60,7 @@ chron_subset_previous_sequences <-
     ) {
 
       # warn user
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "Cannot use the previous AD models as there is no 'bchon_output'",
           "Will you re-calibrate all age-depth model 'de novo'"
@@ -79,25 +79,25 @@ chron_subset_previous_sequences <-
       # Look into the outputs and load the data for last Chronology output
       #   then filter out all sites, which have Chronology output
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Previous AD models will be loaded"
       )
 
       # load the output
       bchron_output_done <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_predicted_ages",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Predicted_ages"
           )
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "bchron_output_done",
         env = current_env
       )
 
-      util_check_class("bchron_output_done", "data.frame")
+      RUtilpol::check_class("bchron_output_done", "data.frame")
 
       bchron_output_done <-
         bchron_output_done %>%
@@ -107,7 +107,7 @@ chron_subset_previous_sequences <-
         res %>%
         dplyr::filter(!dataset_id %in% bchron_output_done$dataset_id)
     } else {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "AD models will be created 'de novo'"
       )
     }

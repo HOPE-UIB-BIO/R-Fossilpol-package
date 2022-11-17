@@ -15,9 +15,9 @@ chron_save_results <-
            current_state,
            sites_to_rerun,
            dir) {
-    util_check_class("data_source_predicted_ages", "data.frame")
+    RUtilpol::check_class("data_source_predicted_ages", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source_predicted_ages",
       c(
         "dataset_id",
@@ -25,9 +25,9 @@ chron_save_results <-
       )
     )
 
-    util_check_class("data_source_to_predict", "data.frame")
+    RUtilpol::check_class("data_source_to_predict", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source_predicted_ages",
       c(
         "dataset_id",
@@ -36,11 +36,11 @@ chron_save_results <-
       )
     )
 
-    util_check_class("current_state", "list")
+    RUtilpol::check_class("current_state", "list")
 
-    util_check_class("sites_to_rerun", c("character", "NULL"))
+    RUtilpol::check_class("sites_to_rerun", c("character", "NULL"))
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -48,20 +48,20 @@ chron_save_results <-
     if (
       nrow(data_source_predicted_ages) < 0
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "No successful predicted ages. Not saving"
       )
 
       return()
     }
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Saving outputs"
     )
 
     # Chronology outputs  -----
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Saving Chronology outputs. This can take a while."
     )
 
@@ -72,7 +72,7 @@ chron_save_results <-
 
       # load the old outputs
       previous_models <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_mod_output",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Models_full"
@@ -81,12 +81,12 @@ chron_save_results <-
         # filter out sequences marked to re-run
         dplyr::filter(!(dataset_id %in% sites_to_rerun))
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "previous_models",
         env = current_env
       )
 
-      util_check_class("previous_models", "data.frame")
+      RUtilpol::check_class("previous_models", "data.frame")
 
       previous_models_sub <-
         previous_models %>%
@@ -121,7 +121,7 @@ chron_save_results <-
       )
 
     # save
-    # do not use the `util_save_if_latests` as it cannot handle large files
+    # do not use the `RUtilpol::save_if_latests` as it cannot handle large files
     readr::write_rds(
       x = models_full,
       file = paste0(
@@ -133,7 +133,7 @@ chron_save_results <-
 
     # Predicted ages  -----
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Saving predicted ages"
     )
 
@@ -144,19 +144,19 @@ chron_save_results <-
 
       # load the old pred ages
       previous_age_prediction <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_predicted_ages",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Predicted_ages"
           )
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "previous_age_prediction",
         env = current_env
       )
 
-      util_check_class("previous_age_prediction", "data.frame")
+      RUtilpol::check_class("previous_age_prediction", "data.frame")
 
       previous_age_prediction_sub <-
         previous_age_prediction %>%
@@ -179,11 +179,13 @@ chron_save_results <-
         !dplyr::any_of("bchron_mod")
       )
 
-    util_save_if_latests(
-      file_name = "chron_predicted_ages",
+    RUtilpol::save_latest_file(
+      file_to_save = chron_predicted_ages,
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
-      )
+      ),
+      prefered_format = "rds",
+      use_sha = TRUE
     )
 
     # clean the files

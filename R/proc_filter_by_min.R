@@ -4,13 +4,13 @@
 #' @param min_n Criterion to be evaluated against
 proc_filter_by_min <-
   function(data_source, var_name, min_n) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("var_name", "character")
+    RUtilpol::check_class("var_name", "character")
 
-    util_check_class("min_n", "numeric")
+    RUtilpol::check_class("min_n", "numeric")
 
-    util_check_col_names("data_source", eval(var_name))
+    RUtilpol::check_col_names("data_source", eval(var_name))
 
     data_source_filtered <-
       data_source %>%

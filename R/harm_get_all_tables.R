@@ -5,9 +5,9 @@
 harm_get_all_tables <-
   function(data_source,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "harmonisation_region",
@@ -15,7 +15,7 @@ harm_get_all_tables <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     # create table with all harmonisation tables
     #   If there is a table missing, create the table 'de novo'
@@ -51,7 +51,7 @@ harm_get_all_tables <-
         )
       )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "harmonisation_tables",
       c("harmonisation_region", "harm_table")
     )
@@ -64,10 +64,10 @@ harm_get_all_tables <-
       ) %>%
         any()
     ) {
-      util_stop_quietly()
+      RUtilpol::stop_quietly()
     }
 
-    util_output_comment(
+    RUtilpol::output_comment(
       "All harmonisation tables are loaded properly"
     )
 

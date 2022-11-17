@@ -4,30 +4,30 @@
 #' @export
 proc_get_merged_dataset <-
   function(data_storage_path, private_data = FALSE) {
-    util_check_class("data_storage_path", "character")
+    RUtilpol::check_class("data_storage_path", "character")
 
-    util_check_class("private_data", "logical")
+    RUtilpol::check_class("private_data", "logical")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Loading datasets"
     )
 
     # Load processed Neotoma sequences
     neotoma_processed <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "neotoma_processed",
         dir = paste0(data_storage_path, "/Data/Processed/Neotoma_processed")
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "neotoma_processed",
       env = current_env
     )
 
-    util_check_class("neotoma_processed", "data.frame")
+    RUtilpol::check_class("neotoma_processed", "data.frame")
 
     if (
       private_data == TRUE
@@ -35,17 +35,17 @@ proc_get_merged_dataset <-
 
       # load processed private sequences
       private_processed <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "private_data_prepared",
           dir = paste0(data_storage_path, "/Data/Processed/Private")
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "private_processed",
         env = current_env
       )
 
-      util_check_class("private_processed", "data.frame")
+      RUtilpol::check_class("private_processed", "data.frame")
 
       # make sure that dataset_id are not duplicated
       neotoma_filtered <-
@@ -75,30 +75,30 @@ proc_get_merged_dataset <-
           )
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_full",
         env = current_env
       )
 
-      util_check_class("data_full", "data.frame")
+      RUtilpol::check_class("data_full", "data.frame")
 
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "data_full",
         c("data_publicity", "pollen_percentage", "source_of_data")
       )
 
-      util_output_comment("Neotoma data was loanded and merged with Private")
+      RUtilpol::output_comment("Neotoma data was loanded and merged with Private")
     } else {
       data_full <- neotoma_processed
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_full",
         env = current_env
       )
 
-      util_check_class("data_full", "data.frame")
+      RUtilpol::check_class("data_full", "data.frame")
 
-      util_output_comment("Neotoma data was loaded")
+      RUtilpol::output_comment("Neotoma data was loaded")
     }
 
     util_check_data_table(data_full)

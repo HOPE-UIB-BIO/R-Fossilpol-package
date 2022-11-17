@@ -6,13 +6,13 @@
 #' @export
 proc_neo_get_chronologies <-
   function(neotoma_download, chron_order, min_n_of_control_points) {
-    util_check_class("neotoma_download", "list")
+    RUtilpol::check_class("neotoma_download", "list")
 
-    util_check_class("chron_order", "data.frame")
+    RUtilpol::check_class("chron_order", "data.frame")
 
-    util_check_col_names("chron_order", c("order", "type"))
+    RUtilpol::check_col_names("chron_order", c("order", "type"))
 
-    util_check_class("min_n_of_control_points", "numeric")
+    RUtilpol::check_class("min_n_of_control_points", "numeric")
 
     # extract chronologies for all sequences
     chronologies <-
@@ -46,7 +46,7 @@ proc_neo_get_chronologies <-
       ) %>%
       dplyr::filter(n_chron_control >= min_n_of_control_points)
 
-    util_check_col_names("chroncontrol_tables_clean", "n_chron_control")
+    RUtilpol::check_col_names("chroncontrol_tables_clean", "n_chron_control")
 
     util_check_data_table(chroncontrol_tables_clean)
 

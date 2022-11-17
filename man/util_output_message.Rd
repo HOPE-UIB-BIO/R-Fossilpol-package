@@ -10,5 +10,6 @@ util_output_message(msg = "")
 \item{msg}{String with the message that should be printed}
 }
 \description{
-Output boxed message in console
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
+\keyword{internal}

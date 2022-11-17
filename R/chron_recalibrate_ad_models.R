@@ -33,9 +33,9 @@ chron_recalibrate_ad_models <-
            batch_attempts = 3,
            time_per_sequence = 120,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -43,21 +43,21 @@ chron_recalibrate_ad_models <-
       )
     )
 
-    util_check_class("batch_size", "numeric")
+    RUtilpol::check_class("batch_size", "numeric")
 
-    util_check_class("number_of_cores", "numeric")
+    RUtilpol::check_class("number_of_cores", "numeric")
 
-    util_check_class("default_iteration", "numeric")
+    RUtilpol::check_class("default_iteration", "numeric")
 
-    util_check_class("default_burn", "numeric")
+    RUtilpol::check_class("default_burn", "numeric")
 
-    util_check_class("default_thin", "numeric")
+    RUtilpol::check_class("default_thin", "numeric")
 
-    util_check_class("iteration_multiplier", "numeric")
+    RUtilpol::check_class("iteration_multiplier", "numeric")
 
-    util_check_class("set_seed", "numeric")
+    RUtilpol::check_class("set_seed", "numeric")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -78,7 +78,7 @@ chron_recalibrate_ad_models <-
     if (
       nrow(data_source) < 1
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "There are no sequences for AD calculation,",
           "re-calibration will be skipped in current run"
@@ -92,7 +92,7 @@ chron_recalibrate_ad_models <-
           bchron_mod = NA_real_
         )
 
-      util_check_col_names("chron_output", "bchron_mod")
+      RUtilpol::check_col_names("chron_output", "bchron_mod")
 
       return(chron_output)
     }
@@ -123,7 +123,7 @@ chron_recalibrate_ad_models <-
         # write sequences as vector
         sequence_vec = purrr::map_chr(
           .x = sequence_list,
-          .f = ~ util_paste_as_vector(.x, sep = "")
+          .f = ~ RUtilpol::paste_as_vector(.x, sep = "")
         ),
         # number of sequences in each batch
         batch_size = purrr::map_dbl(
@@ -136,12 +136,12 @@ chron_recalibrate_ad_models <-
         .rows = number_of_batches
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "batch_success_table",
       env = current_env
     )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "batch_success_table",
       c(
         "batch_number",
@@ -190,7 +190,7 @@ chron_recalibrate_ad_models <-
       if (
         rerun_batches == TRUE
       ) {
-        util_output_comment(
+        RUtilpol::output_comment(
           paste(
             "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
             "Each batch will have", batch_attempts, "attempts to calculate.",
@@ -231,7 +231,7 @@ chron_recalibrate_ad_models <-
     if (
       style_selection == "batches"
     ) {
-      util_check_col_names("chron_output_batch", "bchron_mod")
+      RUtilpol::check_col_names("chron_output_batch", "bchron_mod")
 
       return(chron_output_batch)
     }
@@ -250,7 +250,7 @@ chron_recalibrate_ad_models <-
           purrr::pluck("batch_size") %>%
           sum()
 
-        util_output_comment(
+        RUtilpol::output_comment(
           msg = paste(
             "Individual calculation will be done for", number_of_fails, "sequences"
           )
@@ -273,7 +273,7 @@ chron_recalibrate_ad_models <-
     if (
       style_selection == "individual"
     ) {
-      util_check_col_names("chron_output_individual", "bchron_mod")
+      RUtilpol::check_col_names("chron_output_individual", "bchron_mod")
 
       return(chron_output_individual)
     }
@@ -288,7 +288,7 @@ chron_recalibrate_ad_models <-
         ) %>%
         dplyr::distinct(dataset_id, .keep_all = TRUE)
 
-      util_check_col_names("bchron_output", "bchron_mod")
+      RUtilpol::check_col_names("bchron_output", "bchron_mod")
 
       return(bchron_output)
     }

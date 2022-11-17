@@ -12,3 +12,4 @@ util_confirm_global_setting(setting_name)
 \description{
 Offer the user to temporarily change one logical variable
 }
+\keyword{internal}

@@ -14,19 +14,19 @@ proc_filter_by_geography <-
            lat_max = NA,
            alt_min = NA,
            alt_max = NA) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("long_min", c("numeric", "logical"))
+    RUtilpol::check_class("long_min", c("numeric", "logical"))
 
-    util_check_class("long_max", c("numeric", "logical"))
+    RUtilpol::check_class("long_max", c("numeric", "logical"))
 
-    util_check_class("lat_min", c("numeric", "logical"))
+    RUtilpol::check_class("lat_min", c("numeric", "logical"))
 
-    util_check_class("lat_max", c("numeric", "logical"))
+    RUtilpol::check_class("lat_max", c("numeric", "logical"))
 
-    util_check_class("alt_min", c("numeric", "logical"))
+    RUtilpol::check_class("alt_min", c("numeric", "logical"))
 
-    util_check_class("alt_max", c("numeric", "logical"))
+    RUtilpol::check_class("alt_max", c("numeric", "logical"))
 
     data_filter <- data_source
 

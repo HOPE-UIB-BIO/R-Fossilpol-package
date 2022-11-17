@@ -15,19 +15,19 @@ proc_neo_get_metadata_with_samples <-
            lat_max = NA,
            alt_min = NA,
            alt_max = NA) {
-    util_check_class("neotoma_download", "list")
+    RUtilpol::check_class("neotoma_download", "list")
 
-    util_check_class("long_min", c("numeric", "logical"))
+    RUtilpol::check_class("long_min", c("numeric", "logical"))
 
-    util_check_class("long_max", c("numeric", "logical"))
+    RUtilpol::check_class("long_max", c("numeric", "logical"))
 
-    util_check_class("lat_min", c("numeric", "logical"))
+    RUtilpol::check_class("lat_min", c("numeric", "logical"))
 
-    util_check_class("lat_max", c("numeric", "logical"))
+    RUtilpol::check_class("lat_max", c("numeric", "logical"))
 
-    util_check_class("alt_min", c("numeric", "logical"))
+    RUtilpol::check_class("alt_min", c("numeric", "logical"))
 
-    util_check_class("alt_max", c("numeric", "logical"))
+    RUtilpol::check_class("alt_max", c("numeric", "logical"))
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -47,16 +47,16 @@ proc_neo_get_metadata_with_samples <-
         alt_max
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "neotoma_sites_meta_data_filtered",
       env = current_env
     )
 
-    util_check_class("neotoma_sites_meta_data_filtered", "data.frame")
+    RUtilpol::check_class("neotoma_sites_meta_data_filtered", "data.frame")
 
-    util_output_comment("Neotoma meta information extracted")
+    RUtilpol::output_comment("Neotoma meta information extracted")
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       nrow(neotoma_sites_meta_data_filtered) > 0,
       false_msg = paste(
         "There are 0 sequences based on the selected Criteria",
@@ -88,7 +88,7 @@ proc_neo_get_metadata_with_samples <-
         doi
       )
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       nrow(neotoma_meta_samples) > 0,
       false_msg = paste(
         "There are 0 sequences with both meta data and sample data",

@@ -16,5 +16,7 @@ util_stop_if_not(..., env = parent.frame(), false_msg = NULL, true_msg = NULL)
 \item{true_msg}{Comment to be printed when positive result of test}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Test a selected criteria an output comment or stop
 }
+\keyword{internal}

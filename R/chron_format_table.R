@@ -21,9 +21,9 @@ chron_format_table <-
            valid_control_types,
            control_types_to_calibrate,
            guess_depth) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "chroncontroltype",
@@ -34,9 +34,9 @@ chron_format_table <-
       )
     )
 
-    util_check_class("curve_name", "character")
+    RUtilpol::check_class("curve_name", "character")
 
-    util_check_class("use_default_thickness", "numeric")
+    RUtilpol::check_class("use_default_thickness", "numeric")
 
     # make sure that there is a column name 'thickness'
     if (
@@ -49,7 +49,7 @@ chron_format_table <-
         )
     }
 
-    util_check_col_names("data_source", "thickness")
+    RUtilpol::check_col_names("data_source", "thickness")
 
 
     # make sure that there is a column name 'chroncontrolid'
@@ -62,10 +62,10 @@ chron_format_table <-
         )
     }
 
-    util_check_col_names("data_source", "chroncontrolid")
+    RUtilpol::check_col_names("data_source", "chroncontrolid")
 
 
-    util_check_class("use_default_error", "numeric")
+    RUtilpol::check_class("use_default_error", "numeric")
 
     if (
       missing(max_error)
@@ -73,7 +73,7 @@ chron_format_table <-
       max_error <- Inf
     }
 
-    util_check_class("max_error", "numeric")
+    RUtilpol::check_class("max_error", "numeric")
 
     # if there is not a selected types, use all of them
     if (
@@ -84,14 +84,14 @@ chron_format_table <-
         unique()
     }
 
-    util_check_class("valid_control_types", "character")
+    RUtilpol::check_class("valid_control_types", "character")
 
     assertthat::assert_that(
       length(valid_control_types) > 0,
       msg = "There are no 'chroncontroltype' in the 'data_source'"
     )
 
-    util_check_class("control_types_to_calibrate", "character")
+    RUtilpol::check_class("control_types_to_calibrate", "character")
 
     if (
       missing(guess_depth)
@@ -99,7 +99,7 @@ chron_format_table <-
       guess_depth <- -Inf
     }
 
-    util_check_class("guess_depth", "numeric")
+    RUtilpol::check_class("guess_depth", "numeric")
 
     table_res <-
       data_source %>%
@@ -259,7 +259,7 @@ chron_format_table <-
       }
     }
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "table_res",
       c(
         "chroncontrolid",

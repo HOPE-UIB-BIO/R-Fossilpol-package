@@ -21,20 +21,20 @@ proc_detect_duplicates <-
            source_var = "source_of_data",
            n_subgroups = 1,
            maximal_distance = 5) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("lat", "long", eval(source_var)))
+    RUtilpol::check_col_names("data_source", c("lat", "long", eval(source_var)))
 
-    util_check_class("source_var", "character")
+    RUtilpol::check_class("source_var", "character")
 
-    util_check_class("n_subgroups", "numeric")
+    RUtilpol::check_class("n_subgroups", "numeric")
 
     assertthat::assert_that(
       n_subgroups > 0,
       msg = "'n_subgroups' must be larger than 0"
     )
 
-    util_check_class("maximal_distance", "numeric")
+    RUtilpol::check_class("maximal_distance", "numeric")
 
     assertthat::assert_that(
       maximal_distance > 0,
@@ -66,7 +66,7 @@ proc_detect_duplicates <-
       data_source %>%
       dplyr::mutate(subgroup = clusters_selection$cluster)
 
-    util_check_col_names("data_w", "subgroup")
+    RUtilpol::check_col_names("data_w", "subgroup")
 
     # detect all the possible sources of data
     source_var_levels <-
@@ -80,7 +80,7 @@ proc_detect_duplicates <-
     if (
       length(source_var_levels) < 2
       ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste("There is only 1 possible source of data:", source_var_levels)
       )
       return(NA)
@@ -110,7 +110,7 @@ proc_detect_duplicates <-
     if (
       length(intresting_subgroups) > 0
       ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0(
           "Detected potential regions of duplicates, N = ",
           length(intresting_subgroups)
@@ -209,7 +209,7 @@ proc_detect_duplicates <-
           ) %>%
           dplyr::ungroup()
 
-        util_check_col_names(
+        RUtilpol::check_col_names(
           "combination_grid",
           c(
             "distance",
@@ -245,7 +245,7 @@ proc_detect_duplicates <-
             different = TRUE
           )
 
-        util_check_col_names(
+        RUtilpol::check_col_names(
           "comparison_table_temp",
           c("var", "different")
         )
@@ -271,7 +271,7 @@ proc_detect_duplicates <-
               )
             )
 
-          util_check_col_names("comparison_table", "different")
+          RUtilpol::check_col_names("comparison_table", "different")
 
           posible_candidates$similarity[j] <- mean(comparison_table$different)
         }
@@ -288,7 +288,7 @@ proc_detect_duplicates <-
         }
       }
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0(
           "Returning ", nrow(final_result), " of potential duplicates"
         )
@@ -299,7 +299,7 @@ proc_detect_duplicates <-
         dplyr::mutate(distance = round(distance, digits = 2)) %>%
         return()
     } else {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Did not detect any potential duplicates"
       )
 

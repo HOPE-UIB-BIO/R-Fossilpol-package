@@ -52,11 +52,11 @@ proc_filter_all_data <-
            min_n_levels = TRUE,
            use_age_quantiles = FALSE,
            use_bookend_level = FALSE) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("variable_vec", "character")
+    RUtilpol::check_class("variable_vec", "character")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -65,26 +65,26 @@ proc_filter_all_data <-
     )
 
 
-    util_check_class("msg", "character")
+    RUtilpol::check_class("msg", "character")
 
-    util_check_class("filter_by_pollen_sum", "logical")
+    RUtilpol::check_class("filter_by_pollen_sum", "logical")
 
     if (
       filter_by_pollen_sum == TRUE
     ) {
-      util_check_class("min_n_grains", "numeric")
+      RUtilpol::check_class("min_n_grains", "numeric")
 
-      util_check_class("target_n_grains", "numeric")
+      RUtilpol::check_class("target_n_grains", "numeric")
 
-      util_check_class("percentage_samples", "numeric")
+      RUtilpol::check_class("percentage_samples", "numeric")
     }
 
-    util_check_class("filter_by_age_limit", "logical")
+    RUtilpol::check_class("filter_by_age_limit", "logical")
 
     if (
       filter_by_age_limit == TRUE
     ) {
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "data_source",
         c(
           "young_age",
@@ -93,30 +93,30 @@ proc_filter_all_data <-
       )
     }
 
-    util_check_class("filter_by_extrapolation", "logical")
+    RUtilpol::check_class("filter_by_extrapolation", "logical")
 
     if (
       filter_by_extrapolation == TRUE
     ) {
-      util_check_class("maximum_age_extrapolation", "numeric")
+      RUtilpol::check_class("maximum_age_extrapolation", "numeric")
 
-      util_check_col_names("data_source", "chron_control_limits")
+      RUtilpol::check_col_names("data_source", "chron_control_limits")
     }
 
-    util_check_class("filter_by_interest_region", "logical")
+    RUtilpol::check_class("filter_by_interest_region", "logical")
 
     if (
       filter_by_interest_region == TRUE
     ) {
-      util_check_col_names("data_source", "end_of_interest_period")
+      RUtilpol::check_col_names("data_source", "end_of_interest_period")
     }
 
-    util_check_class("filter_by_number_of_levels", "logical")
+    RUtilpol::check_class("filter_by_number_of_levels", "logical")
 
     if (
       filter_by_number_of_levels == TRUE
     ) {
-      util_check_class("min_n_levels", "numeric")
+      RUtilpol::check_class("min_n_levels", "numeric")
     }
 
     current_frame <- sys.nframe()
@@ -137,7 +137,7 @@ proc_filter_all_data <-
 
     # Sort LEVELS by Age -----
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Sorting levels by age"
     )
 
@@ -159,14 +159,14 @@ proc_filter_all_data <-
         variable_vec = variable_vec
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_ages_sorted",
       env = current_env
     )
 
-    util_check_class("data_ages_sorted", "data.frame")
+    RUtilpol::check_class("data_ages_sorted", "data.frame")
 
-    util_output_comment("All levels were sorted by ages")
+    RUtilpol::output_comment("All levels were sorted by ages")
 
     # Filter out LEVELS with duplicated age -----
 
@@ -189,7 +189,7 @@ proc_filter_all_data <-
         variable_vec = variable_vec
       )
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       purrr::map_lgl(
         data_ages_unique_age$levels,
         ~ .x$age %>%
@@ -207,7 +207,7 @@ proc_filter_all_data <-
     if (
       filter_by_pollen_sum == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering levels by pollen sums"
       )
 
@@ -233,22 +233,22 @@ proc_filter_all_data <-
           variable_vec = variable_vec
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_pollen_sum_filtered",
         env = current_env
       )
 
-      util_check_class("data_pollen_sum_filtered", "data.frame")
+      RUtilpol::check_class("data_pollen_sum_filtered", "data.frame")
 
-      util_output_comment("All levels were filtered out by pollen sum")
+      RUtilpol::output_comment("All levels were filtered out by pollen sum")
 
       util_check_data_table(data_pollen_sum_filtered)
 
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering sequences by pollen sums"
       )
 
-      util_stop_if_not(
+      RUtilpol::stop_if_not(
         any(
           purrr::map_lgl(data_pollen_sum_filtered$young_age, is.na),
           purrr::map_lgl(data_pollen_sum_filtered$old_age, is.na)
@@ -286,14 +286,14 @@ proc_filter_all_data <-
         dplyr::filter(fullfil_test == TRUE) %>%
         dplyr::select(-fullfil_test)
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_percentage_filtered",
         env = current_env
       )
 
-      util_check_class("data_percentage_filtered", "data.frame")
+      RUtilpol::check_class("data_percentage_filtered", "data.frame")
 
-      util_output_comment("All sequences were filtered out by pollen sum")
+      RUtilpol::output_comment("All sequences were filtered out by pollen sum")
 
       util_check_data_table(data_percentage_filtered)
     } else {
@@ -305,11 +305,11 @@ proc_filter_all_data <-
     if (
       filter_by_age_limit == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering sequences by age limits"
       )
 
-      util_stop_if_not(
+      RUtilpol::stop_if_not(
         any(
           purrr::map_lgl(data_percentage_filtered$young_age, is.na),
           purrr::map_lgl(data_percentage_filtered$old_age, is.na)
@@ -339,14 +339,14 @@ proc_filter_all_data <-
         dplyr::filter(fullfil_test == TRUE) %>%
         dplyr::select(-fullfil_test)
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_age_filtered",
         env = current_env
       )
 
-      util_check_class("data_age_filtered", "data.frame")
+      RUtilpol::check_class("data_age_filtered", "data.frame")
 
-      util_output_comment("All sequences were filtered out by age limits")
+      RUtilpol::output_comment("All sequences were filtered out by age limits")
 
       util_check_data_table(data_age_filtered)
     } else {
@@ -358,7 +358,7 @@ proc_filter_all_data <-
     if (
       filter_by_extrapolation == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering out levels beyond last chron.control point (extrapolation)"
       )
 
@@ -381,14 +381,14 @@ proc_filter_all_data <-
           variable_vec = variable_vec
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_extrapolation_filtered",
         env = current_env
       )
 
-      util_check_class("data_extrapolation_filtered", "data.frame")
+      RUtilpol::check_class("data_extrapolation_filtered", "data.frame")
 
-      util_output_comment("All levels beyond last chron.control point were filtered out")
+      RUtilpol::output_comment("All levels beyond last chron.control point were filtered out")
 
       util_check_data_table(data_extrapolation_filtered)
     } else {
@@ -400,11 +400,11 @@ proc_filter_all_data <-
     if (
       filter_by_interest_region == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering out levels beyond age limits"
       )
 
-      util_stop_if_not(
+      RUtilpol::stop_if_not(
         any(
           purrr::map_lgl(
             data_extrapolation_filtered$end_of_interest_period,
@@ -439,14 +439,14 @@ proc_filter_all_data <-
           variable_vec = variable_vec
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_age_limit_filtered",
         env = current_env
       )
 
-      util_check_class("data_age_limit_filtered", "data.frame")
+      RUtilpol::check_class("data_age_limit_filtered", "data.frame")
 
-      util_output_comment("All levels beyond age limits were filtered out")
+      RUtilpol::output_comment("All levels beyond age limits were filtered out")
 
       util_check_data_table(data_age_limit_filtered)
     } else {
@@ -458,7 +458,7 @@ proc_filter_all_data <-
     if (
       filter_by_number_of_levels == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Filtering out sequnces by number of levels"
       )
 
@@ -475,16 +475,16 @@ proc_filter_all_data <-
           )
         )
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "data_n_leves_filtered",
         env = current_env
       )
 
-      util_check_class("data_n_leves_filtered", "data.frame")
+      RUtilpol::check_class("data_n_leves_filtered", "data.frame")
 
-      util_check_col_names("data_n_leves_filtered", "n_sample_counts")
+      RUtilpol::check_col_names("data_n_leves_filtered", "n_sample_counts")
 
-      util_output_comment("All sequences were filtered out based on number of levels")
+      RUtilpol::output_comment("All sequences were filtered out based on number of levels")
 
       util_check_data_table(data_n_leves_filtered)
     } else {
@@ -538,14 +538,14 @@ proc_filter_all_data <-
       data_filtered %>%
       dplyr::relocate(fin_columns)
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_filtered_res",
       env = current_env
     )
 
-    util_check_class("data_filtered_res", "data.frame")
+    RUtilpol::check_class("data_filtered_res", "data.frame")
 
-    util_output_comment("All sequences and levels were filtered out based on user's preferences")
+    RUtilpol::output_comment("All sequences and levels were filtered out based on user's preferences")
 
     util_check_data_table(data_filtered_res)
 

@@ -8,11 +8,11 @@
 geo_assign_shapefile <-
   function(data_source,
            shapefile) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("lat", "long"))
+    RUtilpol::check_col_names("data_source", c("lat", "long"))
 
-    util_check_class("shapefile", c("sf", "SpatialPolygonsDataFrame"))
+    RUtilpol::check_class("shapefile", c("sf", "SpatialPolygonsDataFrame"))
 
     # extract the coordinates system
     data_coord <-

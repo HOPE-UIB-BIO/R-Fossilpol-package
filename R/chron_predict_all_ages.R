@@ -11,9 +11,9 @@ chron_predict_all_ages <-
   function(data_source,
            dir,
            date) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -21,16 +21,16 @@ chron_predict_all_ages <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("date", "Date")
+    RUtilpol::check_class("date", "Date")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
     # load the processed data
     data_level_depth <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "data_merged",
         dir = paste0(
           dir, "/Data/Processed/Data_merged"
@@ -42,12 +42,12 @@ chron_predict_all_ages <-
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_level_depth",
       env = current_env
     )
 
-    util_check_class("data_level_depth", "data.frame")
+    RUtilpol::check_class("data_level_depth", "data.frame")
 
     # merge them together
     data_work <-
@@ -73,14 +73,14 @@ chron_predict_all_ages <-
         )
       ))
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_age_predicted",
       env = current_env
     )
 
-    util_check_class("data_age_predicted", "data.frame")
+    RUtilpol::check_class("data_age_predicted", "data.frame")
 
-    util_check_col_names("data_age_predicted", "chron_predicted_ages")
+    RUtilpol::check_col_names("data_age_predicted", "chron_predicted_ages")
 
     util_check_data_table(data_age_predicted)
 
@@ -112,19 +112,19 @@ chron_predict_all_ages <-
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_age_predicted_summary",
       env = current_env
     )
 
-    util_check_class("data_age_predicted_summary", "data.frame")
+    RUtilpol::check_class("data_age_predicted_summary", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_age_predicted_summary",
       c("levels", "age_uncertainty")
     )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       paste(
         "Ages were sucessfully predicted for",
         nrow(data_age_predicted_summary), "out of",
@@ -152,7 +152,7 @@ chron_predict_all_ages <-
           paste0(sites_fail_path, "sites_fail_to_predict_", date, ".csv")
         )
 
-        util_output_comment(
+        RUtilpol::output_comment(
           paste(
             "There are several sequences, which fail to predict ages.", "\n",
             "You can see them in:",
@@ -160,13 +160,13 @@ chron_predict_all_ages <-
           )
         )
 
-        util_open_dir(
+        RUtilpol::open_dir(
           dir = sites_fail_path
         )
       }
     }
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_age_predicted_summary",
       c("levels", "age_uncertainty")
     )

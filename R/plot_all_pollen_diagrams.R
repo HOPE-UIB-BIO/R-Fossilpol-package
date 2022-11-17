@@ -15,9 +15,9 @@ plot_all_pollen_diagrams <-
            max_taxa = 20,
            y_var = c("age", "depth"),
            date) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -27,22 +27,22 @@ plot_all_pollen_diagrams <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("min_n_occur", "numeric")
+    RUtilpol::check_class("min_n_occur", "numeric")
 
-    util_check_class("max_taxa", "numeric")
+    RUtilpol::check_class("max_taxa", "numeric")
 
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_the_latest_file("y_var", c("depth", "age"))
+    RUtilpol::check_vector_values("y_var", c("depth", "age"))
 
     y_var <- match.arg(y_var)
 
 
-    util_check_class("date", "Date")
+    RUtilpol::check_class("date", "Date")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Transforming data to percentages"
     )
 
@@ -69,11 +69,11 @@ plot_all_pollen_diagrams <-
         )
       )
 
-    util_check_col_names("data_filtered_percentages", "data_percent")
+    RUtilpol::check_col_names("data_filtered_percentages", "data_percent")
 
     # Plot pollen diagrams -----
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Plotting of data"
     )
 
@@ -92,8 +92,8 @@ plot_all_pollen_diagrams <-
     )
 
     most_recent_folder <-
-      util_check_the_latest_file(
-        file_name = NA,
+      RUtilpol::get_latest_file_name(
+        file_name = ".",
         dir = pollen_dir,
         folder = TRUE
       )
@@ -112,7 +112,7 @@ plot_all_pollen_diagrams <-
           .$region # ..4
         ),
         .f = ~ {
-          util_output_comment(
+          RUtilpol::output_comment(
             msg = paste0("Saving figure for dataset ", ..3)
           )
 
@@ -127,7 +127,7 @@ plot_all_pollen_diagrams <-
         }
       )
 
-    util_open_dir(
+    RUtilpol::open_dir(
       dir = save_path
     )
   }

@@ -1,6 +1,7 @@
 #' @title Test presence and create folders if necessary
 #' @param dir Path to the selected directory
-#' @export
+#' @keywords internal
+#' @export 
 util_make_datastorage_folders <-
   function(dir) {
     if (

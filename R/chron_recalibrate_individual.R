@@ -23,9 +23,9 @@ chron_recalibrate_individual <-
     # For each file, temporarily add its dataset_id into `Crash_file` until it is
     #   successfully re-calibrated
 
-    util_check_class("data_source_chron", "data.frame")
+    RUtilpol::check_class("data_source_chron", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source_chron",
       c(
         "dataset_id",
@@ -33,9 +33,9 @@ chron_recalibrate_individual <-
       )
     )
 
-    util_check_class("data_source_batch", "data.frame")
+    RUtilpol::check_class("data_source_batch", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source_batch",
       c(
         "batch_number",
@@ -45,13 +45,13 @@ chron_recalibrate_individual <-
       )
     )
 
-    util_check_class("n_iterations", "numeric")
+    RUtilpol::check_class("n_iterations", "numeric")
 
-    util_check_class("n_burn", "numeric")
+    RUtilpol::check_class("n_burn", "numeric")
 
-    util_check_class("n_thin", "numeric")
+    RUtilpol::check_class("n_thin", "numeric")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     crash_file <- util_load_chron_crashfile(dir)
 
@@ -85,7 +85,7 @@ chron_recalibrate_individual <-
       purrr::pluck("time_per_sequence") %>%
       mean()
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "Additional calculation will be done for", broken_sites_number,
         "sequences"
@@ -103,7 +103,7 @@ chron_recalibrate_individual <-
             current_frame <- sys.nframe()
             current_env <- sys.frame(which = current_frame)
 
-            util_output_comment(
+            RUtilpol::output_comment(
               msg = paste0(
                 "dataset: ", ..2, ". Number ", ..1, " out of ",
                 broken_sites_number
@@ -166,7 +166,7 @@ chron_recalibrate_individual <-
               paste0(crash_file_path, "Crash_file.csv")
             )
 
-            util_output_comment(
+            RUtilpol::output_comment(
               msg = paste0("dataset: ", ..2, ". Number ", ..1, " - Done")
             )
 
@@ -176,7 +176,7 @@ chron_recalibrate_individual <-
       ) %>%
       dplyr::select(-row_n)
 
-    util_check_col_names("broken_sites_done", "bchron_mod")
+    RUtilpol::check_col_names("broken_sites_done", "bchron_mod")
 
     return(broken_sites_done)
   }

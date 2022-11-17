@@ -17,3 +17,4 @@ Data.frame including all potential duplicates
 \description{
 Create file with list of potential duplicates
 }
+\keyword{internal}

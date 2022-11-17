@@ -2,7 +2,7 @@
 #' @param dir Path to the directory
 util_make_chron_crashfile <-
   function(dir) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     crash_file <- list.files(dir)
 

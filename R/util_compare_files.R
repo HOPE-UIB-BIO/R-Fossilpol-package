@@ -3,18 +3,24 @@
 #' @param file_name_b The name of the object to compare in quotes
 #' @param file_a_envir The environment where is the `file_a` present
 #' @param file_b_envir The environment where is the `file_b` present
-#' @description Compare the two files and return if same
 #' @return Logical. Are those file the same?
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' Compare the two files and return if same
 util_compare_files <-
   function(file_name_a,
            file_name_b,
            file_a_envir = NULL,
            file_b_envir = NULL) {
-    util_check_class("file_name_a", "character")
+    lifecycle::deprecate_warn(
+      "0.0.2", "util_compare_files()", "RUtilpol::compare_files()"
+    )
+    RUtilpol::check_class("file_name_a", "character")
 
-    util_check_class("file_name_b", "character")
+    RUtilpol::check_class("file_name_b", "character")
 
-    util_check_class(
+    RUtilpol::check_class(
       "file_a_envir",
       c(
         "NULL",
@@ -22,7 +28,7 @@ util_compare_files <-
       )
     )
 
-    util_check_class(
+    RUtilpol::check_class(
       "file_b_envir",
       c(
         "NULL",

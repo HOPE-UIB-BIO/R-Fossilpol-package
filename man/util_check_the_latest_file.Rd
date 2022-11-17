@@ -17,6 +17,8 @@ util_check_the_latest_file(file_name, dir, folder = FALSE)
 Object name of the most recent file
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 look into the folder and find the version of the file
 with the most recent name
 }
+\keyword{internal}

@@ -7,13 +7,13 @@
 #' @export
 proc_neo_filter_by_dep_env <-
   function(data_source, data_storage_path) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "depositionalenvironment")
+    RUtilpol::check_col_names("data_source", "depositionalenvironment")
 
-    util_check_class("data_storage_path", "character")
+    RUtilpol::check_class("data_storage_path", "character")
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Starting preparation of depositional environment selection"
     )
 
