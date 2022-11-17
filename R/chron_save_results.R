@@ -184,7 +184,7 @@ chron_save_results <-
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
       ),
-      prefered_format = "qs",
+      prefered_format = "rds",
       use_sha = TRUE
     )
 

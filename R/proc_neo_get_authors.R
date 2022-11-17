@@ -168,7 +168,7 @@ proc_neo_get_authors <-
       RUtilpol::save_latest_file(
         file_to_save = neotoma_author_data,
         dir = author_data_path,
-        prefered_format = "qs",
+        prefered_format = "rds",
         use_sha = TRUE
       )
 
