@@ -1,6 +1,7 @@
 #' @title Confirm the general setting
 #' @param setting_name Name of the setting variable
 #' @description Offer the user to temporarily change one logical variable
+#' @keywords internal
 util_confirm_global_setting <-
   function(setting_name) {
     RUtilpol::check_class(setting_name, "logical")

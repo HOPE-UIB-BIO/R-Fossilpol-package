@@ -19,3 +19,4 @@ util_open_dir_if_not(..., env = parent.frame(), dir, msg)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Test a selected criteria an open selected directory if not true
 }
+\keyword{internal}

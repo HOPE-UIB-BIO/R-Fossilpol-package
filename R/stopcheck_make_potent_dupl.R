@@ -2,6 +2,7 @@
 #' @param data_source Data.frame with the potential duplicates
 #' @param dir Path to save file
 #' @return Data.frame including all potential duplicates
+#' @keywords internal
 stopcheck_make_potent_dupl <-
   function(data_source,
            dir) {

@@ -2,6 +2,7 @@
 #' @param data_source Data.frame with the `raw_counts` data
 #' @param dir Path to save file
 #' @return Data.frame with all taxa
+#' @keywords internal
 stopcheck_make_harmonisation <-
   function(data_source,
            dir) {

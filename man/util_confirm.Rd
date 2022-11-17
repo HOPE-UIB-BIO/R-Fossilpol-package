@@ -17,3 +17,4 @@ return logical
 \description{
 Open menu to confirm TRUE/FALSE
 }
+\keyword{internal}

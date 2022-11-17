@@ -2,6 +2,7 @@
 #' @param data_source Data.frame with the regions
 #' @param dir Path to save file
 #' @return Data.frame including age limits for all regions
+#' @keywords internal
 stopcheck_make_age_limits <-
   function(data_source,
            dir) {

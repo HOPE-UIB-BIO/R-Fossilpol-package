@@ -3,6 +3,8 @@
 #' @param default_value Default value of answer
 #' @return return logical
 #' @export
+#' @keywords internal
+#' 
 util_confirm <-
   function(msg = "",
            default_value = TRUE) {

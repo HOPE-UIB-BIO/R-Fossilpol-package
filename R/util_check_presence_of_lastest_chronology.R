@@ -2,6 +2,7 @@
 #' @param dir Path to the data storage folder
 #' @return Named vector with a summary of presence of previous chronologies and
 #' predicted ages
+#' @keywords internal
 util_check_presence_of_lastest_chronology <-
   function(dir) {
     RUtilpol::check_class("dir", "character")

@@ -1,5 +1,6 @@
 #' @title Load last Crash file or create dummy if not present
 #' @param dir Path to the data storage folder
+#' @keywords internal
 util_load_chron_crashfile <-
   function(dir) {
     RUtilpol::check_class("dir", "character")

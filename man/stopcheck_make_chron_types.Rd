@@ -17,3 +17,4 @@ Data.frame including all chronology control points
 \description{
 Create file with list of chronology control point types
 }
+\keyword{internal}

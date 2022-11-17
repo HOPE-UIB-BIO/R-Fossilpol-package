@@ -2,6 +2,7 @@
 #' @return List with all the important data-related settings
 #' @description Gather information about current setting config.
 #' @export
+#' @keywords internal
 util_extract_config_data <- function() {
 
   # helper function to extract variable from global environment and replace it

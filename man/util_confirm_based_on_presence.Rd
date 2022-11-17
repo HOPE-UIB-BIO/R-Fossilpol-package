@@ -16,3 +16,4 @@ util_confirm_based_on_presence(dir, file_name, msg = "")
 \description{
 Confirm choice based on the presence of previous data
 }
+\keyword{internal}

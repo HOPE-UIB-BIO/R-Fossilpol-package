@@ -2,6 +2,7 @@
 #' @param data_source Data.frame with the chronology control types
 #' @param dir Path to save file
 #' @return Data.frame including all chronology control points
+#' @keywords internal
 stopcheck_make_chron_types <-
   function(data_source,
            dir) {

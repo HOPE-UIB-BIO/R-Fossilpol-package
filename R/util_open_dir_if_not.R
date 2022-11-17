@@ -3,6 +3,7 @@
 #' @param env The environment in which to evaluate the test
 #' @param msg Error message to be printed
 #' @param dir Path to the selected folder
+#' @keywords internal
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #' Test a selected criteria an open selected directory if not true

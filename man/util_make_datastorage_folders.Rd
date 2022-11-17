@@ -12,3 +12,4 @@ util_make_datastorage_folders(dir)
 \description{
 Test presence and create folders if necessary
 }
+\keyword{internal}

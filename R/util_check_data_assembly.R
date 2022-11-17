@@ -4,6 +4,7 @@
 #' variables. Stop the session if mandatory not present. Warn about
 #' non-mandatory and fill them with 'NA'
 #' @return Data.frame with all variables
+#' @keywords internal
 util_check_data_assembly <-
   function(data_source) {
     RUtilpol::check_class("data_source", "data.frame")

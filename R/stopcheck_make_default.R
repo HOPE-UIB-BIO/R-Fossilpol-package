@@ -2,6 +2,7 @@
 #' @param data_source Data.frame with the data
 #' @param dir Path to save file
 #' @return Data.frame including all present data and `include` == FALSE
+#' @keywords internal
 stopcheck_make_default <-
   function(data_source,
            dir) {

@@ -3,6 +3,7 @@
 #' warning message `msg` if there are no sequences
 #' @param data_source Data.frame of sequences
 #' @param msg Message to be appended to the end of warning
+#' @keywords internal
 util_check_data_table <-
   function(data_source, msg = "") {
     RUtilpol::check_class("data_source", "data.frame")

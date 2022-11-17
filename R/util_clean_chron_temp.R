@@ -1,6 +1,7 @@
 #' @title Delete all temporary files for age-depth modelling
 #' @param dir Path to the data storage folder
 #' @return NULL
+#' @keywords internal
 util_clean_chron_temp <-
   function(dir) {
     RUtilpol::check_class("dir", "character")
