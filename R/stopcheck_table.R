@@ -48,9 +48,10 @@ stopcheck_table <-
 
     # get the name of the file (or NA if missig)
     selection_file_name <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = file_name,
-        dir = dir
+        dir = dir,
+        silent = TRUE
       )
 
     # choose function based on the 'method'
@@ -81,21 +82,13 @@ stopcheck_table <-
         msg = "Did not detect any previous file, continue to create new one"
       )
 
-      assign(file_name,
-        sel_file,
-        envir = current_env
-      )
-
       # Save
-      util_save_if_latests(
+      RUtilpol::save_latest_file(
+        file_to_save = sel_file,
         file_name = file_name,
         dir = dir,
-        prefered_format = "csv",
-        compress = FALSE
+        prefered_format = "csv"
       )
-
-      # remove from global env
-      rm(list = file_name, envir = current_env)
 
       # Output message
       usethis::ui_info(
@@ -162,23 +155,13 @@ stopcheck_table <-
           rewrite_confirm == TRUE
         ) {
 
-          # assign to global environment
-          #   (`util_save_if_latests` has to be in global env.)
-          assign(file_name,
-            sel_file,
-            envir = current_env
-          )
-
           # Save
-          util_save_if_latests(
+          RUtilpol::save_latest_file(
+            file_to_save = sel_file,
             file_name = file_name,
             dir = dir,
-            prefered_format = "csv",
-            compress = FALSE
+            prefered_format = "csv"
           )
-
-          # remove from global env
-          rm(list = file_name, envir = current_env)
 
           # Output message
           usethis::ui_info(

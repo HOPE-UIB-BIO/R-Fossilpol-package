@@ -45,7 +45,7 @@ chron_save_ad_figures <-
 
     # load the old outputs
     chron_output <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "chron_mod_output",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Models_full"
@@ -63,7 +63,7 @@ chron_save_ad_figures <-
 
     # load the processed data
     data_regions <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "data_merged",
         dir = paste0(
           dir, "/Data/Processed/Data_merged"
@@ -107,8 +107,8 @@ chron_save_ad_figures <-
     )
 
     most_recent_folder <-
-      util_check_the_latest_file(
-        file_name = NA,
+      RUtilpol::get_latest_file_name(
+        file_name = ".",
         dir = fig_dir,
         folder = TRUE
       )

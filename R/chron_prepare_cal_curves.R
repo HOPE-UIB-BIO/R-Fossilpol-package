@@ -35,9 +35,10 @@ chron_prepare_cal_curves <-
 
     # check if there is a mix curve file
     name_of_mix_curve_file <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "calmixed",
-        dir = system.file("data", package = "Bchron")
+        dir = system.file("data", package = "Bchron"),
+        silent = TRUE
       )
 
     RUtilpol::stop_if_not(
@@ -93,9 +94,10 @@ chron_prepare_cal_curves <-
 
       # save if the postbomb curve is missing
       postbomb_curve_names_missing[i] <-
-        util_check_the_latest_file(
+        RUtilpol::get_latest_file_name(
           file_name = postbomb_curve_names[i],
-          dir = system.file("data", package = "Bchron")
+          dir = system.file("data", package = "Bchron"),
+          silent = TRUE
         ) %>%
         is.na()
     }

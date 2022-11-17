@@ -52,7 +52,7 @@ chron_prepare_ad_to_predict <-
 
         # load the old outputs
         previous_models <-
-          util_load_latest_file(
+          RUtilpol::get_latest_file(
             file_name = "chron_mod_output",
             dir = paste0(
               dir, "/Data/Processed/Chronology/Models_full"
@@ -70,7 +70,7 @@ chron_prepare_ad_to_predict <-
 
         # load the old pred ages
         previous_age_prediction <-
-          util_load_latest_file(
+          RUtilpol::get_latest_file(
             file_name = "chron_predicted_ages",
             dir = paste0(
               dir, "/Data/Processed/Chronology/Predicted_ages"
@@ -135,7 +135,7 @@ chron_prepare_ad_to_predict <-
 
       # load the old outputs
       previous_models <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_mod_output",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Models_full"
@@ -186,7 +186,7 @@ chron_prepare_ad_to_predict <-
 
         # load the old outputs
         previous_models <-
-          util_load_latest_file(
+          RUtilpol::get_latest_file(
             file_name = "chron_mod_output",
             dir = paste0(
               dir, "/Data/Processed/Chronology/Models_full"

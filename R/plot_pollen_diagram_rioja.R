@@ -34,7 +34,7 @@ plot_pollen_diagram_rioja <-
 
     RUtilpol::check_class("y_var", "character")
 
-    util_check_the_latest_file("y_var", c("depth", "age"))
+    RUtilpol::check_vector_values("y_var", c("depth", "age"))
 
     y_var <- match.arg(y_var)
 

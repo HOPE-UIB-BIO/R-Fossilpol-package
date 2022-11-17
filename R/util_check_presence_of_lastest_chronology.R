@@ -8,7 +8,7 @@ util_check_presence_of_lastest_chronology <-
 
     # look for most recent re-calibrated data
     latest_chron_file <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "chron_mod_output",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Models_full"
@@ -19,7 +19,7 @@ util_check_presence_of_lastest_chronology <-
 
     # look for the chron info file
     latest_pred_ages_file <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "chron_predicted_ages",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Predicted_ages"

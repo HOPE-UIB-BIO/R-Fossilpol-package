@@ -10,7 +10,7 @@ chron_load_data_for_ad_modelling <-
     current_env <- sys.frame(which = current_frame)
 
     chron_tables_prepared <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "chron_tables_prepared",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Chron_tables_prepared"

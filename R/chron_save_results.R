@@ -72,7 +72,7 @@ chron_save_results <-
 
       # load the old outputs
       previous_models <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_mod_output",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Models_full"
@@ -121,7 +121,7 @@ chron_save_results <-
       )
 
     # save
-    # do not use the `util_save_if_latests` as it cannot handle large files
+    # do not use the `RUtilpol::save_if_latests` as it cannot handle large files
     readr::write_rds(
       x = models_full,
       file = paste0(
@@ -144,7 +144,7 @@ chron_save_results <-
 
       # load the old pred ages
       previous_age_prediction <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_predicted_ages",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Predicted_ages"
@@ -179,11 +179,13 @@ chron_save_results <-
         !dplyr::any_of("bchron_mod")
       )
 
-    util_save_if_latests(
-      file_name = "chron_predicted_ages",
+    RUtilpol::save_latest_file(
+      file_to_save = chron_predicted_ages,
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
-      )
+      ),
+      prefered_format = "qs",
+      use_sha = TRUE
     )
 
     # clean the files

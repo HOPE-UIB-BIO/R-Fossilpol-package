@@ -152,7 +152,7 @@ proc_neo_get_authors <-
       suppressWarnings(
         try(
           neotoma_author_data <-
-            util_load_latest_file(
+            RUtilpol::get_latest_file(
               file_name = "neotoma_author_data",
               dir = author_data_path
             ),
@@ -165,9 +165,11 @@ proc_neo_get_authors <-
     if (
       exists("neotoma_author_data", envir = current_env)
     ) {
-      util_save_if_latests(
-        file_name = "neotoma_author_data",
-        dir = author_data_path
+      RUtilpol::save_latest_file(
+        file_to_save = neotoma_author_data,
+        dir = author_data_path,
+        prefered_format = "qs",
+        use_sha = TRUE
       )
 
       neotoma_author_info <-

@@ -6,15 +6,20 @@
 #' which contains a description of setting
 #' @param compress Should `gz` compression be applied?
 #' @return NULL
-#' @description Look into the folder and find the version of the file with
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' Look into the folder and find the version of the file with
 #'  the most recent name. Compare the last saved file and selected file and
 #'   save file if something changed since recent
-#' @export
 util_save_if_latests <- function(file_name,
                                  dir,
                                  system_setting_file = "current_setting",
                                  prefered_format = c("rds", "csv"),
                                  compress = TRUE) {
+  lifecycle::deprecate_warn(
+    "0.0.2", "util_save_if_latests()", "RUtilpol::save_latest_file()"
+  )
   current_frame <- sys.nframe()
   parent_frame <- sys.parent()
 
@@ -48,9 +53,10 @@ util_save_if_latests <- function(file_name,
   }
 
   latest_file_name <-
-    util_check_the_latest_file(
+    RUtilpol::get_latest_file_name(
       file_name = file_name,
-      dir = dir
+      dir = dir,
+      silent = TRUE
     )
 
   if (

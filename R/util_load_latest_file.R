@@ -2,18 +2,23 @@
 #' @param file_name Name of the object to save in quotes
 #' @param dir Directory path
 #' @return Object of latest version of the `file_name`
-#' @description Look into the folder `dir` and find the version of the file with
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' Look into the folder `dir` and find the version of the file with
 #'  the most recent date and load it
-#' @export
 util_load_latest_file <-
   function(file_name,
            dir) {
+    lifecycle::deprecate_warn(
+      "0.0.2", "util_load_latest_file()", "RUtilpol::get_latest_file()"
+    )
     RUtilpol::check_class("file_name", "character")
 
     RUtilpol::check_class("dir", "character")
 
     file_last_name <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = file_name,
         dir = dir
       )

@@ -28,7 +28,7 @@ chron_subset_previous_sequences <-
 
     # check if AD models are already calculated
     latest_bchron <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "chron_predicted_ages",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Predicted_ages"
@@ -85,7 +85,7 @@ chron_subset_previous_sequences <-
 
       # load the output
       bchron_output_done <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "chron_predicted_ages",
           dir = paste0(
             dir, "/Data/Processed/Chronology/Predicted_ages"

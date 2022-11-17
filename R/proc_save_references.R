@@ -4,7 +4,6 @@
 #' @param user_sel_variables Vector with variables, which have to be present in the
 #' final data assembly
 #' @param dir Path to the data storage folder
-#' @export
 proc_save_references <-
   function(data_source,
            project_database,
@@ -55,11 +54,10 @@ proc_save_references <-
         )
       )
 
-    util_save_if_latests(
-      file_name = "data_assembly_meta",
+    RUtilpol::save_latest_file(
+      file_to_save = data_assembly_meta,
       dir = refference_path,
-      prefered_format = "csv",
-      compress = FALSE
+      prefered_format = "csv"
     )
 
     # Authors of datasets -----
@@ -149,11 +147,10 @@ proc_save_references <-
       "author_table", "last_name"
     )
 
-    util_save_if_latests(
-      file_name = "author_table",
+    RUtilpol::save_latest_file(
+      file_to_save = author_table,
       dir = refference_path,
-      prefered_format = "csv",
-      compress = FALSE
+      prefered_format = "csv"
     )
 
     affiliation_table <-
@@ -162,11 +159,10 @@ proc_save_references <-
         !dplyr::any_of("affiliation_id")
       )
 
-    util_save_if_latests(
-      file_name = "affiliation_table",
+    RUtilpol::save_latest_file(
+      file_to_save = affiliation_table,
       dir = refference_path,
-      prefered_format = "csv",
-      compress = FALSE
+      prefered_format = "csv"
     )
 
     RUtilpol::output_comment(
@@ -193,7 +189,7 @@ proc_save_references <-
         latest_file = purrr::map2_chr(
           .x = path_full,
           .y = file_name,
-          .f = ~ util_check_the_latest_file(
+          .f = ~ RUtilpol::get_latest_file_name(
             file_name = .y,
             dir = .x
           )
@@ -225,7 +221,7 @@ proc_save_references <-
           latest_file = purrr::map2_chr(
             .x = path_full,
             .y = harmonisation_region,
-            .f = ~ util_check_the_latest_file(
+            .f = ~ RUtilpol::get_latest_file_name(
               file_name = .y,
               dir = .x
             )

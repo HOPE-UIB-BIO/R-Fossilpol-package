@@ -30,7 +30,7 @@ chron_predict_all_ages <-
 
     # load the processed data
     data_level_depth <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "data_merged",
         dir = paste0(
           dir, "/Data/Processed/Data_merged"

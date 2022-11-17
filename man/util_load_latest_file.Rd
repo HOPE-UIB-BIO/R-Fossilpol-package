@@ -15,6 +15,8 @@ util_load_latest_file(file_name, dir)
 Object of latest version of the \code{file_name}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Look into the folder \code{dir} and find the version of the file with
 the most recent date and load it
 }
+\keyword{internal}

@@ -25,7 +25,9 @@ which contains a description of setting}
 \item{compress}{Should \code{gz} compression be applied?}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Look into the folder and find the version of the file with
 the most recent name. Compare the last saved file and selected file and
 save file if something changed since recent
 }
+\keyword{internal}

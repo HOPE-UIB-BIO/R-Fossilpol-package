@@ -17,7 +17,7 @@ proc_get_merged_dataset <-
 
     # Load processed Neotoma sequences
     neotoma_processed <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "neotoma_processed",
         dir = paste0(data_storage_path, "/Data/Processed/Neotoma_processed")
       )
@@ -35,7 +35,7 @@ proc_get_merged_dataset <-
 
       # load processed private sequences
       private_processed <-
-        util_load_latest_file(
+        RUtilpol::get_latest_file(
           file_name = "private_data_prepared",
           dir = paste0(data_storage_path, "/Data/Processed/Private")
         )
