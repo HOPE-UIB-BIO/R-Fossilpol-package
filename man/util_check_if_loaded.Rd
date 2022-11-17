@@ -14,5 +14,6 @@ util_check_if_loaded(file_name, env = rlang::current_env, silent = FALSE)
 \item{silent}{Logical. Should there be no message?}
 }
 \description{
-Confirm that the selected file is present in selected environment
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
+\keyword{internal}

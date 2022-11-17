@@ -6,9 +6,9 @@
 util_confirm <-
   function(msg = "",
            default_value = TRUE) {
-    util_check_class("msg", "character")
+    RUtilpol::check_class("msg", "character")
 
-    util_check_class("default_value", "logical")
+    RUtilpol::check_class("default_value", "logical")
 
     # pre-set to default_value
     confirm <- default_value

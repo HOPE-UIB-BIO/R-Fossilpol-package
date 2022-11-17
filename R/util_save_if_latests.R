@@ -21,17 +21,17 @@ util_save_if_latests <- function(file_name,
   current_env <- sys.frame(which = current_frame)
   parent_env <- sys.frame(which = parent_frame)
 
-  util_check_class("file_name", "character")
+  RUtilpol::check_class("file_name", "character")
 
-  util_check_class("dir", "character")
+  RUtilpol::check_class("dir", "character")
 
-  util_check_class("prefered_format", "character")
+  RUtilpol::check_class("prefered_format", "character")
 
-  util_check_vector_values("prefered_format", c("rds", "csv"))
+  RUtilpol::check_vector_values("prefered_format", c("rds", "csv"))
 
   prefered_format <- match.arg(prefered_format)
 
-  util_check_class("compress", "logical")
+  RUtilpol::check_class("compress", "logical")
 
   has_setting <- TRUE
 
@@ -77,7 +77,7 @@ util_save_if_latests <- function(file_name,
 
     assign("file_to_save", file_to_save, envir = current_env)
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
       silent = TRUE
@@ -159,7 +159,7 @@ util_save_if_latests <- function(file_name,
 
     assign("file_to_save", file_to_save, envir = current_env)
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
       silent = TRUE

@@ -2,7 +2,7 @@
 #' @param datasets List of lists with Neotoma datasets
 proc_neo_get_coord <-
   function(datasets) {
-    util_check_class("datasets", "list")
+    RUtilpol::check_class("datasets", "list")
 
     purrr::map_dfr(
       .x = datasets,

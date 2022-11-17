@@ -23,25 +23,25 @@ chron_save_ad_figures <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("date", "Date")
+    RUtilpol::check_class("date", "Date")
 
-    util_check_class("text_size", "numeric")
+    RUtilpol::check_class("text_size", "numeric")
 
-    util_check_class("line_size", "numeric")
+    RUtilpol::check_class("line_size", "numeric")
 
-    util_check_class("image_width", "numeric")
+    RUtilpol::check_class("image_width", "numeric")
 
-    util_check_class("image_height", "numeric")
+    RUtilpol::check_class("image_height", "numeric")
 
-    util_check_vector_values("image_units", c("in", "cm", "mm", "px"))
+    RUtilpol::check_vector_values("image_units", c("in", "cm", "mm", "px"))
 
     image_units <- match.arg(image_units)
 
-    util_check_class("image_units", "character")
+    RUtilpol::check_class("image_units", "character")
 
-    util_check_class("image_format", "character")
+    RUtilpol::check_class("image_format", "character")
 
     # load the old outputs
     chron_output <-
@@ -52,14 +52,14 @@ chron_save_ad_figures <-
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "chron_output",
       env = current_env
     )
 
-    util_check_class("chron_output", "data.frame")
+    RUtilpol::check_class("chron_output", "data.frame")
 
-    util_check_col_names("chron_output", c("dataset_id", "bchron_mod"))
+    RUtilpol::check_col_names("chron_output", c("dataset_id", "bchron_mod"))
 
     # load the processed data
     data_regions <-
@@ -75,14 +75,14 @@ chron_save_ad_figures <-
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_regions",
       env = current_env
     )
 
-    util_check_class("data_regions", "data.frame")
+    RUtilpol::check_class("data_regions", "data.frame")
 
-    util_check_col_names("data_regions", c("dataset_id", "region"))
+    RUtilpol::check_col_names("data_regions", c("dataset_id", "region"))
 
     # merge them together
     data_to_plot <-
@@ -118,7 +118,7 @@ chron_save_ad_figures <-
       current_inside_frame <- sys.nframe()
       current_inside_env <- sys.frame(which = current_inside_frame)
 
-      util_output_comment(paste("Processing", all_present_regions[i]))
+      RUtilpol::output_comment(paste("Processing", all_present_regions[i]))
 
       save_dir <-
         paste0(

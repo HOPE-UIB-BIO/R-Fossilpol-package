@@ -4,7 +4,7 @@
 chron_merge_results <- 
   function(dir) {
     
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
     
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -12,7 +12,7 @@ chron_merge_results <-
     # look for most recent processed file and merge with
     #   most recent file with chronology output
     
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Loading data")
     
     # load the processed data
@@ -26,13 +26,13 @@ chron_merge_results <-
             "n_chron_control",
             "sample_depth")))
     
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_merged",
       env = current_env)
     
-    util_check_class("data_merged", "data.frame")
+    RUtilpol::check_class("data_merged", "data.frame")
     
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_merged",
       c(
         "dataset_id", "handle", "siteid", "sitename",
@@ -60,11 +60,11 @@ chron_merge_results <-
             "levels", 
             "age_uncertainty")))
     
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "chron_output",
       env = current_env)
     
-    util_check_class("chron_output", "data.frame")
+    RUtilpol::check_class("chron_output", "data.frame")
     
     # merge them together
     data_ages <-
@@ -73,13 +73,13 @@ chron_merge_results <-
         chron_output,
         by = "dataset_id")
     
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_ages",
       env = current_env)
     
-    util_check_class("data_ages", "data.frame")
+    RUtilpol::check_class("data_ages", "data.frame")
     
-    util_output_comment("Data were succesfully merged with age-depth models")
+    RUtilpol::output_comment("Data were succesfully merged with age-depth models")
     
     util_check_data_table(data_ages)
     
@@ -88,7 +88,7 @@ chron_merge_results <-
     # 3. Order levels in all datasets  -----
     #----------------------------------------------------------#
     
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Sorting of levels")
     
     data_ages_sorted <-
@@ -109,11 +109,11 @@ chron_merge_results <-
         data_source = .,
         variable_vec = "raw_counts")
     
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_ages_sorted",
       c("levels", "raw_counts"))
     
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       all(purrr::map_dbl(data_ages_sorted$levels, nrow) == 
             purrr::map_dbl(data_ages_sorted$raw_counts, nrow)),
       true_msg = "All sequences have the same number of levels",

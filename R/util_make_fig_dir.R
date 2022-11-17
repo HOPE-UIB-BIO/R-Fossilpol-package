@@ -7,11 +7,11 @@
 #' `sel_date` inside of `dir`
 util_make_fig_dir <-
   function(dir, region_vector, sel_date) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("region_vector", "character")
+    RUtilpol::check_class("region_vector", "character")
 
-    util_check_class("sel_date", "Date")
+    RUtilpol::check_class("sel_date", "Date")
 
     suppressWarnings(
       dir.create(

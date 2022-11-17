@@ -4,7 +4,7 @@
 #' predicted ages
 util_check_presence_of_lastest_chronology <-
   function(dir) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     # look for most recent re-calibrated data
     latest_chron_file <-

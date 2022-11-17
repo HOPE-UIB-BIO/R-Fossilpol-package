@@ -20,21 +20,21 @@ harmonise_taxa <-
            pollen_grain_test = TRUE) {
 
     # safety tests
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
-    util_check_class("harmonisation_table", "data.frame")
+    RUtilpol::check_class("harmonisation_table", "data.frame")
 
-    util_check_class("original_name", "character")
+    RUtilpol::check_class("original_name", "character")
 
-    util_check_class("harm_name", "character")
+    RUtilpol::check_class("harm_name", "character")
 
-    util_check_class("exclude_taxa", "character")
+    RUtilpol::check_class("exclude_taxa", "character")
 
-    util_check_class("pollen_grain_test", "logical")
+    RUtilpol::check_class("pollen_grain_test", "logical")
 
     assertthat::assert_that(
       any(names(harmonisation_table) %in% original_name),
@@ -76,7 +76,7 @@ harmonise_taxa <-
       msg = paste(
         "The following taxa are present in the 'data_source'",
         "but not in the 'harmonisation_table':",
-        util_paste_as_vector(missing_taxa)
+        RUtilpol::paste_as_vector(missing_taxa)
       )
     )
 
@@ -127,7 +127,7 @@ harmonise_taxa <-
       tibble::rownames_to_column("sample_id") %>%
       tibble::as_tibble()
 
-    util_check_col_names("counts", "sample_id")
+    RUtilpol::check_col_names("counts", "sample_id")
 
     # remove the "exclude" taxa
     counts_without_deleted <-
@@ -252,7 +252,7 @@ harmonise_taxa <-
               " (",
               round(((n_pollen_harm - n_pollen_harm_delete) / n_pollen_harm) * 100, 2),
               "%) grains deleted marked as ",
-              util_paste_as_vector(exclude_taxa)
+              RUtilpol::paste_as_vector(exclude_taxa)
             )
           )
         }

@@ -10,13 +10,13 @@ proc_save_references <-
            project_database,
            user_sel_variables = c(),
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "dataset_id")
+    RUtilpol::check_col_names("data_source", "dataset_id")
 
-    util_check_class("project_database", "proj_db_class")
+    RUtilpol::check_class("project_database", "proj_db_class")
 
-    util_check_class(
+    RUtilpol::check_class(
       "user_sel_variables",
       c(
         "NULL",
@@ -24,12 +24,12 @@ proc_save_references <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     refference_path <-
       paste0(dir, "/Outputs/Tables/Meta_and_references/")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Saving meta-information about data assembly"
     )
 
@@ -64,7 +64,7 @@ proc_save_references <-
 
     # Authors of datasets -----
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Saving authors of data assembly"
     )
 
@@ -97,7 +97,7 @@ proc_save_references <-
       ) %>%
       dplyr::relocate(afffiliation_number)
 
-    util_check_col_names("affiliation_present_with_n", "afffiliation_number")
+    RUtilpol::check_col_names("affiliation_present_with_n", "afffiliation_number")
 
     affiliation_present <-
       db_Auth_aff_tab(project_database) %>%
@@ -121,7 +121,7 @@ proc_save_references <-
             purrr::pluck("dataset_id") %>%
             unique() %>%
             sort() %>%
-            util_paste_as_vector(.) %>%
+            RUtilpol::paste_as_vector(.) %>%
             return()
         )
       ) %>%
@@ -134,7 +134,7 @@ proc_save_references <-
             purrr::pluck("afffiliation_number") %>%
             unique() %>%
             sort() %>%
-            util_paste_as_vector(.) %>%
+            RUtilpol::paste_as_vector(.) %>%
             return()
         )
       ) %>%
@@ -145,7 +145,7 @@ proc_save_references <-
       ) %>%
       dplyr::arrange(last_name)
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "author_table", "last_name"
     )
 
@@ -169,7 +169,7 @@ proc_save_references <-
       compress = FALSE
     )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Saving reproducibility package"
     )
 
@@ -257,7 +257,7 @@ proc_save_references <-
     )
 
 
-    util_open_dir(
+    RUtilpol::open_dir(
       dir = refference_path
     )
   }

@@ -10,9 +10,9 @@ proc_neo_extract_samples <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "list")
+    RUtilpol::check_class("data_source", "list")
 
-    util_check_class("sel_dataset_id", "character")
+    RUtilpol::check_class("sel_dataset_id", "character")
 
     # prepare the table with sample_id and depth
     try(

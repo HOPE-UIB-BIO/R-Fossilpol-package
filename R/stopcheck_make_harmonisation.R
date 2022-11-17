@@ -5,11 +5,11 @@
 stopcheck_make_harmonisation <-
   function(data_source,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_col_names("data_source", "raw_counts")
+    RUtilpol::check_col_names("data_source", "raw_counts")
 
     taxon_list <-
       tibble::tibble(

@@ -11,13 +11,13 @@ chron_predict_ages <-
   function(data_source,
            sample_data,
            target_age_quantile = 0.95) {
-    util_check_class("data_source", "BchronologyRun")
+    RUtilpol::check_class("data_source", "BchronologyRun")
 
-    util_check_class("sample_data", "data.frame")
+    RUtilpol::check_class("sample_data", "data.frame")
 
-    util_check_col_names("sample_data", c("sample_id", "depth"))
+    RUtilpol::check_col_names("sample_data", c("sample_id", "depth"))
 
-    util_check_class("target_age_quantile", "numeric")
+    RUtilpol::check_class("target_age_quantile", "numeric")
 
     assertthat::assert_that(
       target_age_quantile < 1 & target_age_quantile > 0,
@@ -112,7 +112,7 @@ chron_predict_ages <-
       dplyr::select(sample_id, depth, age, upper, lower, dplyr::everything()) %>%
       janitor::clean_names()
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "ages_proccesed",
       c("sample_id", "depth", "age", "lower", "lower")
     )

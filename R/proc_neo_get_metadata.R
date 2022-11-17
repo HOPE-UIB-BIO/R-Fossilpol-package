@@ -3,9 +3,9 @@
 #' @return Data.frame with meta information such as site names, coordinates, doi, etc
 proc_neo_get_metadata <-
   function(neotoma_download) {
-    util_check_class("neotoma_download", "list")
+    RUtilpol::check_class("neotoma_download", "list")
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Extracting Neotoma meta information"
     )
 
@@ -17,7 +17,7 @@ proc_neo_get_metadata <-
     neotoma_download_sites <-
       proc_neo_get_sites(neotoma_download)
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       length(datasets_ids) == length(neotoma_download_sites),
       true_msg = "All sites prepared",
       false_msg = "There is different number of sites than dataset IDs."
@@ -33,26 +33,26 @@ proc_neo_get_metadata <-
         # site id
         siteid = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("siteid", .x)
+            .f = ~ RUtilpol::extract_var_from_list("siteid", .x)
           ),
 
         # site name
         sitename = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("sitename", .x)
+            .f = ~ RUtilpol::extract_var_from_list("sitename", .x)
           ),
 
         # collection handle
         handle = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("handle", .x)
+            .f = ~ RUtilpol::extract_var_from_list("handle", .x)
           ),
 
         # full coordinates
         coord = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("geography", .x)
+            .f = ~ RUtilpol::extract_var_from_list("geography", .x)
           ) %>%
           stringr::str_replace(., ".*\\[", "") %>%
           stringr::str_replace(., "\\].*", ""),
@@ -68,20 +68,20 @@ proc_neo_get_metadata <-
         # altitude
         altitude = neotoma_download_sites %>%
           purrr::map_dbl(
-            .f = ~ util_extract_var_safe("altitude", .x)
+            .f = ~ RUtilpol::extract_var_from_list("altitude", .x)
           ),
 
         # depositional environment
         depositionalenvironment = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("depositionalenvironment", .x)
+            .f = ~ RUtilpol::extract_var_from_list("depositionalenvironment", .x)
           ),
         doi = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map("dataset") %>%
           purrr::map_chr(
-            .f = ~ util_extract_var_safe("doi", .x) %>%
+            .f = ~ RUtilpol::extract_var_from_list("doi", .x) %>%
               unlist()
           )
       ) %>%

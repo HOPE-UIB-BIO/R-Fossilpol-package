@@ -5,15 +5,15 @@
 stopcheck_make_default <-
   function(data_source,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     data_selection <-
       data_source %>%
       dplyr::mutate(include = FALSE)
 
-    util_check_col_names("data_selection", "include")
+    RUtilpol::check_col_names("data_selection", "include")
 
     return(data_selection)
   }

@@ -3,13 +3,17 @@
 #' @param env The environment in which to evaluate the test
 #' @param msg Error message to be printed
 #' @param dir Path to the selected folder
-#' @description Test a selected criteria an open selected directory if not true
-#' @export
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' Test a selected criteria an open selected directory if not true
 util_open_dir_if_not <-
   function(...,
            env = parent.frame(),
            dir,
            msg) {
+    lifecycle::deprecate_warn(
+      "0.0.2", "util_open_dir_if_not()", "RUtilpol::open_dir_if_not()"
+    )
     res <-
       assertthat::see_if(..., env = env, msg = msg)
 
@@ -23,8 +27,8 @@ util_open_dir_if_not <-
       cat("\n")
 
       # open the folder
-      util_open_dir(dir)
+      RUtilpol::open_dir(dir)
 
-      util_stop_quietly()
+      RUtilpol::stop_quietly()
     }
   }

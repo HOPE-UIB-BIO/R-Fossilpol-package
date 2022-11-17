@@ -8,13 +8,13 @@ chron_check_negative_rc_ages <-
   function(data_source,
            postbomb_age = 199,
            rc_control_types = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
+    RUtilpol::check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
 
-    util_check_class("postbomb_age", "numeric")
+    RUtilpol::check_class("postbomb_age", "numeric")
 
-    util_check_class("rc_control_types", c("character", "NULL"))
+    RUtilpol::check_class("rc_control_types", c("character", "NULL"))
 
     # default is FALSE
     need_to_fix <- FALSE

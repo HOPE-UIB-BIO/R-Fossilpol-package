@@ -70,7 +70,7 @@ util_extract_config_data <- function() {
       session_info = utils::sessionInfo()
     )
 
-  util_check_class("res_list", "list")
+  RUtilpol::check_class("res_list", "list")
 
   return(res_list)
 }

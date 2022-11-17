@@ -2,7 +2,7 @@
 #' @param dir Path to the data storage folder
 util_load_chron_crashfile <-
   function(dir) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     # set path to Crash file
     crash_file_path <-
@@ -18,7 +18,7 @@ util_load_chron_crashfile <-
         show_col_types = FALSE
       )
 
-    util_check_class("crash_file", "data.frame")
+    RUtilpol::check_class("crash_file", "data.frame")
 
     return(crash_file)
   }

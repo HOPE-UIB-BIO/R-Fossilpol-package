@@ -22,19 +22,19 @@ proc_neo_get_all_neotoma_datasets <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("dataset_type", "character")
+    RUtilpol::check_class("dataset_type", "character")
 
     # if `loc` is not specified by the user, use the traditional geo box
     if (
       is.null(loc) == TRUE
     ) {
-      util_check_class("long_min", "numeric")
+      RUtilpol::check_class("long_min", "numeric")
 
-      util_check_class("long_max", "numeric")
+      RUtilpol::check_class("long_max", "numeric")
 
-      util_check_class("lat_min", "numeric")
+      RUtilpol::check_class("lat_min", "numeric")
 
-      util_check_class("lat_max", "numeric")
+      RUtilpol::check_class("lat_max", "numeric")
 
       loc <-
         c(
@@ -66,14 +66,14 @@ proc_neo_get_all_neotoma_datasets <-
         lat_max
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "sel_sites_filtered",
       env = current_env
     )
 
-    util_check_class("sel_sites_filtered", "data.frame")
+    RUtilpol::check_class("sel_sites_filtered", "data.frame")
 
-    util_output_comment("List of Neotoma sites was successfully obtained.")
+    RUtilpol::output_comment("List of Neotoma sites was successfully obtained.")
 
     sel_datasets <-
       neotoma2::get_datasets(
@@ -93,14 +93,14 @@ proc_neo_get_all_neotoma_datasets <-
         dsid = datasetid
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "sel_datasets",
       env = current_env
     )
 
-    util_check_class("sel_datasets", "data.frame")
+    RUtilpol::check_class("sel_datasets", "data.frame")
 
-    util_output_comment("List of Neotoma sequences was successfully obtained.")
+    RUtilpol::output_comment("List of Neotoma sequences was successfully obtained.")
 
     util_check_data_table(sel_datasets)
 

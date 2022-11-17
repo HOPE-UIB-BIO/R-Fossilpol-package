@@ -5,9 +5,9 @@
 stopcheck_make_potent_dupl <-
   function(data_source,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     potential_duplicates <-
       data_source %>%
@@ -16,7 +16,7 @@ stopcheck_make_potent_dupl <-
         delete = 0
       )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "potential_duplicates",
       c("pair_n", "delete")
     )

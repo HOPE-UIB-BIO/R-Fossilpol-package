@@ -73,8 +73,8 @@ proj_db_class <-
 
       all(
         c(
-          util_check_class("check_Authors", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Authors", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Authors",
             c(
               "author_id",
@@ -85,8 +85,8 @@ proj_db_class <-
               "orcid"
             )
           ),
-          util_check_class("check_Affiliations", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Affiliations", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Affiliations",
             c(
               "affiliation_id",
@@ -101,32 +101,32 @@ proj_db_class <-
               "BusinessCountryRegion"
             )
           ),
-          util_check_class("check_Auth_aff_tab", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Auth_aff_tab", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Auth_aff_tab",
             c(
               "author_id",
               "affiliation_id"
             )
           ),
-          util_check_class("check_Datasets_id_tab", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Datasets_id_tab", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Datasets_id_tab",
             c(
               "dataset_id",
               "sitename"
             )
           ),
-          util_check_class("check_Auth_dataset_tab", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Auth_dataset_tab", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Auth_dataset_tab",
             c(
               "dataset_id",
               "author_id"
             )
           ),
-          util_check_class("check_Dataset_pub", "data.frame"),
-          util_check_col_names(
+          RUtilpol::check_class("check_Dataset_pub", "data.frame"),
+          RUtilpol::check_col_names(
             "check_Dataset_pub",
             c(
               "dataset_id",

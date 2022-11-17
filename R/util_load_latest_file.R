@@ -8,9 +8,9 @@
 util_load_latest_file <-
   function(file_name,
            dir) {
-    util_check_class("file_name", "character")
+    RUtilpol::check_class("file_name", "character")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     file_last_name <-
       util_check_the_latest_file(

@@ -9,9 +9,9 @@
 #' values younger than 199
 chron_fix_postbomb <-
   function(data_source, chron_control_types, set_postbomb_age = 199) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -20,9 +20,9 @@ chron_fix_postbomb <-
       )
     )
 
-    util_check_class("chron_control_types", "list")
+    RUtilpol::check_class("chron_control_types", "list")
 
-    util_check_class("set_postbomb_age", "numeric")
+    RUtilpol::check_class("set_postbomb_age", "numeric")
 
     # check if any radiocarbon is younger than the limitation of post-bomb
     #   curve
@@ -39,7 +39,7 @@ chron_fix_postbomb <-
         )
       )
 
-    util_check_col_names("data_post_bomb", "need_to_correct")
+    RUtilpol::check_col_names("data_post_bomb", "need_to_correct")
 
     # check which datasets should be adjusted
     dataset_with_potential_postbomb <-
@@ -56,7 +56,7 @@ chron_fix_postbomb <-
         dplyr::filter(chroncontroltype %in% chron_control_types$radiocarbon_control_types &
           chroncontrolage < set_postbomb_age)
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Showing datasets that need post-bomb curve"
       )
 
@@ -85,7 +85,7 @@ chron_fix_postbomb <-
       ) %>%
       dplyr::select(-need_to_correct)
 
-    util_check_col_names("data_post_bomb_fixed", "chron_control_format")
+    RUtilpol::check_col_names("data_post_bomb_fixed", "chron_control_format")
 
     return(data_post_bomb_fixed)
   }

@@ -10,11 +10,11 @@ util_check_the_latest_file <-
   function(file_name,
            dir,
            folder = FALSE) {
-    util_check_class("file_name", c("character", "logical"))
+    RUtilpol::check_class("file_name", c("character", "logical"))
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("folder", "logical")
+    RUtilpol::check_class("folder", "logical")
 
     file_full_list <- list.files(dir)
 

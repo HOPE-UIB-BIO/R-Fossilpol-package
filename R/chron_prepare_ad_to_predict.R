@@ -12,15 +12,15 @@ chron_prepare_ad_to_predict <-
            dir,
            sites_to_rerun = c(),
            current_state) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "dataset_id")
+    RUtilpol::check_col_names("data_source", "dataset_id")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("sites_to_rerun", c("character", "NULL"))
+    RUtilpol::check_class("sites_to_rerun", c("character", "NULL"))
 
-    util_check_class("current_state", "list")
+    RUtilpol::check_class("current_state", "list")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -38,7 +38,7 @@ chron_prepare_ad_to_predict <-
       #   prediction only sequences, which does not have Chronology output and age
       #   predictions
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "Ages will be predicted for sequences, which are not present in previous",
           "version of the Chronology outputs."
@@ -61,12 +61,12 @@ chron_prepare_ad_to_predict <-
           # filter out sequences marked to re-run
           dplyr::filter(!(dataset_id %in% sites_to_rerun))
 
-        util_check_if_loaded(
+        RUtilpol::check_if_loaded(
           file_name = "previous_models",
           env = current_env
         )
 
-        util_check_class("previous_models", "data.frame")
+        RUtilpol::check_class("previous_models", "data.frame")
 
         # load the old pred ages
         previous_age_prediction <-
@@ -77,12 +77,12 @@ chron_prepare_ad_to_predict <-
             )
           )
 
-        util_check_if_loaded(
+        RUtilpol::check_if_loaded(
           file_name = "previous_age_prediction",
           env = current_env
         )
 
-        util_check_class("previous_age_prediction", "data.frame")
+        RUtilpol::check_class("previous_age_prediction", "data.frame")
 
         # merge previous outputs
         previous_outputs <-
@@ -120,14 +120,14 @@ chron_prepare_ad_to_predict <-
       #   Chronology outputs, which have previous Chronology output. Select for prediction
       #   all sequences merged together.
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "Ages will be predicted for all sequences, as combination of current and",
           "previous Chronology outputs"
         )
       )
 
-      util_stop_if_not(
+      RUtilpol::stop_if_not(
         stringr::str_detect(current_state$latest_ad_present, "TRUE-*"),
         false_msg = "Cannot detect the previous AD models for selected setting",
         true_msg = "Detected AD models for for selected setting"
@@ -144,12 +144,12 @@ chron_prepare_ad_to_predict <-
         # filter out sequences marked to re-run
         dplyr::filter(!(dataset_id %in% sites_to_rerun))
 
-      util_check_if_loaded(
+      RUtilpol::check_if_loaded(
         file_name = "previous_models",
         env = current_env
       )
 
-      util_check_class("previous_models", "data.frame")
+      RUtilpol::check_class("previous_models", "data.frame")
 
       # filter out sequences which have successful Chronology output
       chron_output_sub <-
@@ -174,7 +174,7 @@ chron_prepare_ad_to_predict <-
       #   Chronology outputs with old sequences, which are not present in current run.
       #   Predict for all of them.
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "Ages will be predicted for all sequences."
         )
@@ -195,12 +195,12 @@ chron_prepare_ad_to_predict <-
           # filter out sequences marked to re-run
           dplyr::filter(!(dataset_id %in% sites_to_rerun))
 
-        util_check_if_loaded(
+        RUtilpol::check_if_loaded(
           file_name = "previous_models",
           env = current_env
         )
 
-        util_check_class("previous_models", "data.frame")
+        RUtilpol::check_class("previous_models", "data.frame")
 
         # filter out sequences have new Chronology output
         previous_models_sub <-
@@ -229,7 +229,7 @@ chron_prepare_ad_to_predict <-
 
       # Use only the current Bchorn result for prediction
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "Ages will be predicted for current Chronology results."
         )

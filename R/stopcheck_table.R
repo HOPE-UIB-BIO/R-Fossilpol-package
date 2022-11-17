@@ -17,15 +17,15 @@ stopcheck_table <-
            sel_method = c("default", "chron_control", "harm_table", "duplicates", "age_limits"),
            msg = "",
            stop_session = TRUE) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("file_name", "character")
+    RUtilpol::check_class("file_name", "character")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("sel_method", "character")
+    RUtilpol::check_class("sel_method", "character")
 
-    util_check_vector_values(
+    RUtilpol::check_vector_values(
       "sel_method",
       c(
         "default",
@@ -38,7 +38,7 @@ stopcheck_table <-
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("msg", "character")
+    RUtilpol::check_class("msg", "character")
 
     current_frame <- sys.nframe()
     parent_frame <- sys.parent()
@@ -77,7 +77,7 @@ stopcheck_table <-
     if (
       is.na(selection_file_name)
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Did not detect any previous file, continue to create new one"
       )
 
@@ -107,13 +107,13 @@ stopcheck_table <-
       )
 
       # open the folder
-      util_open_dir(dir)
+      RUtilpol::open_dir(dir)
 
       if (
         stop_session == TRUE
       ) {
         # stop session
-        util_stop_quietly()
+        RUtilpol::stop_quietly()
       } else {
         return(NA_real_)
       }
@@ -197,14 +197,14 @@ stopcheck_table <-
           )
 
           # open the folder
-          util_open_dir(dir)
+          RUtilpol::open_dir(dir)
         }
 
         if (
           stop_session == TRUE
         ) {
           # stop session
-          util_stop_quietly()
+          RUtilpol::stop_quietly()
         } else {
           return(NA_real_)
         }

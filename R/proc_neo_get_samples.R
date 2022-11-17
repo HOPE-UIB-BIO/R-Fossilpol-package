@@ -4,9 +4,9 @@
 proc_neo_get_samples <- 
   function(neotoma_download) {
     
-    util_check_class("neotoma_download", "list")
+    RUtilpol::check_class("neotoma_download", "list")
     
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Extracting Neotoma samples")
     
     neotoma_download_sites <- 
@@ -34,7 +34,7 @@ proc_neo_get_samples <-
       neotoma_sample_data %>% 
       tidyr::drop_na(samples)
     
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       nrow(neotoma_sample_data_clean) > 0,
       false_msg = paste(
         "There are 0 sequences with sample data based on the current download",

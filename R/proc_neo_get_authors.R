@@ -7,18 +7,18 @@
 #' @export
 proc_neo_get_authors <-
   function(neotoma_download, dataset_ids, dir, download_new = TRUE) {
-    util_check_class("neotoma_download", "list")
+    RUtilpol::check_class("neotoma_download", "list")
 
-    util_check_class("dataset_ids", "character")
+    RUtilpol::check_class("dataset_ids", "character")
 
-    util_check_class("download_new", "logical")
+    RUtilpol::check_class("download_new", "logical")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Extracting information about dataset authors"
     )
 
@@ -101,7 +101,7 @@ proc_neo_get_authors <-
         as.numeric() %>%
         sort()
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Start to download Neotoma author data"
       )
 
@@ -128,11 +128,11 @@ proc_neo_get_authors <-
 
               tibble::tibble(
                 author_id = paste0(all_author_ids[.x], "_neotoma"),
-                first_name = util_replace_null_with_na(author_info$givennames),
-                last_name = util_replace_null_with_na(author_info$familyname),
-                email = util_replace_null_with_na(author_info$email),
-                Department = util_replace_null_with_na(author_info$address),
-                url = util_replace_null_with_na(author_info$url)
+                first_name = RUtilpol::replace_null_with_na(author_info$givennames),
+                last_name = RUtilpol::replace_null_with_na(author_info$familyname),
+                email = RUtilpol::replace_null_with_na(author_info$email),
+                Department = RUtilpol::replace_null_with_na(author_info$address),
+                url = RUtilpol::replace_null_with_na(author_info$url)
               ) %>%
                 return()
             } else {
@@ -180,7 +180,7 @@ proc_neo_get_authors <-
       neotoma_author_info <- neotoma_sites_meta_pi
     }
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       nrow(neotoma_author_info) > 0,
       false_msg = "No authors information were extracted",
       true_msg = paste(

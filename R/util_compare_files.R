@@ -10,11 +10,11 @@ util_compare_files <-
            file_name_b,
            file_a_envir = NULL,
            file_b_envir = NULL) {
-    util_check_class("file_name_a", "character")
+    RUtilpol::check_class("file_name_a", "character")
 
-    util_check_class("file_name_b", "character")
+    RUtilpol::check_class("file_name_b", "character")
 
-    util_check_class(
+    RUtilpol::check_class(
       "file_a_envir",
       c(
         "NULL",
@@ -22,7 +22,7 @@ util_compare_files <-
       )
     )
 
-    util_check_class(
+    RUtilpol::check_class(
       "file_b_envir",
       c(
         "NULL",

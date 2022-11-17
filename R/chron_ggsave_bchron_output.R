@@ -22,27 +22,27 @@ chron_ggsave_bchron_output <-
 
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "BchronologyRun")
+    RUtilpol::check_class("data_source", "BchronologyRun")
 
-    util_check_class("dataset_id", "character")
+    RUtilpol::check_class("dataset_id", "character")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("text_size", "numeric")
+    RUtilpol::check_class("text_size", "numeric")
 
-    util_check_class("line_size", "numeric")
+    RUtilpol::check_class("line_size", "numeric")
 
-    util_check_class("image_width", "numeric")
+    RUtilpol::check_class("image_width", "numeric")
 
-    util_check_class("image_height", "numeric")
+    RUtilpol::check_class("image_height", "numeric")
 
-    util_check_vector_values("image_units", c("in", "cm", "mm", "px"))
+    RUtilpol::check_vector_values("image_units", c("in", "cm", "mm", "px"))
 
     image_units <- match.arg(image_units)
 
-    util_check_class("image_units", "character")
+    RUtilpol::check_class("image_units", "character")
 
-    util_check_class("image_format", "character")
+    RUtilpol::check_class("image_format", "character")
 
     site_name <- paste0("dataset_", dataset_id, image_format)
     site_title <- paste0("dataset_id = ", dataset_id)

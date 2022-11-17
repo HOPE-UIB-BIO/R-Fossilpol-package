@@ -13,11 +13,11 @@ chron_decimal_ages_mark <-
            only_rc = TRUE,
            rc_control_types = NULL,
            age_range = c(80, 120)) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
+    RUtilpol::check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
 
-    util_check_class("rc_control_types", c("character", "NULL"))
+    RUtilpol::check_class("rc_control_types", c("character", "NULL"))
 
     if (
       only_rc
@@ -61,7 +61,7 @@ chron_decimal_ages_mark <-
         )
       )
 
-    util_check_col_names("data_marked", "fulfil_criteria")
+    RUtilpol::check_col_names("data_marked", "fulfil_criteria")
 
     return(data_marked)
   }

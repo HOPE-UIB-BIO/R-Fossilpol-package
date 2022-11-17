@@ -8,9 +8,9 @@
 proc_clean_names <-
   function(data_source,
            additional_patterns = NULL) {
-    util_check_class("data_source", "character")
+    RUtilpol::check_class("data_source", "character")
 
-    util_check_class("additional_patterns", c("NULL", "character"))
+    RUtilpol::check_class("additional_patterns", c("NULL", "character"))
 
     names_clean <-
       data_source %>%

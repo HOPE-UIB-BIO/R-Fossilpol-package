@@ -16,9 +16,9 @@ chron_prepare_control_tables <-
            max_age_error,
            guess_depth,
            min_n_of_control_points = 2) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "chron_control",
@@ -26,11 +26,11 @@ chron_prepare_control_tables <-
       )
     )
 
-    util_check_class("chron_control_types", "list")
+    RUtilpol::check_class("chron_control_types", "list")
 
-    util_check_class("default_thickness", "numeric")
+    RUtilpol::check_class("default_thickness", "numeric")
 
-    util_check_class("default_error", "numeric")
+    RUtilpol::check_class("default_error", "numeric")
 
     if (
       missing(max_age_error)
@@ -38,7 +38,7 @@ chron_prepare_control_tables <-
       max_age_error <- Inf
     }
 
-    util_check_class("max_age_error", "numeric")
+    RUtilpol::check_class("max_age_error", "numeric")
 
     if (
       missing(guess_depth)
@@ -46,9 +46,9 @@ chron_prepare_control_tables <-
       guess_depth <- -Inf
     }
 
-    util_check_class("guess_depth", "numeric")
+    RUtilpol::check_class("guess_depth", "numeric")
 
-    util_check_class("min_n_of_control_points", "numeric")
+    RUtilpol::check_class("min_n_of_control_points", "numeric")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -83,19 +83,19 @@ chron_prepare_control_tables <-
       # update the number of control points
       dplyr::mutate(n_chron_control = purrr::map_dbl(chron_control_format, nrow))
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_formated",
       env = current_env
     )
 
-    util_check_class("data_formated", "data.frame")
+    RUtilpol::check_class("data_formated", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_formated",
       c("chron_control_format", "n_chron_control")
     )
 
-    util_output_comment("Chronology control tables were formatted")
+    RUtilpol::output_comment("Chronology control tables were formatted")
 
     util_check_data_table(data_formated)
 
@@ -109,7 +109,7 @@ chron_prepare_control_tables <-
 
     util_check_data_table(data_subset)
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_subset",
       c("chron_control_format", "n_chron_control")
     )

@@ -6,7 +6,7 @@
 #' @return Data.frame with all variables
 util_check_data_assembly <-
   function(data_source) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
     mandatory_vars <-
       c(
@@ -22,7 +22,7 @@ util_check_data_assembly <-
         "n_chron_control"
       )
 
-    util_check_col_names("data_source", c(mandatory_vars))
+    RUtilpol::check_col_names("data_source", c(mandatory_vars))
 
     non_mandatory_vars <-
       c(
@@ -48,7 +48,7 @@ util_check_data_assembly <-
     if (
       length(missing_vars) > 0
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "The following variables have been added to dataset with NAs:",
           paste(
@@ -69,7 +69,7 @@ util_check_data_assembly <-
             )
         )
     } else {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "All variables present"
       )
 
@@ -104,7 +104,7 @@ util_check_data_assembly <-
         n_chron_control, chron_control
       )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_res",
       c(
         "dataset_id",

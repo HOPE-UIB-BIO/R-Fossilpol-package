@@ -3,9 +3,9 @@
 #' @export
 proc_neo_check_final_assembly <-
   function(data_source) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c("sample_depth", "raw_counts")
     )
@@ -27,13 +27,13 @@ proc_neo_check_final_assembly <-
         n_sample_depth = purrr::map_dbl(sample_depth, nrow)
       )
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "sample_counts_filtered",
       c("sample_depth", "n_sample_counts", "n_sample_depth")
     )
 
     # test for number of levels in sample_depth and row_counts
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       all(sample_counts_filtered$n_sample_depth ==
         sample_counts_filtered$n_sample_counts),
       false_msg = "Depth-age dataset and count dataset have different number of levels",

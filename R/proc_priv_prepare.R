@@ -21,27 +21,27 @@ proc_priv_prepare <-
            lat_max = NA,
            alt_min = NA,
            alt_max = NA) {
-    util_check_class("data_storage_path", "character")
+    RUtilpol::check_class("data_storage_path", "character")
 
-    util_check_class("min_n_levels", "numeric")
+    RUtilpol::check_class("min_n_levels", "numeric")
 
-    util_check_class("long_min", c("numeric", "logical"))
+    RUtilpol::check_class("long_min", c("numeric", "logical"))
 
-    util_check_class("long_max", c("numeric", "logical"))
+    RUtilpol::check_class("long_max", c("numeric", "logical"))
 
-    util_check_class("lat_min", c("numeric", "logical"))
+    RUtilpol::check_class("lat_min", c("numeric", "logical"))
 
-    util_check_class("lat_max", c("numeric", "logical"))
+    RUtilpol::check_class("lat_max", c("numeric", "logical"))
 
-    util_check_class("alt_min", c("numeric", "logical"))
+    RUtilpol::check_class("alt_min", c("numeric", "logical"))
 
-    util_check_class("alt_max", c("numeric", "logical"))
+    RUtilpol::check_class("alt_max", c("numeric", "logical"))
 
     # check all names
     private_dat_checked <-
       util_check_data_assembly(data_source)
 
-    util_output_comment(
+    RUtilpol::output_comment(
       "Filtering by number of geography"
     )
 
@@ -55,7 +55,7 @@ proc_priv_prepare <-
         lat_max
       )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       "Filtering by number of samples"
     )
 
