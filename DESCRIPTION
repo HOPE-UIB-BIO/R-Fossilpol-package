@@ -35,6 +35,7 @@ Imports:
     readxl,
     rioja,
     rlang,
+    RUtilpol,
     sf,
     sp,
     stats,
@@ -47,6 +48,7 @@ Imports:
     withr
 Remotes:
     NeotomaDB/neotoma2
+    HOPE-UIB-BIO/R-Utilpol-package
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
