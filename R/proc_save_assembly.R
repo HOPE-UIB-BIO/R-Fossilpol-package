@@ -5,19 +5,18 @@
 #' @param user_sel_variables Vector with variables, which have to be present in the
 #' final data assembly
 #' @param dir Path to the data storage folder
-#' @export
 proc_save_assembly <-
   function(data_source,
            select_final_variables,
            user_sel_variables = c(),
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "dataset_id")
+    RUtilpol::check_col_names("data_source", "dataset_id")
 
-    util_check_class("select_final_variables", "logical")
+    RUtilpol::check_class("select_final_variables", "logical")
 
-    util_check_class(
+    RUtilpol::check_class(
       "user_sel_variables",
       c(
         "NULL",
@@ -25,13 +24,13 @@ proc_save_assembly <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
 
     if (
       select_final_variables == TRUE
     ) {
-      util_output_message(
+      RUtilpol::output_heading(
         msg = "Start selection of data variables"
       )
 
@@ -54,13 +53,13 @@ proc_save_assembly <-
             .f = ~ util_confirm(
               msg = paste(
                 "Do you want to include:",
-                util_paste_as_vector(.x)
+                RUtilpol::paste_as_vector(.x)
               )
             )
           )
         )
 
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "selected_vars",
         c("var", "include")
       )
@@ -81,8 +80,10 @@ proc_save_assembly <-
       data_assembly <- data_source
     }
 
-    util_save_if_latests(
-      file_name = "data_assembly",
-      dir = paste0(dir, "/Outputs/Data/")
+    RUtilpol::save_latest_file(
+      file_to_save = data_assembly,
+      dir = paste0(dir, "/Outputs/Data/"),
+      prefered_format = "rds",
+      use_sha = TRUE
     )
   }

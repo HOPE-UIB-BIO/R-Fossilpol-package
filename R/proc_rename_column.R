@@ -10,11 +10,11 @@ proc_rename_column <-
   function(data_source,
            old_name,
            new_name) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("old_name", "character")
+    RUtilpol::check_class("old_name", "character")
 
-    util_check_class("new_name", "character")
+    RUtilpol::check_class("new_name", "character")
 
     # if there is an old_name in the data
     if (

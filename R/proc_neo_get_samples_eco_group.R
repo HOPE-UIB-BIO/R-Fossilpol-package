@@ -2,9 +2,9 @@
 #' @param data_source Data.frame with samples saved as nested information
 proc_neo_get_samples_eco_group <-
   function(data_source) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "samples")
+    RUtilpol::check_col_names("data_source", "samples")
 
     # extract all ecological groups
     eco_group_data <-

@@ -11,7 +11,6 @@ URL: https://hope-uib-bio.github.io/FOSSILPOL-website/
 Imports:
     assertthat,
     Bchron,
-    cli,
     dplyr,
     furrr,
     future,
@@ -26,7 +25,6 @@ Imports:
     magrittr,
     methods,
     neotoma2,
-    plyr,
     purrr,
     R.utils,
     raster,
@@ -35,6 +33,7 @@ Imports:
     readxl,
     rioja,
     rlang,
+    RUtilpol,
     sf,
     sp,
     stats,
@@ -43,12 +42,12 @@ Imports:
     tidyr,
     tidyselect,
     usethis,
-    utils,
-    withr
+    utils
 Remotes:
     NeotomaDB/neotoma2
+    HOPE-UIB-BIO/R-Utilpol-package
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1

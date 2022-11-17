@@ -5,11 +5,11 @@
 proc_neo_get_sample_depth <-
   function(data_source,
            min_n_levels = 1) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "samples")
+    RUtilpol::check_col_names("data_source", "samples")
 
-    util_check_class("min_n_levels", "numeric")
+    RUtilpol::check_class("min_n_levels", "numeric")
 
     # extract level depth (sample_depth) information
     data_sample_depth <-
@@ -38,7 +38,7 @@ proc_neo_get_sample_depth <-
         min_n_levels
       )
 
-    util_check_col_names("data_sample_depth_filtered", c("sample_depth", "n_sample_depth"))
+    RUtilpol::check_col_names("data_sample_depth_filtered", c("sample_depth", "n_sample_depth"))
 
     # save
     return(data_sample_depth_filtered)

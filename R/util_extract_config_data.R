@@ -2,18 +2,22 @@
 #' @return List with all the important data-related settings
 #' @description Gather information about current setting config.
 #' @export
+#' @keywords internal
 util_extract_config_data <- function() {
 
   # helper function to extract variable from global environment and replace it
   # with NA if not available
-  get_safely <-
-    function(var_name) {
-      plyr::try_default(
-        get(var_name, envir = .GlobalEnv),
-        default = NA, quiet = TRUE
-      ) %>%
-        return()
-    }
+  get_safely <- function(var_name) {
+    result <- NA
+    tryCatch(
+      result <- get(
+        var_name,
+        envir = .GlobalEnv
+      ),
+      error = function(e) NULL
+    )
+    return(result)
+  }
 
   res_list <-
     list(
@@ -67,7 +71,7 @@ util_extract_config_data <- function() {
       session_info = utils::sessionInfo()
     )
 
-  util_check_class("res_list", "list")
+  RUtilpol::check_class("res_list", "list")
 
   return(res_list)
 }

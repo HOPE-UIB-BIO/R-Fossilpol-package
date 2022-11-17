@@ -4,11 +4,11 @@
 #' @export
 proc_neo_download_sequences <-
   function(allds, n_tries = 10) {
-    util_check_class("allds", "data.frame")
+    RUtilpol::check_class("allds", "data.frame")
 
-    util_check_col_names("allds", "dsid")
+    RUtilpol::check_col_names("allds", "dsid")
 
-    util_check_class("n_tries", "numeric")
+    RUtilpol::check_class("n_tries", "numeric")
 
     ds_vector <- allds$dsid
 
@@ -89,7 +89,7 @@ proc_neo_download_sequences <-
           length(cannot_download), "out of", nrow(allds),
           "sequences were NOT downloaded.", "\n",
           "Specifically, dataset IDs:",
-          util_paste_as_vector(cannot_download)
+          RUtilpol::paste_as_vector(cannot_download)
         )
       )
     }

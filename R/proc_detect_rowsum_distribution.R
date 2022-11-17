@@ -21,30 +21,30 @@ proc_detect_rowsum_distribution <-
            target_n_grains,
            percentage_samples,
            test_quantiles = FALSE) {
-    util_check_class("data_counts", "data.frame")
+    RUtilpol::check_class("data_counts", "data.frame")
 
-    util_check_col_names("data_counts", "sample_id")
+    RUtilpol::check_col_names("data_counts", "sample_id")
 
-    util_check_class("data_levels", "data.frame")
+    RUtilpol::check_class("data_levels", "data.frame")
 
-    util_check_col_names("data_levels", "sample_id")
+    RUtilpol::check_col_names("data_levels", "sample_id")
 
-    util_check_class("age_limit_young", "numeric")
+    RUtilpol::check_class("age_limit_young", "numeric")
 
-    util_check_class("age_limit_old", "numeric")
+    RUtilpol::check_class("age_limit_old", "numeric")
 
-    util_check_class("target_n_grains", "numeric")
+    RUtilpol::check_class("target_n_grains", "numeric")
 
-    util_check_class("percentage_samples", "numeric")
+    RUtilpol::check_class("percentage_samples", "numeric")
 
-    util_check_class("test_quantiles", "logical")
+    RUtilpol::check_class("test_quantiles", "logical")
 
     if (
       test_quantiles == TRUE
     ) {
-      util_check_col_names("data_levels", c("lower", "upper"))
+      RUtilpol::check_col_names("data_levels", c("lower", "upper"))
     } else {
-      util_check_col_names("data_levels", "age")
+      RUtilpol::check_col_names("data_levels", "age")
     }
 
     data_strip <-
@@ -63,7 +63,7 @@ proc_detect_rowsum_distribution <-
         by = ("sample_id")
       )
 
-    util_check_col_names("data_merged", "above_threshold")
+    RUtilpol::check_col_names("data_merged", "above_threshold")
 
     if (
       test_quantiles == TRUE

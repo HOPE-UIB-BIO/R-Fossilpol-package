@@ -17,9 +17,9 @@ harmonise_all_regions <-
            harm_level = "level_1",
            exclude_taxa = "delete",
            pollen_grain_test = TRUE) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -28,9 +28,9 @@ harmonise_all_regions <-
       )
     )
 
-    util_check_class("harmonisation_tables", "data.frame")
+    RUtilpol::check_class("harmonisation_tables", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "harmonisation_tables",
       c(
         "harmonisation_region",
@@ -38,15 +38,15 @@ harmonise_all_regions <-
       )
     )
 
-    util_check_class("original_name", "character")
+    RUtilpol::check_class("original_name", "character")
 
-    util_check_class("harm_level", "character")
+    RUtilpol::check_class("harm_level", "character")
 
-    util_check_class("exclude_taxa", "character")
+    RUtilpol::check_class("exclude_taxa", "character")
 
-    util_check_class("pollen_grain_test", "logical")
+    RUtilpol::check_class("pollen_grain_test", "logical")
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Start harmonisation of taxa"
     )
 
@@ -60,7 +60,7 @@ harmonise_all_regions <-
         counts_harmonised = pmap(
           .l = list(dataset_id, raw_counts, harm_table),
           .f = ~ {
-            util_output_comment(
+            RUtilpol::output_comment(
               msg = paste("Dataset", ..1)
             )
 
@@ -78,14 +78,14 @@ harmonise_all_regions <-
       ) %>%
       dplyr::select(-harm_table)
 
-    util_check_col_names("data_harmonised", "counts_harmonised")
+    RUtilpol::check_col_names("data_harmonised", "counts_harmonised")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Harmonisation completed"
     )
 
     # test of number of levels before and after harmonisation
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       all(
         purrr::map_dbl(data_harmonised$counts_harmonised, nrow) ==
           purrr::map_dbl(data_harmonised$raw_counts, nrow)

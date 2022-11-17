@@ -15,6 +15,8 @@ util_check_class(data_source, sel_class)
 \code{TRUE} if class match or error message
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 The function will evaluate the object of \code{data_source} name
 and test if ANY of the classes in equal to \code{sel_class}
 }
+\keyword{internal}

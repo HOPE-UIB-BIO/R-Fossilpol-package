@@ -3,7 +3,7 @@
 #' @export
 chron_prepare_cal_curves <-
   function(first_curve_proportion = 0.5) {
-    util_check_class("first_curve_proportion", "numeric")
+    RUtilpol::check_class("first_curve_proportion", "numeric")
 
     assertthat::assert_that(
       first_curve_proportion <= 1 & first_curve_proportion >= 0,
@@ -35,12 +35,13 @@ chron_prepare_cal_curves <-
 
     # check if there is a mix curve file
     name_of_mix_curve_file <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = "calmixed",
-        dir = system.file("data", package = "Bchron")
+        dir = system.file("data", package = "Bchron"),
+        silent = TRUE
       )
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       is.na(name_of_mix_curve_file) == FALSE,
       false_msg = "The mix curve was not copied in Bchron package",
       true_msg = "Mix curve was succesfully copied to Bchron package"
@@ -93,15 +94,16 @@ chron_prepare_cal_curves <-
 
       # save if the postbomb curve is missing
       postbomb_curve_names_missing[i] <-
-        util_check_the_latest_file(
+        RUtilpol::get_latest_file_name(
           file_name = postbomb_curve_names[i],
-          dir = system.file("data", package = "Bchron")
+          dir = system.file("data", package = "Bchron"),
+          silent = TRUE
         ) %>%
         is.na()
     }
 
     # check if all postbomb curves were successfully copied to Bchron
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       all(!postbomb_curve_names_missing),
       false_msg = paste(
         "The following postbomb curves were NOT copied to Bchron package:",

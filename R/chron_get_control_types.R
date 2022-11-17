@@ -8,11 +8,11 @@
 #' @export
 chron_get_control_types <-
   function(data_source, dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "chron_control")
+    RUtilpol::check_col_names("data_source", "chron_control")
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Starting preparation of chron control point types"
     )
 
@@ -48,7 +48,7 @@ chron_get_control_types <-
       dplyr::filter(include == TRUE) %>%
       purrr::pluck("chroncontroltype")
 
-    util_open_dir_if_not(
+    RUtilpol::open_dir_if_not(
       length(chroncontrol_included_types) > 0,
       dir = chron_control_point_types_path,
       msg = paste(
@@ -58,11 +58,11 @@ chron_get_control_types <-
       )
     )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "There is", length(chroncontrol_included_types),
         "chroncontrol point types included:",
-        util_paste_as_vector(chroncontrol_included_types)
+        RUtilpol::paste_as_vector(chroncontrol_included_types)
       )
     )
 
@@ -74,11 +74,11 @@ chron_get_control_types <-
       ) %>%
       purrr::pluck("chroncontroltype")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "There is", length(radiocarbon_control_types),
         "chroncontrol point types to be calibrated:",
-        util_paste_as_vector(radiocarbon_control_types)
+        RUtilpol::paste_as_vector(radiocarbon_control_types)
       )
     )
 

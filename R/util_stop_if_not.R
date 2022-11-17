@@ -3,13 +3,18 @@
 #' @param env The environment in which to evaluate the test
 #' @param false_msg Error message to be printed when stopping
 #' @param true_msg Comment to be printed when positive result of test
-#' @description Test a selected criteria an output comment or stop
-#' @export
+#' @description 
+#' `r lifecycle::badge("deprecated")`
+#' Test a selected criteria an output comment or stop
+#' @keywords internal
 util_stop_if_not <-
   function(...,
            env = parent.frame(),
            false_msg = NULL,
            true_msg = NULL) {
+    lifecycle::deprecate_warn(
+      "0.0.2", "util_stop_if_not()", "RUtilpol::stop_if_not()"
+    )
     res <-
       assertthat::see_if(..., env = env, msg = false_msg)
 
@@ -25,6 +30,6 @@ util_stop_if_not <-
         paste("WARNING:", attr(res, "msg"))
       )
       cat("\n")
-      util_stop_quietly()
+      RUtilpol::stop_quietly()
     }
   }

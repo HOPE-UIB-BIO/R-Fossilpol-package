@@ -17,9 +17,9 @@ import_datasets_from_folder <-
            suffix = "private") {
 
     # safety tests
-    util_check_class("dir_files", "character")
-    util_check_class("dir", "character")
-    util_check_class("suffix", "character")
+    RUtilpol::check_class("dir_files", "character")
+    RUtilpol::check_class("dir", "character")
+    RUtilpol::check_class("suffix", "character")
 
     # Get the vector of all files in focal dir_files
     sites_list <-
@@ -32,7 +32,7 @@ import_datasets_from_folder <-
     n_sites <- length(sites_list)
 
     # Check if there are some files
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       n_sites >= 1,
       true_msg = paste(
         "There are", n_sites, "xlsx files detected."
@@ -53,9 +53,9 @@ import_datasets_from_folder <-
           )
       )
 
-      util_check_class("project_db", "proj_db_class")
+      RUtilpol::check_class("project_db", "proj_db_class")
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0("Extracting file ", i, " out of ", n_sites)
       )
 

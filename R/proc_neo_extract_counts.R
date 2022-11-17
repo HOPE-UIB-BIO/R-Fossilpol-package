@@ -14,13 +14,13 @@ proc_neo_extract_counts <-
 
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_detail")
+    RUtilpol::check_col_names("data_source", "sample_detail")
 
-    util_check_class("sel_var_element", "character")
+    RUtilpol::check_class("sel_var_element", "character")
 
-    util_check_class("sel_eco_group", "character")
+    RUtilpol::check_class("sel_eco_group", "character")
 
     counts <-
       data_source %>%

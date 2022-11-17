@@ -3,11 +3,12 @@
 #' warning message `msg` if there are no sequences
 #' @param data_source Data.frame of sequences
 #' @param msg Message to be appended to the end of warning
+#' @keywords internal
 util_check_data_table <-
   function(data_source, msg = "") {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       nrow(data_source) > 0,
       false_msg = paste(
         "There is 0 sequences based on the selected Criteria.",

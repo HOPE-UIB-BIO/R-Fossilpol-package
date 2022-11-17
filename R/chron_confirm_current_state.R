@@ -10,11 +10,11 @@ chron_get_current_state <-
   function(dir,
            calc_AD_models_denovo,
            predict_ages_denovo) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("calc_AD_models_denovo", "logical")
+    RUtilpol::check_class("calc_AD_models_denovo", "logical")
 
-    util_check_class("predict_ages_denovo", "logical")
+    RUtilpol::check_class("predict_ages_denovo", "logical")
 
     latest_ad_present <-
       util_check_presence_of_lastest_chronology(
@@ -31,7 +31,7 @@ chron_get_current_state <-
         nm = c("calc_AD_models_denovo-predict_ages_denovo")
       )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "Current setting:", "\n",
         "Re-calibrate age-depth models 'de novo' = ", calc_AD_models_denovo, "\n",
@@ -44,7 +44,7 @@ chron_get_current_state <-
         setting_state == "FALSE-TRUE" && stringr::str_detect(latest_ad_present, "FALSE-*") |
         setting_state == "TRUE-TRUE" && stringr::str_detect(latest_ad_present, "FALSE-*")
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste(
           "The selected setting does not align with the presence of previous data.", "\n",
           "Please review the setting.",

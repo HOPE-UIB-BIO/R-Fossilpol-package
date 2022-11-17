@@ -7,5 +7,7 @@
 util_stop_quietly()
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Stop the script without producing error
 }
+\keyword{internal}

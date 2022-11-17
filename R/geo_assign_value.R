@@ -30,17 +30,17 @@ geo_assign_value <-
            tif_fill_na = TRUE,
            tif_distance_step = 5e3,
            tif_n_max_step = 20) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_vector_values("sel_method", c("shapefile", "tif"))
+    RUtilpol::check_vector_values("sel_method", c("shapefile", "tif"))
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("file_name", "character")
+    RUtilpol::check_class("file_name", "character")
 
-    util_check_class("var", "character")
+    RUtilpol::check_class("var", "character")
 
     if (
       missing(var_name)
@@ -48,13 +48,13 @@ geo_assign_value <-
       var_name <- var
     }
 
-    util_check_class("var_name", "character")
+    RUtilpol::check_class("var_name", "character")
 
-    util_check_class("tif_fill_na", "logical")
+    RUtilpol::check_class("tif_fill_na", "logical")
 
-    util_check_class("tif_distance_step", "numeric")
+    RUtilpol::check_class("tif_distance_step", "numeric")
 
-    util_check_class("tif_n_max_step", "numeric")
+    RUtilpol::check_class("tif_n_max_step", "numeric")
 
     if (
       sel_method == "shapefile"
@@ -83,7 +83,7 @@ geo_assign_value <-
     }
 
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       var %in% names(data_with_value),
       true_msg = paste("Selected shapefile resulted in the selected value:", var),
       false_msg = paste(
@@ -107,7 +107,7 @@ geo_assign_value <-
         new_name = var_name
       )
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       var_name %in% names(res),
       true_msg = paste(
         "Data.frame contains the preferred values in variable:", var_name

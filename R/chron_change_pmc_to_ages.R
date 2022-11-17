@@ -7,9 +7,9 @@
 #' calibration curves
 chron_change_pmc_to_ages <-
   function(data_source) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c("chroncontroltype", "chroncontrolage", "error")
     )
@@ -41,7 +41,7 @@ chron_change_pmc_to_ages <-
       ) %>%
       dplyr::select(names(data_source))
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_pmc_ages_fixed",
       c("chroncontroltype", "chroncontrolage", "error")
     )

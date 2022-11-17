@@ -23,13 +23,13 @@ chron_recalibrate_in_batches <-
            number_of_cores = 1,
            set_seed = 1234,
            maximum_number_of_loops = 3) {
-    util_check_class("data_source_chron", "data.frame")
+    RUtilpol::check_class("data_source_chron", "data.frame")
 
-    util_check_col_names("data_source_chron", "chron_control_format")
+    RUtilpol::check_col_names("data_source_chron", "chron_control_format")
 
-    util_check_class("data_source_batch", "data.frame")
+    RUtilpol::check_class("data_source_batch", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source_batch",
       c(
         "batch_number",
@@ -39,17 +39,17 @@ chron_recalibrate_in_batches <-
       )
     )
 
-    util_check_class("n_iterations", "numeric")
+    RUtilpol::check_class("n_iterations", "numeric")
 
-    util_check_class("n_burn", "numeric")
+    RUtilpol::check_class("n_burn", "numeric")
 
-    util_check_class("n_thin", "numeric")
+    RUtilpol::check_class("n_thin", "numeric")
 
-    util_check_class("number_of_cores", "numeric")
+    RUtilpol::check_class("number_of_cores", "numeric")
 
-    util_check_class("set_seed", "numeric")
+    RUtilpol::check_class("set_seed", "numeric")
 
-    util_check_class("maximum_number_of_loops", "numeric")
+    RUtilpol::check_class("maximum_number_of_loops", "numeric")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -69,7 +69,7 @@ chron_recalibrate_in_batches <-
     if (
       length(prev_batch) > 0
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste("Decteted n =", length(prev_batch), "previous batches")
       )
 
@@ -89,7 +89,7 @@ chron_recalibrate_in_batches <-
 
     # start the loop
     repeat{
-      util_output_comment(
+      RUtilpol::output_comment(
         paste("Attempt number", loop_counter, "for all batches")
       )
 
@@ -101,7 +101,7 @@ chron_recalibrate_in_batches <-
         if (
           data_source_batch$done[i] == FALSE
         ) {
-          util_output_comment(
+          RUtilpol::output_comment(
             msg = paste("batch", current_batch_n, "out of", number_of_batches)
           )
 
@@ -151,7 +151,7 @@ chron_recalibrate_in_batches <-
             silent = TRUE
           )
 
-          util_output_comment(
+          RUtilpol::output_comment(
             msg = paste("batch", current_batch_n, "finished")
           )
 
@@ -159,7 +159,7 @@ chron_recalibrate_in_batches <-
           if (
             exists("bchron_temp", envir = current_env) == TRUE
           ) {
-            util_check_col_names("bchron_temp", "bchron_mod")
+            RUtilpol::check_col_names("bchron_temp", "bchron_mod")
 
             # save the batch as temporarily
             readr::write_rds(
@@ -182,7 +182,7 @@ chron_recalibrate_in_batches <-
               # mark status of batch
               data_source_batch$done[i] <- TRUE
 
-              util_output_comment(
+              RUtilpol::output_comment(
                 msg = "attempt = successful"
               )
             }
@@ -190,7 +190,7 @@ chron_recalibrate_in_batches <-
             # remove the temporary result
             rm(bchron_temp, envir = current_env)
           } else {
-            util_output_comment(
+            RUtilpol::output_comment(
               msg = "attempt = unsuccessful"
             )
           }
@@ -221,7 +221,7 @@ chron_recalibrate_in_batches <-
     number_of_successes <-
       length(pres_batch)
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "Chronology was successfully calculated for", number_of_successes, "batches"
       )
@@ -241,7 +241,7 @@ chron_recalibrate_in_batches <-
       dplyr::bind_rows()
 
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       exists("bchron_output", envir = current_env),
       true_msg = "All batches were successfully merged together",
       false_msg = "there has been an issue with loading of individual batch files"
@@ -256,14 +256,14 @@ chron_recalibrate_in_batches <-
         nm = c("bchron_output", "batch_success_table")
       )
 
-    util_output_comment("Saving temporarily output")
+    RUtilpol::output_comment("Saving temporarily output")
 
     readr::write_rds(
       x = chron_result_batch,
       file = paste0(dir, temp_path, "chron_result_batch.rds")
     )
 
-    util_output_comment("Deleting temporarily batches output")
+    RUtilpol::output_comment("Deleting temporarily batches output")
 
     # delete all the batch files
     purrr::walk(

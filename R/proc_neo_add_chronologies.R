@@ -4,13 +4,13 @@
 #' @export
 proc_neo_add_chronologies <-
   function(neotoma_meta_samples, chroncontrol_tables) {
-    util_check_class("neotoma_meta_samples", "data.frame")
+    RUtilpol::check_class("neotoma_meta_samples", "data.frame")
 
-    util_check_col_names("neotoma_meta_samples", "dataset_id")
+    RUtilpol::check_col_names("neotoma_meta_samples", "dataset_id")
 
-    util_check_class("chroncontrol_tables", "data.frame")
+    RUtilpol::check_class("chroncontrol_tables", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "chroncontrol_tables",
       c(
         "dataset_id",

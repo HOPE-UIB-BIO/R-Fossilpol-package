@@ -15,3 +15,4 @@ util_check_data_table(data_source, msg = "")
 Function will check the number of rows of the table and return
 warning message \code{msg} if there are no sequences
 }
+\keyword{internal}

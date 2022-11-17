@@ -22,25 +22,22 @@ geo_assign_tif <-
            na_as_value = NULL,
            distance_step = 500,
            n_max_step = 10) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("lat", "long"))
+    RUtilpol::check_col_names("data_source", c("lat", "long"))
 
-    util_check_class("tif_file_name", "character")
+    RUtilpol::check_class("tif_file_name", "character")
 
-    util_check_class("fill_na", "logical")
+    RUtilpol::check_class("fill_na", "logical")
 
     if (
       fill_na == TRUE
     ) {
-      util_check_class("distance_step", "numeric")
+      RUtilpol::check_class("distance_step", "numeric")
 
-      util_check_class("n_max_step", "numeric")
+      RUtilpol::check_class("n_max_step", "numeric")
 
-      assertthat::assert_that(
-        round(n_max_step) == n_max_step,
-        msg = "'n_max_step' must be an integer"
-      )
+      RUtilpol::check_if_integer("n_max_step")
     } else {
       assertthat::assert_that(
         is.null(na_as_value),
@@ -76,7 +73,7 @@ geo_assign_tif <-
     if (
       any(is.na(raster_value)) & fill_na == TRUE
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Searching for the closest value for NAs"
       )
 
@@ -146,7 +143,7 @@ geo_assign_tif <-
         raster_values = raster_value
       )
 
-    util_check_col_names("data_with_values", "raster_values")
+    RUtilpol::check_col_names("data_with_values", "raster_values")
 
     return(data_with_values)
   }
