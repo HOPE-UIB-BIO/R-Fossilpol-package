@@ -81,7 +81,7 @@ proc_save_assembly <-
     }
 
     RUtilpol::save_latest_file(
-      file_to_save = data_assembly,
+      object_to_save = data_assembly,
       dir = paste0(dir, "/Outputs/Data/"),
       prefered_format = "rds",
       use_sha = TRUE

@@ -180,7 +180,7 @@ chron_save_results <-
       )
 
     RUtilpol::save_latest_file(
-      file_to_save = chron_predicted_ages,
+      object_to_save = chron_predicted_ages,
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
       ),

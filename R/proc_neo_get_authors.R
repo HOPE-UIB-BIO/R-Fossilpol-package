@@ -166,7 +166,7 @@ proc_neo_get_authors <-
       exists("neotoma_author_data", envir = current_env)
     ) {
       RUtilpol::save_latest_file(
-        file_to_save = neotoma_author_data,
+        object_to_save = neotoma_author_data,
         dir = author_data_path,
         prefered_format = "rds",
         use_sha = TRUE
