@@ -55,7 +55,7 @@ proc_save_references <-
       )
 
     RUtilpol::save_latest_file(
-      file_to_save = data_assembly_meta,
+      object_to_save = data_assembly_meta,
       dir = refference_path,
       prefered_format = "csv"
     )
@@ -148,7 +148,7 @@ proc_save_references <-
     )
 
     RUtilpol::save_latest_file(
-      file_to_save = author_table,
+      object_to_save = author_table,
       dir = refference_path,
       prefered_format = "csv"
     )
@@ -160,7 +160,7 @@ proc_save_references <-
       )
 
     RUtilpol::save_latest_file(
-      file_to_save = affiliation_table,
+      object_to_save = affiliation_table,
       dir = refference_path,
       prefered_format = "csv"
     )

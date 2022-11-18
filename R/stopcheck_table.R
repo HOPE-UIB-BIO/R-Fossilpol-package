@@ -84,7 +84,7 @@ stopcheck_table <-
 
       # Save
       RUtilpol::save_latest_file(
-        file_to_save = sel_file,
+        object_to_save = sel_file,
         file_name = file_name,
         dir = dir,
         prefered_format = "csv"
@@ -157,7 +157,7 @@ stopcheck_table <-
 
           # Save
           RUtilpol::save_latest_file(
-            file_to_save = sel_file,
+            object_to_save = sel_file,
             file_name = file_name,
             dir = dir,
             prefered_format = "csv"
