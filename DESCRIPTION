@@ -44,7 +44,7 @@ Imports:
     usethis,
     utils
 Remotes:
-    NeotomaDB/neotoma2
+    NeotomaDB/neotoma2,
     HOPE-UIB-BIO/R-Utilpol-package
 Encoding: UTF-8
 Language: en-GB
