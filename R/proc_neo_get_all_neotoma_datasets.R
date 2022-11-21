@@ -47,11 +47,11 @@ proc_neo_get_all_neotoma_datasets <-
 
     # use neotoma2 to get the selected sites
     sel_sites <-
-      neotoma2::get_sites(loc = geo_box)
+      neotoma2::get_sites(loc = loc)
 
     # Transform into a data.frame
     sel_sites_df <-
-      as.data.frame(sel_sites) %>%
+      neotoma2:::as.data.frame(sel_sites) %>%
       dplyr::rename(
         altitude = elev
       )
@@ -83,11 +83,11 @@ proc_neo_get_all_neotoma_datasets <-
       ) %>%
       # filter to only include those seletced by altitude
       neotoma2::filter(siteid %in% sel_sites_filtered$siteid) %>%
-      # filter to only include 
-      neotoma2::filter(datasettype %in% dataset_type)  %>% 
+      # filter to only include
+      neotoma2::filter(datasettype %in% dataset_type) %>%
       # turn into datasets
       neotoma2::datasets() %>%
-      as.data.frame()  %>% 
+      neotoma2:::as.data.frame() %>%
       # rename the column for back compatibility
       dplyr::rename(
         dsid = datasetid
