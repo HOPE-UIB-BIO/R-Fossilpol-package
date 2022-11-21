@@ -67,8 +67,22 @@ proc_neo_download_sequences <- function(allds,
     sort() %>%
     as.character()
 
+  dir <- RUtilpol::add_slash_to_path(dir)
+
   path_to_indiv_folder <-
-    paste0(dir, "/individual/")
+    paste0(dir, "individual/")
+
+  if (
+    isFALSE(
+      any(
+        "individual" %in% list.files(dir)
+      )
+    )
+  ) {
+    dir.create(
+      path_to_indiv_folder
+    )
+  }
 
   # get all missing names
   ds_absent <-
