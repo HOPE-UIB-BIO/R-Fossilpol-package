@@ -4,12 +4,17 @@
 \alias{proc_neo_download_sequences}
 \title{Download all sequences from Neotoma}
 \usage{
-proc_neo_download_sequences(allds, n_tries = 10)
+proc_neo_download_sequences(allds, dir, n_tries = 10)
 }
 \arguments{
 \item{allds}{Data.frame with all dataset IDs}
 
+\item{dir}{Path to the data storage folder}
+
 \item{n_tries}{Number of tries to download each dataset}
+}
+\value{
+List with all downloaded sequences
 }
 \description{
 Download all sequences from Neotoma

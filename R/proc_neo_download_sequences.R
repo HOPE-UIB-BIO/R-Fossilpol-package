@@ -2,8 +2,11 @@
 #' @param allds Data.frame with all dataset IDs
 #' @param dir Path to the data storage folder
 #' @param n_tries Number of tries to download each dataset
+#' @return List with all downloaded sequences
 #' @export
-proc_neo_download_sequences <- function(allds, dir, n_tries = 10) {
+proc_neo_download_sequences <- function(allds,
+                                        dir,
+                                        n_tries = 10) {
   RUtilpol::check_class("allds", "data.frame")
 
   RUtilpol::check_col_names("allds", "dsid")
