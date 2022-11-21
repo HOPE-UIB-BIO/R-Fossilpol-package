@@ -140,7 +140,8 @@ proc_neo_download_sequences <- function(allds,
             file_name = sel_seq_name,
             dir = path_to_indiv_folder,
             prefered_format = "rds",
-            use_sha = TRUE
+            use_sha = TRUE,
+            verbose = FALSE
           )
 
           # break from loop
@@ -204,7 +205,8 @@ proc_neo_download_sequences <- function(allds,
     purrr::map(
       .f = ~ RUtilpol::get_latest_file(
         file_name = .x,
-        dir = path_to_indiv_folder
+        dir = path_to_indiv_folder,
+        verbose = FALSE
       )
     )
 
