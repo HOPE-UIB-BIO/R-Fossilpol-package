@@ -69,34 +69,22 @@ chron_recalibrate_ad_models <- function(data_source,
   path_to_chron <-
     paste0(dir, "Data/Processed/Chronology/")
 
-  # check all the models saved
-  seq_present <-
-    list.files(
-      paste0(path_to_chron, "Models_full/")
-    ) %>%
-    RUtilpol::get_clean_name() %>%
-    unique() %>%
-    sort()
-
   seq_prepared <-
     data_source %>%
     purrr::pluck("dataset_id")
 
-  temp_path <- "/Data/Processed/Chronology/Temporary_output/"
+  # get all missing names
+  seq_absent <-
+    util_get_missing_seq_names(
+      dir = paste0(path_to_chron, "Models_full/"),
+      name_vector = seq_prepared
+    )
 
-  # Variables definition for computation  -----
-
-  set.seed(set_seed)
-  setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-
-  n_iterations <- default_iteration * iteration_multiplier
-  n_burn <- default_burn * iteration_multiplier
-  n_thin <- default_thin * iteration_multiplier
-
+  n_seq_to_run <- length(seq_absent)
 
   # test if there are any sequences to run AD modelling
   if (
-    nrow(data_source) < 1
+    length(n_seq_to_run) < 1
   ) {
     RUtilpol::output_comment(
       msg = paste(
@@ -104,23 +92,24 @@ chron_recalibrate_ad_models <- function(data_source,
         "re-calibration will be skipped in current run"
       )
     )
-
-    # create an empty column for data without sequences
-    chron_output <-
-      data_source %>%
-      dplyr::mutate(
-        bchron_mod = NA_real_
-      )
-
-    RUtilpol::check_col_names("chron_output", "bchron_mod")
-
-    return(chron_output)
+    return()
   }
+
+  RUtilpol::output_comment(
+    paste(
+      n_seq_to_run,
+      "age-depth model(s) will be recalibrated"
+    )
+  )
+
+  data_to_run <-
+    data_source %>%
+    dplyr::filter(dataset_id %in% seq_absent)
 
   # detect the number of batches needed to split the data into base on the
   #   `batch_size` selected by user
   number_of_batches <-
-    ceiling(nrow(data_source) / batch_size)
+    ceiling(nrow(data_to_run) / batch_size)
 
   # a dummy data.freme to keep track of progress and number of tries for each batch
   batch_success_table <-
@@ -130,11 +119,11 @@ chron_recalibrate_ad_models <- function(data_source,
       # list of sequences in each batch
       sequence_list = purrr::map(
         .x = batch_number,
-        .f = ~ data_source %>%
+        .f = ~ data_to_run %>%
           dplyr::slice(
             seq(
               from = batch_size * (.x - 1) + 1,
-              to = min(c(batch_size * (.x), nrow(data_source))),
+              to = min(c(batch_size * (.x), nrow(data_to_run))),
               by = 1
             )
           ) %>%
@@ -176,140 +165,95 @@ chron_recalibrate_ad_models <- function(data_source,
   # open custom menu to select confirmation
   style_selection <-
     switch(utils::menu(
-      choices = c("both (batches and then individual) - recommended", "batches", "individual"),
+      choices = c("both (batches and then individual) - recommended", "individual"),
       title = cat(
         "User can specify which kind of age-depth modeling wants to do", "\n",
         "\n",
         "batches = Several age-depth models are then created",
         "at the same time using parralel computation.",
         "This is done by splitting the sequences into batches, with each",
-        "batch containing a certain number of sequences", "\n",
+        "batch containing a certain number of sequences",
+        "Moreover, the “failed” batches are estimated one by one.", "\n",
         "\n",
         "individual = age-depth models for sequences are estimated one by one", "\n",
-        "\n",
-        "both = Workflow will try to estimate age-depth models in batches",
-        "and then the “failed” batches are estimated one by one.",
         "\n"
       )
     ),
-    "both",
     "batches",
     "individual"
     )
 
-  if (
-    style_selection != "individual"
-  ) {
-    rerun_batches <-
-      util_confirm_based_on_presence(
-        dir = paste0(dir, temp_path),
-        file_name = "chron_result_batch",
-        msg = "Detected previous batch results, do you want to rerun them?"
-      )
+  # Variables definition for computation  -----
 
-    if (
-      rerun_batches == TRUE
-    ) {
-      RUtilpol::output_comment(
-        paste(
-          "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
-          "Each batch will have", batch_attempts, "attempts to calculate.",
-          "In case that the whole bach is unsuccessful all", batch_attempts, "times,",
-          "another subroutine can be used to calculate age-depth models",
-          "for each sequence individually."
-        )
-      )
+  set.seed(set_seed)
+  setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
 
-      chron_result_batch <-
-        chron_recalibrate_in_batches(
-          data_source_chron = data_source,
-          data_source_batch = batch_success_table,
-          dir = dir,
-          n_iterations = n_iterations,
-          n_burn = n_burn,
-          n_thin = n_thin,
-          number_of_cores = number_of_cores,
-          set_seed = set_seed,
-          maximum_number_of_loops = batch_attempts
-        )
-    } else {
-      chron_result_batch <-
-        readr::read_rds(
-          file = paste0(dir, temp_path, "chron_result_batch.rds")
-        )
-    }
+  n_iterations <- default_iteration * iteration_multiplier
+  n_burn <- default_burn * iteration_multiplier
+  n_thin <- default_thin * iteration_multiplier
 
-    chron_output_batch <-
-      chron_result_batch %>%
-      purrr::pluck("bchron_output")
-
-    batch_success_table <-
-      chron_result_batch %>%
-      purrr::pluck("batch_success_table")
-  }
+  temp_path <-
+    paste0(path_to_chron, "Temporary_output/")
 
   if (
     style_selection == "batches"
   ) {
-    RUtilpol::check_col_names("chron_output_batch", "bchron_mod")
-
-    return(chron_output_batch)
-  }
-
-  if (
-    style_selection != "batches"
-  ) {
-    if (
-      all(batch_success_table$done) == FALSE
-    ) {
-
-      # calculate the number of failed batches
-      number_of_fails <-
-        batch_success_table %>%
-        dplyr::filter(done == FALSE) %>%
-        purrr::pluck("batch_size") %>%
-        sum()
-
-      RUtilpol::output_comment(
-        msg = paste(
-          "Individual calculation will be done for", number_of_fails, "sequences"
-        )
+    RUtilpol::output_comment(
+      paste(
+        "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
+        "Each batch will have", batch_attempts, "attempts to calculate.",
+        "In case that the whole bach is unsuccessful all", batch_attempts, "times,",
+        "another subroutine can be used to calculate age-depth models",
+        "for each sequence individually."
       )
+    )
 
-      chron_output_individual <-
-        chron_recalibrate_individual(
-          data_source_chron = data_source,
-          data_source_batch = batch_success_table,
-          n_iterations = n_iterations,
-          n_burn = n_burn,
-          n_thin = n_thin,
-          dir = dir
-        )
-    } else {
-      chron_output_individual <- NULL
-    }
+    chron_recalibrate_in_batches(
+      data_source_chron = data_to_run,
+      data_source_batch = batch_success_table,
+      dir = dir,
+      n_iterations = n_iterations,
+      n_burn = n_burn,
+      n_thin = n_thin,
+      number_of_cores = number_of_cores,
+      set_seed = set_seed,
+      maximum_number_of_loops = batch_attempts
+    )
   }
 
+  # check agan the sequences to run
+  # get all missing names
+  seq_absent <-
+    util_get_missing_seq_names(
+      dir = paste0(path_to_chron, "Models_full/"),
+      name_vector = seq_prepared
+    )
+
+  n_seq_to_run <- length(seq_absent)
+
+  # if all succesfull
   if (
-    style_selection == "individual"
+    n_seq_to_run < 1
   ) {
-    RUtilpol::check_col_names("chron_output_individual", "bchron_mod")
-
-    return(chron_output_individual)
+    return()
   }
 
-  if (
-    style_selection == "both"
-  ) {
-    bchron_output <-
-      dplyr::bind_rows(
-        chron_output_batch,
-        chron_output_individual
-      ) %>%
-      dplyr::distinct(dataset_id, .keep_all = TRUE)
+  RUtilpol::output_comment(
+    msg = paste(
+      "Individual calculation will be done for", n_seq_to_run, "sequences"
+    )
+  )
 
-    RUtilpol::check_col_names("bchron_output", "bchron_mod")
+  data_to_run <-
+    data_source %>%
+    dplyr::filter(dataset_id %in% seq_absent)
 
-    return(bchron_output)
-  }
+  chron_recalibrate_individual(
+    data_source_chron = data_to_run,
+    data_source_batch = batch_success_table,
+    n_iterations = n_iterations,
+    n_burn = n_burn,
+    n_thin = n_thin,
+    dir = dir
+  )
 }
