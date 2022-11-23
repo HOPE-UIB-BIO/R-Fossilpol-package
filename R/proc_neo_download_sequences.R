@@ -40,7 +40,7 @@ proc_neo_download_sequences <- function(allds,
   # get all missing names
   ds_absent <-
     util_get_missing_seq_names(
-      path_to_folder = path_to_indiv_folder,
+      dir = path_to_indiv_folder,
       name_vector = ds_vector
     )
 
@@ -132,7 +132,7 @@ proc_neo_download_sequences <- function(allds,
   # extract the sequences which were not successfully downloaded
   cannot_download <-
     util_get_missing_seq_names(
-      path_to_folder = path_to_indiv_folder,
+      dir = path_to_indiv_folder,
       name_vector = ds_vector
     )
 
