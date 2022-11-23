@@ -47,22 +47,21 @@ chron_recalibrate_individual <- function(data_source_chron,
     paste0(dir, "/Data/Input/Chronology_setting/Bchron_crash/")
 
   # subset
-  broken_sites <-
+  data_to_run <-
     data_source_chron %>%
     dplyr::filter(!dataset_id %in% crash_file$dataset_id)
 
-  broken_sites_number <- nrow(broken_sites)
+  n_seq <- nrow(data_to_run)
 
   RUtilpol::output_comment(
     msg = paste(
-      "Additional calculation will be done for", broken_sites_number,
-      "sequences"
+      "Estimation will be done for", n_seq, "sequences"
     )
   )
 
-  # compute for each Site in broken_sites
+  # compute for each Site in data_to_run
   broken_sites_done <-
-    broken_sites %>%
+    data_to_run %>%
     dplyr::mutate(
       row_n = dplyr::row_number(),
       bchron_mod = purrr::pmap(
@@ -74,7 +73,7 @@ chron_recalibrate_individual <- function(data_source_chron,
           RUtilpol::output_comment(
             msg = paste0(
               "dataset: ", ..2, ". Number ", ..1, " out of ",
-              broken_sites_number
+              n_seq
             )
           )
 
@@ -144,7 +143,5 @@ chron_recalibrate_individual <- function(data_source_chron,
     ) %>%
     dplyr::select(-row_n)
 
-  RUtilpol::check_col_names("broken_sites_done", "bchron_mod")
-
-  return(broken_sites_done)
+  return()
 }
