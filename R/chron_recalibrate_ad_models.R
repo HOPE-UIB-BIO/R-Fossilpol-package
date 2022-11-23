@@ -69,7 +69,7 @@ chron_recalibrate_ad_models <- function(data_source,
   path_to_chron <-
     paste0(dir, "Data/Processed/Chronology/")
 
-  n_seq_to_run <- 
+  n_seq_to_run <-
     nrow(data_source)
 
   # test if there are any sequences to run AD modelling
@@ -142,7 +142,7 @@ chron_recalibrate_ad_models <- function(data_source,
     failed_seq <-
       chron_recalibrate_in_batches(
         data_source_chron = data_source,
-        data_source_batch = batch_success_table,
+        batch_size = batch_size,
         dir = dir,
         n_iterations = n_iterations,
         n_burn = n_burn,
