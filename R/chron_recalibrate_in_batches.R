@@ -1,20 +1,34 @@
 #' @title Recalibrate the selected sequences in defined batches using parallel
 #' computation
-#' @param data_source_chron Data.frame containing `dataset_id` and `chron_control_format`
-#' @param data_source_batch Data.frame with the description of the status
-#' of the individual batches
-#' @param dir Path to the data storage folder
-#' @param n_iterations The number of iterations used by Bchron
-#' @param n_burn The number of starting iterations to discard used by Bchron
-#' @param n_thin The step size for every iteration to keep beyond
+#' @param data_source_chron
+#' Data.frame containing `dataset_id` and `chron_control_format`
+#' @param batch_size
+#' Numeric. Number of individual sequences re-calibrate in a single
+#' batch using parallel computation
+#' @param dir Character. Path to the data storage folder
+#' @param n_iterations Numeric. The number of iterations used by Bchron
+#' @param n_burn
+#' Numeric. The number of starting iterations to discard used by Bchron
+#' @param n_thin
+#' Numeric. The step size for every iteration to keep beyond
 #' the burnin used by Bchron
-#' @param number_of_cores Number of CPU cores to use in parallel computation
-#' @param set_seed User-defined seed for randomisations
-#' @param maximum_number_of_loops Number of tries each batch should be considered
+#' @param number_of_cores
+#' Numeric. Number of CPU cores to use in parallel computation
+#' @param set_seed Numeric. User-defined seed for randomisations
+#' @param maximum_number_of_loops
+#' Numeric. Number of tries each batch should be considered
 #' before skipping it
-#' @return Named list with `bchron_output`, `batch_success_table`
+#' @param time_per_sequence Time (in sec) dedicated for each sequence to estimate
+#' age-depth model. If it takes computer longer that selected value, estimation
+#' is considered as unsuccessful and skipped. The time value is multiplied by
+#' `iteration_multiplier` as more iteration required more time. Time for whole
+#' batch is calculated as `time_per_sequence` multiplied by `iteration_multiplier`
+#' multiplied by the number of sequences per batch (which is estimated based on
+#' `number_of_cores`)
+#' @return Vector with names of sequences which failed to estimate
 chron_recalibrate_in_batches <- function(data_source_chron,
-                                         data_source_batch,
+                                         batch_size = 1,
+                                         time_per_sequence = 120,
                                          dir,
                                          n_iterations = 10e3,
                                          n_burn = 2e3,
@@ -26,17 +40,11 @@ chron_recalibrate_in_batches <- function(data_source_chron,
 
   RUtilpol::check_col_names("data_source_chron", "chron_control_format")
 
-  RUtilpol::check_class("data_source_batch", "data.frame")
+  RUtilpol::check_class("batch_size", "numeric")
 
-  RUtilpol::check_col_names(
-    "data_source_batch",
-    c(
-      "batch_number",
-      "batch_name",
-      "batch_size",
-      "done"
-    )
-  )
+  RUtilpol::check_class("time_per_sequence", "numeric")
+
+  RUtilpol::check_class("dir", "character")
 
   RUtilpol::check_class("n_iterations", "numeric")
 
@@ -53,36 +61,61 @@ chron_recalibrate_in_batches <- function(data_source_chron,
   current_frame <- sys.nframe()
   current_env <- sys.frame(which = current_frame)
 
-  temp_path <- "/Data/Processed/Chronology/Temporary_output/"
+  dir <- RUtilpol::add_slash_to_path(dir)
 
-  # Check previous results -----
+  # detect the number of batches needed to split the data into base on the
+  #   `batch_size` selected by user
+  number_of_batches <-
+    ceiling(nrow(data_source_chron) / batch_size)
 
-  # detect previous batches
-  prev_batch <-
-    list.files(
-      path = paste0(dir, temp_path),
-      pattern = "batch."
-    ) %>%
-    stringr::str_replace(., ".rds", "")
-
-  if (
-    length(prev_batch) > 0
-  ) {
-    RUtilpol::output_comment(
-      msg = paste("Decteted n =", length(prev_batch), "previous batches")
+  # a dummy data.freme to keep track of progress and number of tries for each batch
+  batch_success_table <-
+    tibble::tibble(
+      batch_number = 1:number_of_batches,
+      batch_name = paste0("batch_", formatC(batch_number, width = 3, flag = 0)),
+      # list of sequences in each batch
+      sequence_list = purrr::map(
+        .x = batch_number,
+        .f = ~ data_source_chron %>%
+          dplyr::slice(
+            seq(
+              from = batch_size * (.x - 1) + 1,
+              to = min(c(batch_size * (.x), nrow(data_to_run))),
+              by = 1
+            )
+          ) %>%
+          purrr::pluck("dataset_id")
+      ),
+      # number of sequences in each batch
+      batch_size = purrr::map_dbl(
+        .x = sequence_list,
+        .f = length
+      ),
+      # set a value for the process to wait (in seconds) for each batch
+      time_to_stop = (batch_size * time_per_sequence) * max(c((floor(iteration_multiplier / 2)), 1)),
+      done = FALSE,
+      .rows = number_of_batches
     )
 
-    # change all batches which are deteced from last time to TRUE
-    data_source_batch[data_source_batch$batch_name %in% prev_batch, ]$done <- TRUE
-  }
+  RUtilpol::check_if_loaded(
+    file_name = "batch_success_table",
+    env = current_env
+  )
+
+  RUtilpol::check_col_names(
+    "batch_success_table",
+    c(
+      "batch_number",
+      "batch_name",
+      "sequence_list",
+      "batch_size",
+      "time_to_stop",
+      "done"
+    )
+  )
 
   # create a loop counter, which starts at 1
   loop_counter <- 1
-
-  number_of_batches <-
-    data_source_batch %>%
-    dplyr::distinct(batch_number) %>%
-    nrow()
 
   # Chronology computation  -----
 
@@ -98,101 +131,97 @@ chron_recalibrate_in_batches <- function(data_source_chron,
       current_batch_name <- data_source_batch$batch_name[i]
 
       if (
-        data_source_batch$done[i] == FALSE
+        isTRUE(data_source_batch$done[i])
       ) {
-        RUtilpol::output_comment(
-          msg = paste("batch", current_batch_n, "out of", number_of_batches)
-        )
+        next
+      }
 
-        # subset data in the selected batch
-        temp_data <-
-          data_source_chron %>%
-          dplyr::filter(dataset_id %in% data_source_batch$sequence_list[[i]])
+      RUtilpol::output_comment(
+        msg = paste("batch", current_batch_n, "out of", number_of_batches)
+      )
 
-        # setup plan for parallel computation
-        future::plan(
-          strategy = future::multisession(),
-          workers = number_of_cores
-        )
+      # subset data in the selected batch
+      temp_data <-
+        data_source_chron %>%
+        dplyr::filter(dataset_id %in% data_source_batch$sequence_list[[i]])
 
-        # try to run Chronology
-        try(
-          expr = {
-            # compute within time period. If longer than `time_to_stop`,
-            #   stop computation
-            R.utils::withTimeout(
-              {
-                bchron_temp_run <-
-                  temp_data %>%
-                  dplyr::mutate(
-                    bchron_mod = furrr::future_map(
-                      .x = chron_control_format,
-                      .f = ~ chron_run_bchron(
-                        data_source = .x,
-                        n_iterations = n_iterations, # [config_criteria]
-                        n_burn = n_burn, # [config_criteria]
-                        n_thin = n_thin
-                      ), # [config_criteria]
-                      .options = furrr::furrr_options(seed = set_seed)
-                    )
-                  ) # [config_criteria]
+      # setup plan for parallel computation
+      future::plan(
+        strategy = future::multisession(),
+        workers = number_of_cores
+      )
 
-                # assign the test run temporary result
-                assign("bchron_temp", bchron_temp_run, envir = current_env)
+      # try to run Chronology
+      try(
+        expr = {
+          # compute within time period. If longer than `time_to_stop`,
+          #   stop computation
+          R.utils::withTimeout(
+            {
+              bchron_temp_run <-
+                furrr::future_map(
+                  .x = temp_data$chron_control_format,
+                  .f = ~ chron_run_bchron(
+                    data_source = .x,
+                    n_iterations = n_iterations,
+                    n_burn = n_burn,
+                    n_thin = n_thin
+                  ),
+                  .options = furrr::furrr_options(seed = set_seed)
+                ) %>%
+                rlang::set_names(
+                  nm = temp_data$dataset_id
+                )
 
-                # delete test run
-                rm(bchron_temp_run, envir = current_env)
-              },
-              timeout = data_source_batch$time_to_stop[[i]],
-              onTimeout = "silent"
-            )
-          },
-          silent = TRUE
-        )
+              # assign the test run temporary result
+              assign("bchron_temp", bchron_temp_run, envir = current_env)
 
-        RUtilpol::output_comment(
-          msg = paste("batch", current_batch_n, "finished")
-        )
-
-        # if temporary result is produced
-        if (
-          exists("bchron_temp", envir = current_env) == TRUE
-        ) {
-          RUtilpol::check_col_names("bchron_temp", "bchron_mod")
-
-          # save the batch as temporarily
-          readr::write_rds(
-            bchron_temp,
-            paste0(
-              dir, temp_path,
-              current_batch_name, ".rds"
-            ),
-            compress = "gz"
+              # delete test run
+              rm(bchron_temp_run, envir = current_env)
+            },
+            timeout = data_source_batch$time_to_stop[[i]],
+            onTimeout = "silent"
           )
+        },
+        silent = TRUE
+      )
 
-          if (
-            list.files(
-              path = paste0(dir, temp_path),
-              pattern = "batch."
-            ) %>%
-              stringr::str_detect(., current_batch_name) %>%
-              any()
-          ) {
-            # mark status of batch
-            data_source_batch$done[i] <- TRUE
+      RUtilpol::output_comment(
+        msg = paste("batch", current_batch_n, "finished")
+      )
 
-            RUtilpol::output_comment(
-              msg = "attempt = successful"
-            )
-          }
+      # if temporary result is produced
+      if (
+        exists("bchron_temp", envir = current_env) == TRUE
+      ) {
 
-          # remove the temporary result
-          rm(bchron_temp, envir = current_env)
-        } else {
-          RUtilpol::output_comment(
-            msg = "attempt = unsuccessful"
+        # save the batch as individual sequences
+        purrr::walk2(
+          .x = bchron_temp,
+          .y = names(bchron_temp),
+          .f = ~ RUtilpol::save_latest_file(
+            object_to_save = .x,
+            file_name = .y,
+            dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
+            prefered_format = "rds",
+            use_sha = TRUE,
+            verbose = FALSE
           )
-        }
+        )
+
+        # mark status of batch
+        data_source_batch$done[i] <- TRUE
+
+        RUtilpol::output_comment(
+          msg = "attempt = successful"
+        )
+
+        # remove the temporary result
+        rm(bchron_temp, envir = current_env)
+      } else {
+        RUtilpol::output_comment(
+          msg = "attempt = unsuccessful"
+        )
       }
     }
 
@@ -206,19 +235,11 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     loop_counter <- loop_counter + 1
   }
 
-  # Merge all the successful batches together  -----
-
-  # load the batches
-  pres_batch <-
-    list.files(
-      path = paste0(dir, temp_path),
-      pattern = "batch."
-    ) %>%
-    stringr::str_replace(., ".rds", "")
+  # Get the succesfull batches  -----
 
   # detect the number of successful batches
   number_of_successes <-
-    length(pres_batch)
+    sum(batch_success_table$done == TRUE)
 
   RUtilpol::output_comment(
     msg = paste(
@@ -226,51 +247,21 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     )
   )
 
-  # merge all successfully batches together
-  bchron_output <-
-    purrr::map_dfr(
-      .x = pres_batch,
-      .f = ~ readr::read_rds(
-        paste0(
-          dir, temp_path,
-          .x, ".rds"
-        )
-      )
-    ) %>%
-    dplyr::bind_rows()
+  # get list of all sequences which did not estimate
+  failed_batches <-
+    batch_success_table %>%
+    dplyr::filter(done == FALSE)
 
+  if (
+    nrow(failed_batches) < 1
+  ) {
+    return()
+  }
 
-  RUtilpol::stop_if_not(
-    exists("bchron_output", envir = current_env),
-    true_msg = "All batches were successfully merged together",
-    false_msg = "there has been an issue with loading of individual batch files"
-  )
+  failed_seq <-
+    failed_batches %>%
+    purrr::pluck("sequence_list") %>%
+    unlist()
 
-  chron_result_batch <-
-    list(
-      bchron_output,
-      data_source_batch
-    ) %>%
-    purrr::set_names(
-      nm = c("bchron_output", "batch_success_table")
-    )
-
-  RUtilpol::output_comment("Saving temporarily output")
-
-  readr::write_rds(
-    x = chron_result_batch,
-    file = paste0(dir, temp_path, "chron_result_batch.rds")
-  )
-
-  RUtilpol::output_comment("Deleting temporarily batches output")
-
-  # delete all the batch files
-  purrr::walk(
-    .x = pres_batch,
-    .f = ~ file.remove(
-      paste0(dir, temp_path, .x, ".rds")
-    )
-  )
-
-  return(chron_result_batch)
+  return(failed_seq)
 }
