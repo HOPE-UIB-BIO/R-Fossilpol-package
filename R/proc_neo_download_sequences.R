@@ -13,32 +13,6 @@ proc_neo_download_sequences <- function(allds,
 
   RUtilpol::check_class("n_tries", "numeric")
 
-  # helper functions
-  get_missing_names <- function(path_to_folder, name_vector) {
-
-    # pre-alocate that all sequences are missing
-    ds_absent <- name_vector
-
-    # check which sequences are present
-    ds_present <-
-      list.files(
-        path_to_folder
-      )
-
-    if (
-      length(ds_present) > 0
-    ) {
-      ds_present_striped <-
-        RUtilpol::get_clean_name(ds_present)
-
-      # select data NOT downloaded
-      ds_absent <-
-        name_vector[!name_vector %in% ds_present_striped]
-    }
-
-    return(ds_absent)
-  }
-
   # make a vector with all se dataset_ids
   ds_vector <-
     allds %>%
@@ -65,7 +39,7 @@ proc_neo_download_sequences <- function(allds,
 
   # get all missing names
   ds_absent <-
-    get_missing_names(
+    util_get_missing_seq_names(
       path_to_folder = path_to_indiv_folder,
       name_vector = ds_vector
     )
@@ -157,7 +131,7 @@ proc_neo_download_sequences <- function(allds,
   # check again if all are downloaded
   # extract the sequences which were not successfully downloaded
   cannot_download <-
-    get_missing_names(
+    util_get_missing_seq_names(
       path_to_folder = path_to_indiv_folder,
       name_vector = ds_vector
     )
