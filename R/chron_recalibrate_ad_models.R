@@ -62,6 +62,27 @@ chron_recalibrate_ad_models <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
+    # add slash if neede
+    dir <-
+      RUtilpol::add_slash_to_path(dir)
+
+    # common path to the Chronology folder
+    path_to_chron <-
+      paste0(dir, "Data/Processed/Chronology/")
+
+    # check all the models saved
+    seq_present <-
+      list.files(
+        paste0(path_to_chron, "Models_full/")
+      ) %>%
+      RUtilpol::get_clean_name() %>%
+      unique() %>%
+      sort()
+
+    seq_prepared <-
+      data_source %>%
+      purrr::pluck("dataset_id")
+
     temp_path <- "/Data/Processed/Chronology/Temporary_output/"
 
     # Variables definition for computation  -----
