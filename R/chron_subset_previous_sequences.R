@@ -24,18 +24,25 @@ chron_subset_previous_sequences <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
+    dir <- RUtilpol::add_slash_to_path(dir)
+
+    # pre-alocate the result as all sequences
     res <- data_source
 
+    seq_to_run <-
+      data_source %>%
+      purrr::pluck("dataset_id")
+
     # check if AD models are already calculated
-    latest_bchron <-
-      RUtilpol::get_latest_file_name(
-        file_name = "chron_predicted_ages",
-        dir = paste0(
-          dir, "/Data/Processed/Chronology/Predicted_ages"
-        )
+    # get all missing names
+    seq_absent <-
+      util_get_missing_seq_names(
+        dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
+        name_vector = seq_to_run
       )
 
-    previous_AD_present <- (is.na(latest_bchron) == FALSE)
+    previous_AD_present <-
+      length(seq_absent) > 0
 
     # assume that user does (not) want to run AD de novo
     run_AD_denovo_confirm <- rerun_ad
@@ -62,7 +69,7 @@ chron_subset_previous_sequences <-
       # warn user
       RUtilpol::output_comment(
         msg = paste(
-          "Cannot use the previous AD models as there is no 'bchon_output'",
+          "Cannot detect previous AD models",
           "Will you re-calibrate all age-depth model 'de novo'"
         )
       )
@@ -76,36 +83,19 @@ chron_subset_previous_sequences <-
       run_AD_denovo_confirm == FALSE
     ) {
 
-      # Look into the outputs and load the data for last Chronology output
-      #   then filter out all sites, which have Chronology output
+      # Look into the outputs and filter out all sites,
+      #   which have Chronology output
 
-      RUtilpol::output_comment(
-        msg = "Previous AD models will be loaded"
-      )
-
-      # load the output
-      bchron_output_done <-
-        RUtilpol::get_latest_file(
-          file_name = "chron_predicted_ages",
-          dir = paste0(
-            dir, "/Data/Processed/Chronology/Predicted_ages"
-          )
-        )
-
-      RUtilpol::check_if_loaded(
-        file_name = "bchron_output_done",
-        env = current_env
-      )
-
-      RUtilpol::check_class("bchron_output_done", "data.frame")
-
-      bchron_output_done <-
-        bchron_output_done %>%
-        dplyr::filter(!(dataset_id %in% sites_to_rerun))
+      seq_to_rerun <-
+        c(
+          seq_absent,
+          sites_to_rerun
+        ) %>%
+        unique()
 
       res <-
-        res %>%
-        dplyr::filter(!dataset_id %in% bchron_output_done$dataset_id)
+        data_source %>%
+        dplyr::filter(dataset_id %in% seq_to_rerun)
     } else {
       RUtilpol::output_comment(
         msg = "AD models will be created 'de novo'"
