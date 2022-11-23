@@ -56,6 +56,10 @@ chron_recalibrate_ad_models <- function(data_source,
 
   RUtilpol::check_class("set_seed", "numeric")
 
+  RUtilpol::check_class("batch_attempts", "numeric")
+
+  RUtilpol::check_class("time_per_sequence", "numeric")
+
   RUtilpol::check_class("dir", "character")
 
   current_frame <- sys.nframe()
@@ -143,6 +147,7 @@ chron_recalibrate_ad_models <- function(data_source,
       chron_recalibrate_in_batches(
         data_source_chron = data_source,
         batch_size = batch_size,
+        time_per_sequence = time_per_sequence,
         dir = dir,
         n_iterations = n_iterations,
         n_burn = n_burn,
