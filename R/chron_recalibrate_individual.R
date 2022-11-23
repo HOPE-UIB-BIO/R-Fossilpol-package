@@ -40,6 +40,8 @@ chron_recalibrate_individual <- function(data_source_chron,
 
   RUtilpol::check_class("dir", "character")
 
+  dir <- RUtilpol::add_slash_to_path(dir)
+
   crash_file <- util_load_chron_crashfile(dir)
 
   # set path to Crash file
@@ -49,7 +51,10 @@ chron_recalibrate_individual <- function(data_source_chron,
   # subset
   data_to_run <-
     data_source_chron %>%
-    dplyr::filter(!dataset_id %in% crash_file$dataset_id)
+    dplyr::filter(!dataset_id %in% crash_file$dataset_id) %>%
+    dplyr::mutate(
+      row_n = dplyr::row_number()
+    )
 
   n_seq <- nrow(data_to_run)
 
@@ -60,88 +65,90 @@ chron_recalibrate_individual <- function(data_source_chron,
   )
 
   # compute for each Site in data_to_run
-  broken_sites_done <-
-    data_to_run %>%
-    dplyr::mutate(
-      row_n = dplyr::row_number(),
-      bchron_mod = purrr::pmap(
-        .l = list(row_n, dataset_id, chron_control_format),
-        .f = ~ {
-          current_frame <- sys.nframe()
-          current_env <- sys.frame(which = current_frame)
+  purrr::pwalk(
+    .l = list(
+      data_to_run$row_n, # ..1
+      data_to_run$dataset_id, # ..2
+      data_to_run$chron_control_format # ..3
+    ),
+    .f = ~ {
+      current_frame <- sys.nframe()
+      current_env <- sys.frame(which = current_frame)
 
-          RUtilpol::output_comment(
-            msg = paste0(
-              "dataset: ", ..2, ". Number ", ..1, " out of ",
-              n_seq
-            )
+      RUtilpol::output_comment(
+        msg = paste0(
+          "dataset: ", ..2, ". Number ", ..1, " out of ",
+          n_seq
+        )
+      )
+
+      # update the list
+      crash_dataset_list <-
+        c(crash_file$dataset_id, ..2) %>%
+        unique()
+
+      # create new crash file including the current file
+      crash_file <-
+        tibble::tibble(
+          dataset_id = crash_dataset_list
+        )
+
+      # save crash file
+      readr::write_csv(
+        crash_file,
+        paste0(crash_file_path, "Crash_file.csv")
+      )
+
+      try(
+        expr = {
+          # try to run Bchron within `time_to_stop`  time window
+          R.utils::withTimeout(
+            {
+              result <-
+                chron_run_bchron(
+                  data_source = ..3,
+                  n_iterations = n_iterations,
+                  n_burn = n_burn,
+                  n_thin = n_thin
+                )
+            },
+            timeout = time_to_stop,
+            onTimeout = "silent"
           )
-
-          # update the list
-          crash_dataset_list <-
-            c(crash_file$dataset_id, ..2) %>%
-            unique()
-
-          # create new crash file including the current file
-          crash_file <-
-            tibble::tibble(
-              dataset_id = crash_dataset_list
-            )
-
-          # save crash file
-          readr::write_csv(
-            crash_file,
-            paste0(crash_file_path, "Crash_file.csv")
-          )
-
-          try(expr = {
-            # try to run Bchron within `time_to_stop`  time window
-            R.utils::withTimeout(
-              {
-                result <-
-                  chron_run_bchron(
-                    data_source = ..3,
-                    n_iterations = n_iterations,
-                    n_burn = n_burn,
-                    n_thin = n_thin
-                  )
-              },
-              timeout = time_to_stop,
-              onTimeout = "silent"
-            )
-          })
-
-          # if chron fail, insert NA value
-          if (
-            !exists("result", envir = current_env)
-          ) {
-            result <- NA
-          }
-
-          # save result and delete the object
-          broken_sites_res <- result
-          rm(result, envir = current_env)
-
-          # remove the site from crash list
-          crash_file <-
-            crash_file %>%
-            dplyr::filter(dataset_id != ..2)
-
-          # save crash file
-          readr::write_csv(
-            crash_file,
-            paste0(crash_file_path, "Crash_file.csv")
-          )
-
-          RUtilpol::output_comment(
-            msg = paste0("dataset: ", ..2, ". Number ", ..1, " - Done")
-          )
-
-          return(broken_sites_res)
         }
       )
-    ) %>%
-    dplyr::select(-row_n)
 
+      # if chron fail, insert NA value
+      if (
+        !exists("result", envir = current_env)
+      ) {
+        return()
+      }
+
+      # remove the site from crash list
+      crash_file <-
+        crash_file %>%
+        dplyr::filter(dataset_id != ..2)
+
+      # save crash file
+      readr::write_csv(
+        crash_file,
+        paste0(crash_file_path, "Crash_file.csv")
+      )
+
+      RUtilpol::save_latest_file(
+        object_to_save = result,
+        file_name = ..2,
+        dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
+        prefered_format = "rds",
+        use_sha = TRUE,
+        verbose = FALSE
+      )
+
+      RUtilpol::output_comment(
+        msg = paste0("dataset: ", ..2, ". Number ", ..1, " - Done")
+      )
+    }
+  )
   return()
 }
