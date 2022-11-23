@@ -1,17 +1,17 @@
 #' @title Recalibrate age-depth models for individual sequences
 #' @param data_source_chron  Data.frame containing `dataset_id` and `chron_control_format`
-#' @param data_source_batch Data.frame with the description of the status
-#' of the individual batches
-#' @param n_iterations The number of iterations used by Bchron
-#' @param n_burn The number of starting iterations to discard used by Bchron
-#' @param n_thin he step size for every iteration to keep beyond
+#' @param n_iterations Numeric. The number of iterations used by Bchron
+#' @param n_burn 
+#' Numeric. The number of starting iterations to discard used by Bchron
+#' @param n_thin 
+#' Numeric. The step size for every iteration to keep beyond
 #' the burnin used by Bchron
-#' @param time_to_stop Time to wait until saving the sequence's `dataset_id` into
+#' @param time_to_stop 
+#' Numeric. Time to wait until saving the sequence's `dataset_id` into
 #' `Crash_file`as unsuccessfully, due to freeze of calculation
-#' @param dir Path to the data storage folder
+#' @param dir Character. Path to the data storage folder
 chron_recalibrate_individual <-
   function(data_source_chron,
-           data_source_batch,
            n_iterations = 10e3,
            n_burn = 2e3,
            n_thin = 8,
@@ -33,18 +33,6 @@ chron_recalibrate_individual <-
       )
     )
 
-    RUtilpol::check_class("data_source_batch", "data.frame")
-
-    RUtilpol::check_col_names(
-      "data_source_batch",
-      c(
-        "batch_number",
-        "batch_name",
-        "batch_size",
-        "done"
-      )
-    )
-
     RUtilpol::check_class("n_iterations", "numeric")
 
     RUtilpol::check_class("n_burn", "numeric")
@@ -59,31 +47,12 @@ chron_recalibrate_individual <-
     crash_file_path <-
       paste0(dir, "/Data/Input/Chronology_setting/Bchron_crash/")
 
-    # extract dataset_id of datasets that are not present in
-    #   successful batch
-    broken_sites_vec <-
-      data_source_batch %>%
-      dplyr::filter(done == FALSE) %>%
-      purrr::pluck("sequence_list") %>%
-      unlist() %>%
-      unique() %>%
-      sort()
-
     # subset
     broken_sites <-
       data_source_chron %>%
-      dplyr::filter(!dataset_id %in% crash_file$dataset_id) %>%
-      dplyr::filter(dataset_id %in% broken_sites_vec)
+      dplyr::filter(!dataset_id %in% crash_file$dataset_id) 
 
     broken_sites_number <- nrow(broken_sites)
-
-    time_to_stop <-
-      data_source_batch %>%
-      dplyr::mutate(
-        time_per_sequence = time_to_stop
-      ) %>%
-      purrr::pluck("time_per_sequence") %>%
-      mean()
 
     RUtilpol::output_comment(
       msg = paste(
