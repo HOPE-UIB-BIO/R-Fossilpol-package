@@ -14,27 +14,6 @@ proc_neo_download_sequences <- function(allds,
   RUtilpol::check_class("n_tries", "numeric")
 
   # helper functions
-  get_clean_name <- function(data_source) {
-
-    # detect dates
-    data_source_date_apend <-
-      paste0(
-        ".",
-        RUtilpol:::get_date_from_name(data_source),
-        ".*"
-      )
-
-    # remove dates
-    data_source_striped <-
-      stringr::str_replace(
-        string = data_source,
-        pattern = data_source_date_apend,
-        ""
-      )
-
-    return(data_source_striped)
-  }
-
   get_missing_names <- function(path_to_folder, name_vector) {
 
     # pre-alocate that all sequences are missing
@@ -50,7 +29,7 @@ proc_neo_download_sequences <- function(allds,
       length(ds_present) > 0
     ) {
       ds_present_striped <-
-        get_clean_name(ds_present)
+        RUtilpol::get_clean_name(ds_present)
 
       # select data NOT downloaded
       ds_absent <-
@@ -202,7 +181,7 @@ proc_neo_download_sequences <- function(allds,
     list.files(
       path_to_indiv_folder
     ) %>%
-    get_clean_name()
+     RUtilpol::get_clean_name()
 
   RUtilpol::output_comment(
     paste(
