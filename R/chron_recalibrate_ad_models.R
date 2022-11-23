@@ -69,18 +69,8 @@ chron_recalibrate_ad_models <- function(data_source,
   path_to_chron <-
     paste0(dir, "Data/Processed/Chronology/")
 
-  seq_prepared <-
-    data_source %>%
-    purrr::pluck("dataset_id")
-
-  # get all missing names
-  seq_absent <-
-    util_get_missing_seq_names(
-      dir = paste0(path_to_chron, "Models_full/"),
-      name_vector = seq_prepared
-    )
-
-  n_seq_to_run <- length(seq_absent)
+  n_seq_to_run <- 
+    nrow(data_source)
 
   # test if there are any sequences to run AD modelling
   if (
@@ -99,66 +89,6 @@ chron_recalibrate_ad_models <- function(data_source,
     paste(
       n_seq_to_run,
       "age-depth model(s) will be recalibrated"
-    )
-  )
-
-  data_to_run <-
-    data_source %>%
-    dplyr::filter(dataset_id %in% seq_absent)
-
-  # detect the number of batches needed to split the data into base on the
-  #   `batch_size` selected by user
-  number_of_batches <-
-    ceiling(nrow(data_to_run) / batch_size)
-
-  # a dummy data.freme to keep track of progress and number of tries for each batch
-  batch_success_table <-
-    tibble::tibble(
-      batch_number = 1:number_of_batches,
-      batch_name = paste0("batch_", formatC(batch_number, width = 3, flag = 0)),
-      # list of sequences in each batch
-      sequence_list = purrr::map(
-        .x = batch_number,
-        .f = ~ data_to_run %>%
-          dplyr::slice(
-            seq(
-              from = batch_size * (.x - 1) + 1,
-              to = min(c(batch_size * (.x), nrow(data_to_run))),
-              by = 1
-            )
-          ) %>%
-          purrr::pluck("dataset_id")
-      ),
-      # write sequences as vector
-      sequence_vec = purrr::map_chr(
-        .x = sequence_list,
-        .f = ~ RUtilpol::paste_as_vector(.x, sep = "")
-      ),
-      # number of sequences in each batch
-      batch_size = purrr::map_dbl(
-        .x = sequence_list,
-        .f = length
-      ),
-      # set a value for the process to wait (in seconds) for each batch
-      time_to_stop = (batch_size * time_per_sequence) * max(c((floor(iteration_multiplier / 2)), 1)),
-      done = FALSE,
-      .rows = number_of_batches
-    )
-
-  RUtilpol::check_if_loaded(
-    file_name = "batch_success_table",
-    env = current_env
-  )
-
-  RUtilpol::check_col_names(
-    "batch_success_table",
-    c(
-      "batch_number",
-      "batch_name",
-      "sequence_list",
-      "batch_size",
-      "time_to_stop",
-      "done"
     )
   )
 
@@ -195,6 +125,7 @@ chron_recalibrate_ad_models <- function(data_source,
   temp_path <-
     paste0(path_to_chron, "Temporary_output/")
 
+
   if (
     style_selection == "batches"
   ) {
@@ -208,52 +139,46 @@ chron_recalibrate_ad_models <- function(data_source,
       )
     )
 
-    chron_recalibrate_in_batches(
-      data_source_chron = data_to_run,
-      data_source_batch = batch_success_table,
-      dir = dir,
-      n_iterations = n_iterations,
-      n_burn = n_burn,
-      n_thin = n_thin,
-      number_of_cores = number_of_cores,
-      set_seed = set_seed,
-      maximum_number_of_loops = batch_attempts
-    )
+    failed_seq <-
+      chron_recalibrate_in_batches(
+        data_source_chron = data_source,
+        data_source_batch = batch_success_table,
+        dir = dir,
+        n_iterations = n_iterations,
+        n_burn = n_burn,
+        n_thin = n_thin,
+        number_of_cores = number_of_cores,
+        set_seed = set_seed,
+        maximum_number_of_loops = batch_attempts
+      )
   }
 
-  # check agan the sequences to run
-  # get all missing names
-  seq_absent <-
-    util_get_missing_seq_names(
-      dir = paste0(path_to_chron, "Models_full/"),
-      name_vector = seq_prepared
-    )
-
-  n_seq_to_run <- length(seq_absent)
+  n_seq_failed <- length(failed_seq)
 
   # if all succesfull
   if (
-    n_seq_to_run < 1
+    n_seq_failed < 1
   ) {
     return()
   }
 
   RUtilpol::output_comment(
     msg = paste(
-      "Individual calculation will be done for", n_seq_to_run, "sequences"
+      "Individual calculation will be done for", n_seq_failed, "sequences"
     )
   )
 
   data_to_run <-
     data_source %>%
-    dplyr::filter(dataset_id %in% seq_absent)
+    dplyr::filter(dataset_id %in% failed_seq)
 
   chron_recalibrate_individual(
     data_source_chron = data_to_run,
-    data_source_batch = batch_success_table,
     n_iterations = n_iterations,
     n_burn = n_burn,
     n_thin = n_thin,
     dir = dir
   )
+
+  return()
 }
