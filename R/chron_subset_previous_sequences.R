@@ -1,4 +1,5 @@
-#' @title Subset the chronology control tables based on the presence of the previous AD models
+#' @title Subset the chronology control tables based on the presence
+#' of the previous AD models
 #' @param data_source Data.frame with `dataset_id` and `chron_control`
 #' @param dir Path to the data storage folder
 #' @param rerun_ad Logical. Should age-depth models be re-run 'de novo' for
@@ -40,18 +41,18 @@ chron_subset_previous_sequences <- function(data_source,
       name_vector = seq_to_run
     )
 
-  previous_AD_present <-
+  previous_ad_present <-
     length(seq_absent) > 0
 
   # assume that user does (not) want to run AD de novo
-  run_AD_denovo_confirm <- rerun_ad
+  run_ad_denovo_confirm <- rerun_ad
 
-  # if user wants to run it de novo and there is a previous version of AD models,
-  #   confirm that action
+  # if user wants to run it de novo and there is a previous version
+  #   of AD models, confirm that action
   if (
-    rerun_ad == TRUE & previous_AD_present == TRUE
+    isTRUE(rerun_ad) && isTRUE(previous_ad_present)
   ) {
-    run_AD_denovo_confirm <-
+    run_ad_denovo_confirm <-
       util_confirm(
         msg = paste(
           "Detected previous calculation of age-depth models.",
@@ -62,7 +63,7 @@ chron_subset_previous_sequences <- function(data_source,
 
   # if there is not any previous version of AD models
   if (
-    run_AD_denovo_confirm == FALSE & previous_AD_present == FALSE
+    isFALSE(run_ad_denovo_confirm) && isFALSE(previous_ad_present)
   ) {
 
     # warn user
@@ -74,12 +75,12 @@ chron_subset_previous_sequences <- function(data_source,
     )
 
     # switch to calcultion de novo
-    run_AD_denovo_confirm <- TRUE
+    run_ad_denovo_confirm <- TRUE
   }
 
   # if user does NOT want to create de novo
   if (
-    run_AD_denovo_confirm == FALSE
+    isFALSE(run_ad_denovo_confirm)
   ) {
 
     # Look into the outputs and filter out all sites,
