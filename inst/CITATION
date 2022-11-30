@@ -1,0 +1,16 @@
+citHeader("To cite RFossilpol in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "A guide to process and standardise global palaeoecological data of fossil pollen for large-scale syntheses",
+  author   = "Suzette G.A. Flantua, Ondrej Mottl, Vivian A. Felde, Kuber P. Bhatta, Hilary H. Birks, John-Arvid Grytnes, Alistair W.R. Seddon, H. John B. Birks",
+  journal  = "Global Ecology and Biogeography",
+  year     = 2023,
+  url      = "https://hope-uib-bio.github.io/FOSSILPOL-website/",
+  textVersion = paste(
+    "Suzette G.A. Flantua, Ondrej Mottl, Vivian A. Felde, Kuber P. Bhatta,", 
+    "Hilary H. Birks, John-Arvid Grytnes, Alistair W.R. Seddon, H. John B. Birks (2023).", 
+    "'A guide to process and standardise global palaeoecological data of fossil pollen for large-scale syntheses'",
+     "_Global Ecology and Biogeography_, in prep, <https://hope-uib-bio.github.io/FOSSILPOL-website/>"
+  )
+)
