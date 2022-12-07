@@ -1,10 +1,12 @@
 #' @title Recalibrate all age-depth models base on chronology control tables
-#' @param data_source Data.frame containing `dataset_id` and `chron_control_format`
+#' @param data_source
+#' Data.frame containing `dataset_id` and `chron_control_format`
 #' @param batch_size Number of individual sequences re-calibrate in a single
 #' batch using parallel computation
 #' @param number_of_cores Number of CPU cores to use in parallel computation
 #' @param default_iteration The number of iterations used by Bchron
-#' @param default_burn The number of starting iterations to discard used by Bchron
+#' @param default_burn
+#' The number of starting iterations to discard used by Bchron
 #' @param default_thin The step size for every iteration to keep beyond
 #' the burnin used by Bchron
 #' @param iteration_multiplier Value to be used to multiply `iteration`, `burn`,
@@ -13,13 +15,14 @@
 #' @param dir Path to the data storage folder
 #' @param batch_attempts Number of tries each batch should be considered
 #' before skipping it
-#' @param time_per_sequence Time (in sec) dedicated for each sequence to estimate
+#' @param time_per_sequence
+#' Time (in sec) dedicated for each sequence to estimate
 #' age-depth model. If it takes computer longer that selected value, estimation
 #' is considered as unsuccessful and skipped. The time value is multiplied by
 #' `iteration_multiplier` as more iteration required more time. Time for whole
-#' batch is calculated as `time_per_sequence` multiplied by `iteration_multiplier`
-#' multiplied by the number of sequences per batch (which is estimated based on
-#' `number_of_cores`)
+#' batch is calculated as `time_per_sequence` multiplied by
+#' `iteration_multiplier` multiplied by the number of sequences per batch
+#' (which is estimated based on `number_of_cores`)
 #' @export
 chron_recalibrate_ad_models <- function(data_source,
                                         batch_size = 1,
@@ -62,9 +65,6 @@ chron_recalibrate_ad_models <- function(data_source,
 
   RUtilpol::check_class("dir", "character")
 
-  current_frame <- sys.nframe()
-  current_env <- sys.frame(which = current_frame)
-
   # add slash if neede
   dir <-
     RUtilpol::add_slash_to_path(dir)
@@ -96,26 +96,6 @@ chron_recalibrate_ad_models <- function(data_source,
     )
   )
 
-  # open custom menu to select confirmation
-  style_selection <-
-    switch(utils::menu(
-      choices = c("both (batches and then individual) - recommended", "individual"),
-      title = cat(
-        "User can specify which kind of age-depth modeling wants to do", "\n",
-        "\n",
-        "batches = Several age-depth models are then created",
-        "at the same time using parralel computation.",
-        "This is done by splitting the sequences into batches, with each",
-        "batch containing a certain number of sequences",
-        "Moreover, the “failed” batches are estimated one by one.", "\n",
-        "\n",
-        "individual = age-depth models for sequences are estimated one by one", "\n",
-        "\n"
-      )
-    ),
-    "batches",
-    "individual"
-    )
 
   # Variables definition for computation  -----
 
@@ -126,18 +106,28 @@ chron_recalibrate_ad_models <- function(data_source,
   n_burn <- default_burn * iteration_multiplier
   n_thin <- default_thin * iteration_multiplier
 
-  temp_path <-
-    paste0(path_to_chron, "Temporary_output/")
+  style_selection <-
+    ifelse(
+      test = isTRUE(number_of_cores > 1),
+      yes = "batches",
+      no = "individual"
+    )
 
+  # pre-alocate data file
+  data_to_run <-
+    data_source
 
   if (
     style_selection == "batches"
   ) {
     RUtilpol::output_comment(
       paste(
-        "Age-depth re-calibration will be done in", number_of_batches, "batches\n",
+        "Several age-depth models will re-calibrated",
+        "at the same time using parralel computation in",
+        number_of_batches, "batches\n",
         "Each batch will have", batch_attempts, "attempts to calculate.",
-        "In case that the whole bach is unsuccessful all", batch_attempts, "times,",
+        "In case that the whole bach is unsuccessful all",
+        batch_attempts, "times,",
         "another subroutine can be used to calculate age-depth models",
         "for each sequence individually."
       )
@@ -145,7 +135,7 @@ chron_recalibrate_ad_models <- function(data_source,
 
     failed_seq <-
       chron_recalibrate_in_batches(
-        data_source_chron = data_source,
+        data_source_chron = data_to_run,
         batch_size = batch_size,
         time_per_sequence = time_per_sequence,
         dir = dir,
@@ -156,26 +146,28 @@ chron_recalibrate_ad_models <- function(data_source,
         set_seed = set_seed,
         maximum_number_of_loops = batch_attempts
       )
-  }
 
-  n_seq_failed <- length(failed_seq)
+    n_seq_failed <- length(failed_seq)
 
-  # if all succesfull
-  if (
-    n_seq_failed < 1
-  ) {
-    return()
+    # if all succesfull
+    if (
+      n_seq_failed < 1
+    ) {
+      return()
+    }
+
+    data_to_run <-
+      data_to_run %>%
+      dplyr::filter(dataset_id %in% failed_seq)
+
+    n_seq_to_run <- n_seq_failed
   }
 
   RUtilpol::output_comment(
     msg = paste(
-      "Individual calculation will be done for", n_seq_failed, "sequences"
+      "Individual calculation will be done for", n_seq_to_run, "sequences"
     )
   )
-
-  data_to_run <-
-    data_source %>%
-    dplyr::filter(dataset_id %in% failed_seq)
 
   chron_recalibrate_individual(
     data_source_chron = data_to_run,
