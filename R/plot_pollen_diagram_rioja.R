@@ -121,7 +121,7 @@ plot_pollen_diagram_rioja <- function(data_percentages,
   for (i in 1:need_plots) {
     keep <- 1:ntaxa > (i - 1) / need_plots * ntaxa & 1:ntaxa <= i / need_plots * ntaxa
     ex1 <- colSums(data_percentages_sel[, keep]) < 10
-    tk1 <- seq(min(y_var_val), max(y_var_val), by = 100)
+    tk1 <- seq(min(y_var_val), max(y_var_val, na.rm = TRUE), by = 100)
     c_0 <- tk1[seq(1, length(tk1), 5)]
 
     graphics::par(fig = c(0.03, 1, 0.007, 1))
