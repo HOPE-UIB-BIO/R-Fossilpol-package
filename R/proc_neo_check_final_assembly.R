@@ -40,7 +40,7 @@ proc_neo_check_final_assembly <-
       true_msg = "Depth-age dataset and count dataset have been checked"
     )
 
-    # prepare final table only selecting sequences with both sample_depth and
+    # prepare final table only selecting records with both sample_depth and
     #   raw_counts
     sample_counts_checked <-
       sample_counts_filtered %>%

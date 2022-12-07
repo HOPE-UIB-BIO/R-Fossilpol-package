@@ -15,7 +15,7 @@ proc_get_merged_dataset <-
       msg = "Loading datasets"
     )
 
-    # Load processed Neotoma sequences
+    # Load processed Neotoma records
     neotoma_processed <-
       RUtilpol::get_latest_file(
         file_name = "neotoma_processed",
@@ -33,7 +33,7 @@ proc_get_merged_dataset <-
       private_data == TRUE
       ) {
 
-      # load processed private sequences
+      # load processed private records
       private_processed <-
         RUtilpol::get_latest_file(
           file_name = "private_data_prepared",

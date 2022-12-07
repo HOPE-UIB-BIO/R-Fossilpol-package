@@ -12,7 +12,7 @@ proc_filter_by_dep_env(
 )
 }
 \arguments{
-\item{data_source}{Data.frame with sequences to be filtered}
+\item{data_source}{Data.frame with records to be filtered}
 
 \item{selection_data}{Data.frame with depositional environments presented in the data}
 
@@ -22,6 +22,6 @@ proc_filter_by_dep_env(
 }
 \description{
 Use "stop-check" (see \code{stopcheck_table} function) to load/create
-the table defined by the user. Next, it will filter the sequences in
+the table defined by the user. Next, it will filter the records in
 \code{data_source} based on the selected depositional environments.
 }

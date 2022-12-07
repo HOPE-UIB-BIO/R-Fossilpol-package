@@ -35,7 +35,7 @@ TRUE/FALSE (logical)
 }
 \description{
 Calculate pollen sum of each level and test if it is above
-target_n_grains. Compare sequence has at least X\% (percentage_samples) of
+target_n_grains. Compare record has at least X\% (percentage_samples) of
 levels, within the age period, with enough pollen sum. Level is counted
 "in" period if any part of his 95th age quantile is between age_limit_young
 and age_limit_old.

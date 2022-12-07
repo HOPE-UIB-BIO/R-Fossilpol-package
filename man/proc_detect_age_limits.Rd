@@ -2,7 +2,7 @@
 % Please edit documentation in R/proc_detect_age_limits.R
 \name{proc_detect_age_limits}
 \alias{proc_detect_age_limits}
-\title{Test if sequence is long enough for selected age criteria}
+\title{Test if record is long enough for selected age criteria}
 \usage{
 proc_detect_age_limits(
   data_source,

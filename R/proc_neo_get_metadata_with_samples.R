@@ -59,13 +59,13 @@ proc_neo_get_metadata_with_samples <-
     RUtilpol::stop_if_not(
       nrow(neotoma_sites_meta_data_filtered) > 0,
       false_msg = paste(
-        "There are 0 sequences based on the selected Criteria",
+        "There are 0 records based on the selected Criteria",
         "Please change the geographical criteria."
       ),
       true_msg = paste(
         "Extracted meta information for",
         nrow(neotoma_sites_meta_data_filtered),
-        "sequences"
+        "records"
       )
     )
 
@@ -91,13 +91,13 @@ proc_neo_get_metadata_with_samples <-
     RUtilpol::stop_if_not(
       nrow(neotoma_meta_samples) > 0,
       false_msg = paste(
-        "There are 0 sequences with both meta data and sample data",
+        "There are 0 records with both meta data and sample data",
         "Please change the criteria."
       ),
       true_msg = paste(
         "Both meta data and sample data data were extracted for",
         nrow(neotoma_meta_samples),
-        "sequences"
+        "records"
       )
     )
 

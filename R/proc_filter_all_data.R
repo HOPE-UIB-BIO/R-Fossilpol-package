@@ -1,28 +1,28 @@
-#' @title Filter out levels and sequences based on the criteria
+#' @title Filter out levels and records based on the criteria
 #'
 #' @param data_source Data.frame with  `dataset_id`.
 #' @param variable_vec Vector with name sof columns which should be filtered.
 #' By default the columns are `levels`, `raw_counts`, `counts_harmonised`, and
 #' `age_uncertainty`
 #' @param msg A message to be outputted when error occur with age limits
-#' @param filter_by_pollen_sum Logical. If true, levels and sequences will be
+#' @param filter_by_pollen_sum Logical. If true, levels and records will be
 #' filtered out by `min_n_grains`, `target_n_grains`, `percentage_samples`
 #' @param min_n_grains Number of individual pollen grains which each level has
 #' to have
 #' @param target_n_grains Number of individual pollen grains which each levels
 #' 'preferably' has to have
 #' @param percentage_samples Threshold of number of levels with 'preferable' counts
-#' @param filter_by_age_limit Logical. If true, sequences will be filtered out
+#' @param filter_by_age_limit Logical. If true, records will be filtered out
 #' based on their age limits, defined by `young_age` and `old_age`
-#' @param filter_by_extrapolation Logical. If true, sequences will be filtered
+#' @param filter_by_extrapolation Logical. If true, records will be filtered
 #' out based on the age of the last chronology control point
 #' @param maximum_age_extrapolation Maximum age, which be can be extrapolated
 #' beyond the oldest chronology control point
 #' @param filter_by_interest_region Logical. If true, filter out levels beyond
 #' the age of interest
-#' @param filter_by_number_of_levels Logical. If true, filter out sequences based
+#' @param filter_by_number_of_levels Logical. If true, filter out records based
 #' on the number of levels
-#' @param min_n_levels Minimal number of levels each sequence has to have
+#' @param min_n_levels Minimal number of levels each record has to have
 #' @param use_age_quantiles Logical. Should 95th age quantile be used for data
 #' filtration? This will result in more stable data assembly between different
 #' result of AD modelling BUT require additional data preparation before
@@ -124,13 +124,13 @@ proc_filter_all_data <-
 
     # Potential ways to filter data:
     #   A) Filter out LEVELS by pollen sum
-    #   B) Filter out SEQUENCES based on pollen sums
-    #   C) Filter out SEQUENCES based on age limits
+    #   B) Filter out RECORDS based on pollen sums
+    #   C) Filter out RECORDS based on age limits
     #   D) Filter out LEVELS by the last control point
     #   E) Filter out LEVELS beyond age limit
-    #   F) Filters out SEQUENCES based on N of levels
+    #   F) Filters out RECORDS based on N of levels
 
-    # remove duplicated sequences
+    # remove duplicated records
     data_unique <-
       data_source %>%
       dplyr::distinct(dataset_id, .keep_all = TRUE)
@@ -245,7 +245,7 @@ proc_filter_all_data <-
       util_check_data_table(data_pollen_sum_filtered)
 
       RUtilpol::output_heading(
-        msg = "Filtering sequences by pollen sums"
+        msg = "Filtering records by pollen sums"
       )
 
       RUtilpol::stop_if_not(
@@ -262,8 +262,8 @@ proc_filter_all_data <-
         true_msg = paste("All data have a age criterium")
       )
 
-      # test if each sequence fulfil the criteria
-      #    and filter out sequences which validates the criteria
+      # test if each record fulfil the criteria
+      #    and filter out records which validates the criteria
       data_percentage_filtered <-
         data_pollen_sum_filtered %>%
         dplyr::mutate(
@@ -293,20 +293,20 @@ proc_filter_all_data <-
 
       RUtilpol::check_class("data_percentage_filtered", "data.frame")
 
-      RUtilpol::output_comment("All sequences were filtered out by pollen sum")
+      RUtilpol::output_comment("All records were filtered out by pollen sum")
 
       util_check_data_table(data_percentage_filtered)
     } else {
       data_percentage_filtered <- data_ages_unique_age
     }
 
-    # Filter out SEQUENCES based on age limits  -----
+    # Filter out RECORDS based on age limits  -----
 
     if (
       filter_by_age_limit == TRUE
     ) {
       RUtilpol::output_heading(
-        msg = "Filtering sequences by age limits"
+        msg = "Filtering records by age limits"
       )
 
       RUtilpol::stop_if_not(
@@ -346,7 +346,7 @@ proc_filter_all_data <-
 
       RUtilpol::check_class("data_age_filtered", "data.frame")
 
-      RUtilpol::output_comment("All sequences were filtered out by age limits")
+      RUtilpol::output_comment("All records were filtered out by age limits")
 
       util_check_data_table(data_age_filtered)
     } else {
@@ -453,13 +453,13 @@ proc_filter_all_data <-
       data_age_limit_filtered <- data_extrapolation_filtered
     }
 
-    # Filters out SEQUENCES based on N of levels   -----
+    # Filters out RECORDS based on N of levels   -----
 
     if (
       filter_by_number_of_levels == TRUE
     ) {
       RUtilpol::output_heading(
-        msg = "Filtering out sequnces by number of levels"
+        msg = "Filtering out records by number of levels"
       )
 
       data_n_leves_filtered <-
@@ -484,7 +484,7 @@ proc_filter_all_data <-
 
       RUtilpol::check_col_names("data_n_leves_filtered", "n_sample_counts")
 
-      RUtilpol::output_comment("All sequences were filtered out based on number of levels")
+      RUtilpol::output_comment("All records were filtered out based on number of levels")
 
       util_check_data_table(data_n_leves_filtered)
     } else {
@@ -545,7 +545,7 @@ proc_filter_all_data <-
 
     RUtilpol::check_class("data_filtered_res", "data.frame")
 
-    RUtilpol::output_comment("All sequences and levels were filtered out based on user's preferences")
+    RUtilpol::output_comment("All records and levels were filtered out based on user's preferences")
 
     util_check_data_table(data_filtered_res)
 

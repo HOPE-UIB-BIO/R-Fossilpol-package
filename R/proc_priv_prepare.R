@@ -1,7 +1,7 @@
 #' @title Prepare private datasets
 #' @param data_source Data.frame containing private data assembly
 #' @param data_storage_path Path to the data storage folder
-#' @param min_n_levels Minimal number of levels for sequences to be included
+#' @param min_n_levels Minimal number of levels for records to be included
 #' @param long_min Limit for the smallest longitude
 #' @param long_max Limit for the largest longitude
 #' @param lat_min Limit for the smallest latitude

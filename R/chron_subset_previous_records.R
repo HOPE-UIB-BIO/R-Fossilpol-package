@@ -3,11 +3,11 @@
 #' @param data_source Data.frame with `dataset_id` and `chron_control`
 #' @param dir Path to the data storage folder
 #' @param rerun_ad Logical. Should age-depth models be re-run 'de novo' for
-#' sequences where we have previous age-depth model result?
+#' records where we have previous age-depth model result?
 #' @param sites_to_rerun Optional vector with `dataset_id`s, which should be
 #' re-run disregard of the presence of previous results
 #' @export
-chron_subset_previous_sequences <- function(data_source,
+chron_subset_previous_records <- function(data_source,
                                             dir,
                                             rerun_ad = FALSE,
                                             sites_to_rerun = NULL) {
@@ -26,23 +26,23 @@ chron_subset_previous_sequences <- function(data_source,
 
   dir <- RUtilpol::add_slash_to_path(dir)
 
-  # pre-alocate the result as all sequences
+  # pre-alocate the result as all records
   res <- data_source
 
-  seq_to_run <-
+  ds_to_run <-
     data_source %>%
     purrr::pluck("dataset_id")
 
   # check if AD models are already calculated
   # get all missing names
-  seq_absent <-
-    util_get_missing_seq_names(
+  ds_absent <-
+    util_get_missing_ds_names(
       dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
-      name_vector = seq_to_run
+      name_vector = ds_to_run
     )
 
   is_previous_ad_present <-
-    length(seq_absent) > 0
+    length(ds_absent) > 0
 
   # assume that user does (not) want to run AD de novo
   run_ad_denovo_confirm <- rerun_ad
@@ -86,16 +86,16 @@ chron_subset_previous_sequences <- function(data_source,
     # Look into the outputs and filter out all sites,
     #   which have Chronology output
 
-    seq_to_rerun <-
+    ds_to_rerun <-
       c(
-        seq_absent,
+        ds_absent,
         sites_to_rerun
       ) %>%
       unique()
 
     res <-
       data_source %>%
-      dplyr::filter(dataset_id %in% seq_to_rerun)
+      dplyr::filter(dataset_id %in% ds_to_rerun)
   } else {
     RUtilpol::output_comment(
       msg = "AD models will be created 'de novo'"

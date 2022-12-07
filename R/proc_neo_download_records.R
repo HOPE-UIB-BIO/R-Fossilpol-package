@@ -1,10 +1,10 @@
-#' @title Download all sequences from Neotoma
+#' @title Download all records from Neotoma
 #' @param allds Data.frame with all dataset IDs
 #' @param dir Path to the data storage folder
 #' @param n_tries Number of tries to download each dataset
-#' @return List with all downloaded sequences
+#' @return List with all downloaded records
 #' @export
-proc_neo_download_sequences <- function(allds,
+proc_neo_download_records <- function(allds,
                                         dir,
                                         n_tries = 10) {
   RUtilpol::check_class("allds", "data.frame")
@@ -39,25 +39,25 @@ proc_neo_download_sequences <- function(allds,
 
   # get all missing names
   ds_absent <-
-    util_get_missing_seq_names(
+    util_get_missing_ds_names(
       dir = path_to_indiv_folder,
       name_vector = ds_vector
     )
 
-  n_seq_to_download <- length(ds_absent)
+  n_ds_to_download <- length(ds_absent)
 
-  # if all sequences are downloaded
+  # if all records are downloaded
   if (
-    n_seq_to_download < 1
+    n_ds_to_download < 1
   ) {
-    usethis::ui_done("All selected sequences are downloaded")
+    usethis::ui_done("All selected records are downloaded")
     return()
   }
 
   RUtilpol::output_comment(
     paste(
-      n_seq_to_download,
-      "sequence(s) will be downloaded"
+      n_ds_to_download,
+      "record(s) will be downloaded"
     )
   )
 
@@ -66,28 +66,28 @@ proc_neo_download_sequences <- function(allds,
     "https://api.neotomadb.org/v2.0/data/downloads"
 
 
-  # download all sequences individually
+  # download all records individually
   purrr::walk(
-    .x = 1:n_seq_to_download,
+    .x = 1:n_ds_to_download,
     .f = ~ {
-      sel_seq_name <- ds_absent[.x]
+      sel_ds_name <- ds_absent[.x]
 
       # output progress
       cat(
         paste(
-          "downloading", .x, "of", n_seq_to_download
+          "downloading", .x, "of", n_ds_to_download
         )
       )
 
-      # repeat for 'n_tries' or until successfully download the sequence
+      # repeat for 'n_tries' or until successfully download the record
       for (i in 1:n_tries) {
         current_frame <- sys.nframe()
         current_env <- sys.frame(which = current_frame)
 
-        # download the sequence
+        # download the record
         res <-
           httr::GET(
-            paste0(rawdownload, "/", sel_seq_name)
+            paste0(rawdownload, "/", sel_ds_name)
           )
 
         # if it was successful download
@@ -104,7 +104,7 @@ proc_neo_download_sequences <- function(allds,
 
           RUtilpol::save_latest_file(
             object_to_save = output,
-            file_name = sel_seq_name,
+            file_name = sel_ds_name,
             dir = path_to_indiv_folder,
             prefered_format = "rds",
             use_sha = TRUE,
@@ -129,9 +129,9 @@ proc_neo_download_sequences <- function(allds,
   )
 
   # check again if all are downloaded
-  # extract the sequences which were not successfully downloaded
+  # extract the records which were not successfully downloaded
   cannot_download <-
-    util_get_missing_seq_names(
+    util_get_missing_ds_names(
       dir = path_to_indiv_folder,
       name_vector = ds_vector
     )
@@ -139,12 +139,12 @@ proc_neo_download_sequences <- function(allds,
   if (
     length(cannot_download) == 0
   ) {
-    usethis::ui_done("All selected sequences were downloaded")
+    usethis::ui_done("All selected records were downloaded")
   } else {
     usethis::ui_oops(
       paste(
         length(cannot_download), "out of", nrow(allds),
-        "sequences were NOT downloaded.", "\n",
+        "records were NOT downloaded.", "\n",
         "Specifically, dataset IDs:",
         RUtilpol::paste_as_vector(cannot_download)
       )
@@ -159,7 +159,7 @@ proc_neo_download_sequences <- function(allds,
 
   RUtilpol::output_comment(
     paste(
-      "Compiling sequences together"
+      "Compiling records together"
     )
   )
 
@@ -178,7 +178,7 @@ proc_neo_download_sequences <- function(allds,
     )
 
   # save the final list as 'neotoma_download' object filtering out
-  # unsuccessfull sequences
+  # unsuccessfull records
   neotoma_download <-
     result_list[!purrr::map_lgl(result_list, is.null)]
 

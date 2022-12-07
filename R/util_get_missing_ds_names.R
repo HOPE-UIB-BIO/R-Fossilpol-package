@@ -2,12 +2,12 @@
 #' @title Get names of missing datasets
 #' @param dir Character. Path to the folder with files
 #' @param name_vector Vector with names of datasets.
-util_get_missing_seq_names <- function(dir, name_vector) {
+util_get_missing_ds_names <- function(dir, name_vector) {
 
-  # pre-alocate that all sequences are missing
+  # pre-alocate that all records are missing
   ds_absent <- name_vector
 
-  # check which sequences are present
+  # check which records are present
   ds_present <-
     list.files(
       dir

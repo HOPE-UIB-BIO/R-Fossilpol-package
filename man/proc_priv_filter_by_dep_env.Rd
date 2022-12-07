@@ -2,17 +2,17 @@
 % Please edit documentation in R/proc_priv_filter_by_dep_env.R
 \name{proc_priv_filter_by_dep_env}
 \alias{proc_priv_filter_by_dep_env}
-\title{Filter Private sequences by the selected depositional environments}
+\title{Filter Private records by the selected depositional environments}
 \usage{
 proc_priv_filter_by_dep_env(data_source, data_storage_path)
 }
 \arguments{
-\item{data_source}{Data.frame with sequences and their depositional environments}
+\item{data_source}{Data.frame with records and their depositional environments}
 
 \item{data_storage_path}{Path to the data storage folder}
 }
 \description{
 The function will obtain the all depositional environments from
-Neotoma. Next, it will filter the sequences based on the selected
+Neotoma. Next, it will filter the records based on the selected
 depositional environments.
 }

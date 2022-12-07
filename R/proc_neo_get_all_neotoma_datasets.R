@@ -55,7 +55,7 @@ proc_neo_get_all_neotoma_datasets <- function(dataset_type,
       altitude = elev
     )
 
-  # Filter all sequences by the geographical limits
+  # Filter all records by the geographical limits
   sel_sites_filtered <-
     proc_filter_by_geography(
       sel_sites_df,
@@ -100,7 +100,7 @@ proc_neo_get_all_neotoma_datasets <- function(dataset_type,
   RUtilpol::check_class("sel_datasets", "data.frame")
 
   RUtilpol::output_comment(
-    "List of Neotoma sequences was successfully obtained."
+    "List of Neotoma records was successfully obtained."
   )
 
   util_check_data_table(sel_datasets)
