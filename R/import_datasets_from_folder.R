@@ -14,7 +14,7 @@
 import_datasets_from_folder <-
   function(dir_files,
            dir,
-           suffix = "private") {
+           suffix = "other") {
 
     # safety tests
     RUtilpol::check_class("dir_files", "character")

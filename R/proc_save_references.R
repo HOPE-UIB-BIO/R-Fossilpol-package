@@ -178,7 +178,7 @@ proc_save_references <-
         "bchron_crash_file", "Crash_file", "/Data/Input/Chronology_setting/Bchron_crash/",
         "chronology_control_points", "chron_control_point_types", "/Data/Input/Chronology_setting/Chron_control_point_types/",
         "depositional_env_neotoma", "depositional_environment_selection", "/Data/Input/Depositional_environment/Neotoma/",
-        "depositional_env_private", "depositional_environment_selection", "/Data/Input/Depositional_environment/Other/",
+        "depositional_env_other", "depositional_environment_selection", "/Data/Input/Depositional_environment/Other/",
         "ecological_group", "eco_group", "/Data/Input/Eco_group/",
         "potential_duplicates", "potential_duplicates", "/Data/Input/Potential_duplicates/",
         "potential_pmc", "potential_pmc", "/Data/Input/Chronology_setting/Percentage_radiocarbon/",

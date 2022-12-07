@@ -1,4 +1,4 @@
-#' @title Filter Private sequences by the selected depositional environments
+#' @title Filter Other sequences by the selected depositional environments
 #' @param data_source Data.frame with sequences and their depositional environments
 #' @param data_storage_path Path to the data storage folder
 #' @description The function will obtain the all depositional environments from

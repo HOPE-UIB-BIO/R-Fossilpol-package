@@ -1,5 +1,5 @@
-#' @title Prepare private datasets
-#' @param data_source Data.frame containing private data assembly
+#' @title Prepare other datasets
+#' @param data_source Data.frame containing other data assembly
 #' @param data_storage_path Path to the data storage folder
 #' @param min_n_levels Minimal number of levels for sequences to be included
 #' @param long_min Limit for the smallest longitude
@@ -38,7 +38,7 @@ proc_priv_prepare <-
     RUtilpol::check_class("alt_max", c("numeric", "logical"))
 
     # check all names
-    private_dat_checked <-
+    other_dat_checked <-
       util_check_data_assembly(data_source)
 
     RUtilpol::output_comment(
@@ -46,9 +46,9 @@ proc_priv_prepare <-
     )
 
     # filter only data within geographical criteria
-    private_dat_filtered_geo <-
+    other_dat_filtered_geo <-
       proc_filter_by_geography(
-        private_dat_checked,
+        other_dat_checked,
         long_min,
         long_max,
         lat_min,
@@ -60,19 +60,19 @@ proc_priv_prepare <-
     )
 
     # filter by number of samples
-    private_dat_filtered_samples <-
+    other_dat_filtered_samples <-
       proc_filter_by_min(
-        private_dat_filtered_geo,
+        other_dat_filtered_geo,
         "n_sample_counts",
         min_n_levels
       )
 
     # filter by depositional environment
-    private_dat_filtered_dep_env <-
+    other_dat_filtered_dep_env <-
       proc_priv_filter_by_dep_env(
-        private_dat_filtered_samples,
+        other_dat_filtered_samples,
         data_storage_path
       )
 
-    return(private_dat_filtered_dep_env)
+    return(other_dat_filtered_dep_env)
   }

@@ -1,4 +1,4 @@
-#  S4 structure for private data manipulation
+#  S4 structure for other data manipulation
 
 # proj_db_class -----
 #' @title Project dataset database

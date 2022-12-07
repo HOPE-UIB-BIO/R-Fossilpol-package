@@ -109,10 +109,10 @@ util_make_datastorage_folders <-
     }
 
     if (
-      !any(list.files(paste0(dir, "/Data/Input")) %in% c("Private"))
+      !any(list.files(paste0(dir, "/Data/Input")) %in% c("Other"))
     ) {
       dir.create(
-        path = paste0(dir, "/Data/Input/Private")
+        path = paste0(dir, "/Data/Input/Other")
       )
     }
 
@@ -257,10 +257,10 @@ util_make_datastorage_folders <-
     }
 
     if (
-      !any(list.files(paste0(dir, "/Data/Processed")) %in% c("Private"))
+      !any(list.files(paste0(dir, "/Data/Processed")) %in% c("Other"))
     ) {
       dir.create(
-        path = paste0(dir, "/Data/Processed/Private")
+        path = paste0(dir, "/Data/Processed/Other")
       )
     }
 
