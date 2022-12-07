@@ -16,8 +16,8 @@ proc_save_references(
 
 \item{project_database}{Project dataset database}
 
-\item{user_sel_variables}{Vector with variables, which have to be present in the
-final data assembly}
+\item{user_sel_variables}{Vector with variables, which have to be present in
+the final data assembly}
 
 \item{dir}{Path to the data storage folder}
 }

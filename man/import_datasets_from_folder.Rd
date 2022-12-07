@@ -4,7 +4,7 @@
 \alias{import_datasets_from_folder}
 \title{Import all datasets from selected directory}
 \usage{
-import_datasets_from_folder(dir_files, dir, suffix = "private")
+import_datasets_from_folder(dir_files, dir, suffix = "other")
 }
 \arguments{
 \item{dir_files}{A directory path to the folder with all Excel sheets}
