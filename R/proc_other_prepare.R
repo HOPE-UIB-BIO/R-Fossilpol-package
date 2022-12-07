@@ -11,7 +11,7 @@
 #' @description Data is checked for names. Filtered by depositional 
 #' environments, geographical location, and number of samples
 #' @export
-proc_priv_prepare <- function(data_source,
+proc_other_prepare <- function(data_source,
                               data_storage_path,
                               min_n_levels = 1,
                               long_min = NA,
@@ -68,7 +68,7 @@ proc_priv_prepare <- function(data_source,
 
   # filter by depositional environment
   other_dat_filtered_dep_env <-
-    proc_priv_filter_by_dep_env(
+    proc_other_filter_by_dep_env(
       other_dat_filtered_samples,
       data_storage_path
     )
