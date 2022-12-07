@@ -42,30 +42,36 @@ chron_save_ad_figures <- function(dir,
 
   RUtilpol::check_class("image_format", "character")
 
+  dir <- RUtilpol::add_slash_to_path(dir)
+
   # load the old outputs
-  chron_output <-
-    RUtilpol::get_latest_file(
-      file_name = "chron_mod_output",
-      dir = paste0(
-        dir, "/Data/Processed/Chronology/Models_full"
+  ds_present <-
+    list.files(
+      paste0(
+        dir, "Data/Processed/Chronology/Models_full/"
       )
     )
 
-  RUtilpol::check_if_loaded(
-    file_name = "chron_output",
-    env = current_env
+  RUtilpol::stop_if_not(
+    length(ds_present) > 0,
+    false_msg = paste("Did not detect any age-depth models")
   )
 
-  RUtilpol::check_class("chron_output", "data.frame")
+  RUtilpol::get_latest_file(
+    file_name = "chron_mod_output"
+  )
 
-  RUtilpol::check_col_names("chron_output", c("dataset_id", "bchron_mod"))
+  ds_present_unique <-
+    RUtilpol::get_clean_name(ds_present) %>%
+    unique() %>%
+    sort()
 
   # load the processed data
   data_regions <-
     RUtilpol::get_latest_file(
       file_name = "data_merged",
       dir = paste0(
-        dir, "/Data/Processed/Data_merged"
+        dir, "Data/Processed/Data_merged/"
       )
     ) %>%
     dplyr::select(
@@ -85,10 +91,9 @@ chron_save_ad_figures <- function(dir,
 
   # merge them together
   data_to_plot <-
-    dplyr::inner_join(
-      chron_output,
-      data_regions,
-      by = "dataset_id"
+    data_regions %>%
+    dplyr::filter(
+      dataset_id %in% ds_present_unique
     )
 
   all_present_regions <-
@@ -96,7 +101,7 @@ chron_save_ad_figures <- function(dir,
     dplyr::distinct(region) %>%
     purrr::pluck("region")
 
-  fig_dir <- paste0(dir, "/Outputs/Figures/Chronology")
+  fig_dir <- paste0(dir, "Outputs/Figures/Chronology/")
 
   # make the folders with current date
   util_make_fig_dir(
@@ -117,11 +122,13 @@ chron_save_ad_figures <- function(dir,
     current_inside_frame <- sys.nframe()
     current_inside_env <- sys.frame(which = current_inside_frame)
 
-    RUtilpol::output_comment(paste("Processing", all_present_regions[i]))
+    RUtilpol::output_comment(
+      paste("Processing", all_present_regions[i])
+    )
 
     save_dir <-
       paste0(
-        fig_dir, "/", most_recent_folder, "/", all_present_regions[i], "/"
+        fig_dir, most_recent_folder, "/", all_present_regions[i], "/"
       )
 
     data_sub <-
@@ -133,20 +140,30 @@ chron_save_ad_figures <- function(dir,
     ) {
       cat(" - detected sites", "\n")
 
-      purrr::map2(
-        .x = data_sub$bchron_mod,
-        .y = data_sub$dataset_id,
-        .f = ~ chron_ggsave_bchron_output(
-          data_source = .x,
-          dataset_id = .y,
-          dir = save_dir,
-          text_size = text_size,
-          line_size = line_size,
-          image_width = image_width,
-          image_height = image_height,
-          image_units = image_units,
-          image_format = image_format
-        )
+      purrr::map(
+        .x = data_sub$dataset_id,
+        .f = ~ {
+          sel_ad_model <-
+            RUtilpol::get_latest_file(
+              file_name = .x,
+              dir = paste0(
+                dir, "Data/Processed/Chronology/Models_full/"
+              ),
+              verbose = FALSE
+            )
+
+          chron_ggsave_bchron_output(
+            data_source = sel_ad_model,
+            dataset_id = .y,
+            dir = save_dir,
+            text_size = text_size,
+            line_size = line_size,
+            image_width = image_width,
+            image_height = image_height,
+            image_units = image_units,
+            image_format = image_format
+          )
+        }
       )
     }
 
