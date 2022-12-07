@@ -45,9 +45,9 @@ before skipping it}
 age-depth model. If it takes computer longer that selected value, estimation
 is considered as unsuccessful and skipped. The time value is multiplied by
 \code{iteration_multiplier} as more iteration required more time. Time for whole
-batch is calculated as \code{time_per_sequence} multiplied by \code{iteration_multiplier}
-multiplied by the number of sequences per batch (which is estimated based on
-\code{number_of_cores})}
+batch is calculated as \code{time_per_sequence} multiplied by
+\code{iteration_multiplier} multiplied by the number of sequences per batch
+(which is estimated based on \code{number_of_cores})}
 
 \item{dir}{Path to the data storage folder}
 }

@@ -2,12 +2,13 @@
 % Please edit documentation in R/chron_subset_previous_sequences.R
 \name{chron_subset_previous_sequences}
 \alias{chron_subset_previous_sequences}
-\title{Subset the chronology control tables based on the presence of the previous AD models}
+\title{Subset the chronology control tables based on the presence
+of the previous AD models}
 \usage{
 chron_subset_previous_sequences(
   data_source,
   dir,
-  rerun_ad,
+  rerun_ad = FALSE,
   sites_to_rerun = NULL
 )
 }
@@ -23,5 +24,6 @@ sequences where we have previous age-depth model result?}
 re-run disregard of the presence of previous results}
 }
 \description{
-Subset the chronology control tables based on the presence of the previous AD models
+Subset the chronology control tables based on the presence
+of the previous AD models
 }
