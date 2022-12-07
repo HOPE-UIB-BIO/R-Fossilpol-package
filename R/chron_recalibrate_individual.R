@@ -1,5 +1,6 @@
 #' @title Recalibrate age-depth models for individual sequences
-#' @param data_source_chron  Data.frame containing `dataset_id` and `chron_control_format`
+#' @param data_source_chron 
+#' Data.frame containing `dataset_id` and `chron_control_format`
 #' @param n_iterations Numeric. The number of iterations used by Bchron
 #' @param n_burn
 #' Numeric. The number of starting iterations to discard used by Bchron
@@ -103,7 +104,7 @@ chron_recalibrate_individual <- function(data_source_chron,
         expr = {
           # try to run Bchron within `time_to_stop`  time window
           R.utils::withTimeout(
-            {
+            expr = {
               result <-
                 chron_run_bchron(
                   data_source = ..3,

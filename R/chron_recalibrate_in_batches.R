@@ -22,9 +22,9 @@
 #' age-depth model. If it takes computer longer that selected value, estimation
 #' is considered as unsuccessful and skipped. The time value is multiplied by
 #' `iteration_multiplier` as more iteration required more time. Time for whole
-#' batch is calculated as `time_per_sequence` multiplied by `iteration_multiplier`
-#' multiplied by the number of sequences per batch (which is estimated based on
-#' `number_of_cores`)
+#' batch is calculated as `time_per_sequence` multiplied by 
+#' `iteration_multiplier` multiplied by the number of sequences per batch 
+#' (which is estimated based on `number_of_cores`)
 #' @return Vector with names of sequences which failed to estimate
 chron_recalibrate_in_batches <- function(data_source_chron,
                                          batch_size = 1,
@@ -68,7 +68,8 @@ chron_recalibrate_in_batches <- function(data_source_chron,
   number_of_batches <-
     ceiling(nrow(data_source_chron) / batch_size)
 
-  # a dummy data.freme to keep track of progress and number of tries for each batch
+  # a dummy data.freme to keep track of progress and
+  #   number of tries for each batch
   batch_success_table <-
     tibble::tibble(
       batch_number = 1:number_of_batches,
@@ -92,7 +93,13 @@ chron_recalibrate_in_batches <- function(data_source_chron,
         .f = length
       ),
       # set a value for the process to wait (in seconds) for each batch
-      time_to_stop = (batch_size * time_per_sequence) * max(c((floor(iteration_multiplier / 2)), 1)),
+      time_to_stop = (batch_size * time_per_sequence) *
+        max(
+          c(
+            (floor(iteration_multiplier / 2)),
+            1
+          )
+        ),
       done = FALSE,
       .rows = number_of_batches
     )
@@ -128,7 +135,6 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     # For all batches that are not done
     for (i in seq_along(data_source_batch$batch_name)) {
       current_batch_n <- data_source_batch$batch_number[i]
-      current_batch_name <- data_source_batch$batch_name[i]
 
       if (
         isTRUE(data_source_batch$done[i])
@@ -157,7 +163,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
           # compute within time period. If longer than `time_to_stop`,
           #   stop computation
           R.utils::withTimeout(
-            {
+            expr = {
               bchron_temp_run <-
                 furrr::future_map(
                   .x = temp_data$chron_control_format,
@@ -243,7 +249,8 @@ chron_recalibrate_in_batches <- function(data_source_chron,
 
   RUtilpol::output_comment(
     msg = paste(
-      "Chronology was successfully calculated for", number_of_successes, "batches"
+      "Chronology was successfully calculated for", number_of_successes,
+      "batches"
     )
   )
 

@@ -9,7 +9,7 @@
 #' @export
 chron_subset_previous_sequences <- function(data_source,
                                             dir,
-                                            rerun_ad,
+                                            rerun_ad = FALSE,
                                             sites_to_rerun = NULL) {
   RUtilpol::check_class("data_source", "data.frame")
 
@@ -41,7 +41,7 @@ chron_subset_previous_sequences <- function(data_source,
       name_vector = seq_to_run
     )
 
-  previous_ad_present <-
+  is_previous_ad_present <-
     length(seq_absent) > 0
 
   # assume that user does (not) want to run AD de novo
@@ -50,7 +50,7 @@ chron_subset_previous_sequences <- function(data_source,
   # if user wants to run it de novo and there is a previous version
   #   of AD models, confirm that action
   if (
-    isTRUE(rerun_ad) && isTRUE(previous_ad_present)
+    isTRUE(rerun_ad) && isTRUE(is_previous_ad_present)
   ) {
     run_ad_denovo_confirm <-
       util_confirm(
@@ -63,7 +63,7 @@ chron_subset_previous_sequences <- function(data_source,
 
   # if there is not any previous version of AD models
   if (
-    isFALSE(run_ad_denovo_confirm) && isFALSE(previous_ad_present)
+    isFALSE(run_ad_denovo_confirm) && isFALSE(is_previous_ad_present)
   ) {
 
     # warn user
