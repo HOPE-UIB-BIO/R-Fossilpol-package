@@ -9,134 +9,133 @@
 #' @slot Auth_dataset_tab data.frame linking authors and datasets
 #' @slot Dataset_pub data.frame with publications for datasets
 #' @export
-proj_db_class <-
-  setClass(
-    "proj_db_class",
-    slots = c(
-      Authors = "data.frame",
-      Affiliations = "data.frame",
-      Auth_aff_tab = "data.frame",
-      Datasets_id_tab = "data.frame",
-      Auth_dataset_tab = "data.frame",
-      Dataset_pub = "data.frame"
+proj_db_class <- setClass(
+  "proj_db_class",
+  slots = c(
+    Authors = "data.frame",
+    Affiliations = "data.frame",
+    Auth_aff_tab = "data.frame",
+    Datasets_id_tab = "data.frame",
+    Auth_dataset_tab = "data.frame",
+    Dataset_pub = "data.frame"
+  ),
+  prototype = list(
+    Authors = tibble::tibble(
+      author_id = character(),
+      first_name = character(),
+      middle_letters = character(),
+      last_name = character(),
+      email = character(),
+      orcid = character()
     ),
-    prototype = list(
-      Authors = tibble::tibble(
-        author_id = character(),
-        first_name = character(),
-        middle_letters = character(),
-        last_name = character(),
-        email = character(),
-        orcid = character()
-      ),
-      Affiliations = tibble::tibble(
-        affiliation_id = character(),
-        Department = character(),
-        Company = character(),
-        BusinessStreet1 = character(),
-        BusinessStreet2 = character(),
-        BusinessStreet3 = character(),
-        BusinessCity = character(),
-        BusinessState = character(),
-        BusinessPostalCode = character(),
-        BusinessCountryRegion = character()
-      ),
-      Auth_aff_tab = tibble::tibble(
-        author_id = character(),
-        affiliation_id = character()
-      ),
-      Datasets_id_tab = tibble::tibble(
-        dataset_id = character(),
-        sitename = character()
-      ),
-      Auth_dataset_tab = tibble::tibble(
-        dataset_id = character(),
-        author_id = character()
-      ),
-      Dataset_pub = tibble::tibble(
-        dataset_id = character(),
-        publication = character()
-      )
+    Affiliations = tibble::tibble(
+      affiliation_id = character(),
+      Department = character(),
+      Company = character(),
+      BusinessStreet1 = character(),
+      BusinessStreet2 = character(),
+      BusinessStreet3 = character(),
+      BusinessCity = character(),
+      BusinessState = character(),
+      BusinessPostalCode = character(),
+      BusinessCountryRegion = character()
     ),
-    validity = function(object) {
-      check_Authors <- db_Authors(object)
+    Auth_aff_tab = tibble::tibble(
+      author_id = character(),
+      affiliation_id = character()
+    ),
+    Datasets_id_tab = tibble::tibble(
+      dataset_id = character(),
+      sitename = character()
+    ),
+    Auth_dataset_tab = tibble::tibble(
+      dataset_id = character(),
+      author_id = character()
+    ),
+    Dataset_pub = tibble::tibble(
+      dataset_id = character(),
+      publication = character()
+    )
+  ),
+  validity = function(object) {
+    check_Authors <- db_Authors(object)
 
-      check_Affiliations <- db_Affiliations(object)
+    check_Affiliations <- db_Affiliations(object)
 
-      check_Auth_aff_tab <- db_Auth_aff_tab(object)
+    check_Auth_aff_tab <- db_Auth_aff_tab(object)
 
-      check_Datasets_id_tab <- db_Datasets_id_tab(object)
+    check_Datasets_id_tab <- db_Datasets_id_tab(object)
 
-      check_Auth_dataset_tab <- db_Auth_dataset_tab(object)
+    check_Auth_dataset_tab <- db_Auth_dataset_tab(object)
 
-      check_Dataset_pub <- db_Dataset_pub(object)
+    check_Dataset_pub <- db_Dataset_pub(object)
 
-      all(
-        c(
-          RUtilpol::check_class("check_Authors", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Authors",
-            c(
-              "author_id",
-              "first_name",
-              "middle_letters",
-              "last_name",
-              "email",
-              "orcid"
-            )
-          ),
-          RUtilpol::check_class("check_Affiliations", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Affiliations",
-            c(
-              "affiliation_id",
-              "Department",
-              "Company",
-              "BusinessStreet1",
-              "BusinessStreet2",
-              "BusinessStreet3",
-              "BusinessCity",
-              "BusinessState",
-              "BusinessPostalCode",
-              "BusinessCountryRegion"
-            )
-          ),
-          RUtilpol::check_class("check_Auth_aff_tab", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Auth_aff_tab",
-            c(
-              "author_id",
-              "affiliation_id"
-            )
-          ),
-          RUtilpol::check_class("check_Datasets_id_tab", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Datasets_id_tab",
-            c(
-              "dataset_id",
-              "sitename"
-            )
-          ),
-          RUtilpol::check_class("check_Auth_dataset_tab", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Auth_dataset_tab",
-            c(
-              "dataset_id",
-              "author_id"
-            )
-          ),
-          RUtilpol::check_class("check_Dataset_pub", "data.frame"),
-          RUtilpol::check_col_names(
-            "check_Dataset_pub",
-            c(
-              "dataset_id",
-              "publication"
-            )
+    all(
+      c(
+        RUtilpol::check_class("check_Authors", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Authors",
+          c(
+            "author_id",
+            "first_name",
+            "middle_letters",
+            "last_name",
+            "email",
+            "orcid"
+          )
+        ),
+        RUtilpol::check_class("check_Affiliations", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Affiliations",
+          c(
+            "affiliation_id",
+            "Department",
+            "Company",
+            "BusinessStreet1",
+            "BusinessStreet2",
+            "BusinessStreet3",
+            "BusinessCity",
+            "BusinessState",
+            "BusinessPostalCode",
+            "BusinessCountryRegion"
+          )
+        ),
+        RUtilpol::check_class("check_Auth_aff_tab", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Auth_aff_tab",
+          c(
+            "author_id",
+            "affiliation_id"
+          )
+        ),
+        RUtilpol::check_class("check_Datasets_id_tab", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Datasets_id_tab",
+          c(
+            "dataset_id",
+            "sitename"
+          )
+        ),
+        RUtilpol::check_class("check_Auth_dataset_tab", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Auth_dataset_tab",
+          c(
+            "dataset_id",
+            "author_id"
+          )
+        ),
+        RUtilpol::check_class("check_Dataset_pub", "data.frame"),
+        RUtilpol::check_col_names(
+          "check_Dataset_pub",
+          c(
+            "dataset_id",
+            "publication"
           )
         )
       )
-    }
-  )
+    )
+  }
+)
 
 
 #' @title Get the Author table
