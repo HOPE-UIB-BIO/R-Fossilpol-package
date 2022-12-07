@@ -27,6 +27,8 @@ chron_predict_all_ages <- function(data_source,
   current_frame <- sys.nframe()
   current_env <- sys.frame(which = current_frame)
 
+  dir <- RUtilpol::add_slash_to_path(dir)
+
   # load the processed data
   data_level_depth <-
     RUtilpol::get_latest_file(
@@ -83,13 +85,16 @@ chron_predict_all_ages <- function(data_source,
 
   util_check_data_table(data_age_predicted)
 
-  # filter out unsuccessful age prediction and split Bchron output into 2 columns
+  # filter out unsuccessful age prediction and split Bchron output
+  #   into 2 columns
   data_age_predicted_summary <-
     data_age_predicted %>%
-    dplyr::mutate(fail_to_predict_ages = purrr::map_lgl(
-      .x = chron_predicted_ages,
-      .f = ~ any(is.na(.x))
-    )) %>%
+    dplyr::mutate(
+      fail_to_predict_ages = purrr::map_lgl(
+        .x = chron_predicted_ages,
+        .f = ~ any(is.na(.x))
+      )
+    ) %>%
     dplyr::filter(fail_to_predict_ages == FALSE) %>%
     dplyr::mutate(
       levels = purrr::map(
@@ -144,7 +149,8 @@ chron_predict_all_ages <- function(data_source,
     if (
       nrow(sites_fail_to_predict) > 0
     ) {
-      sites_fail_path <- paste0(dir, "/Data/Processed/Chronology/Temporary_output/")
+      sites_fail_path <-
+        paste0(dir, "/Data/Processed/Chronology/Temporary_output/")
 
       readr::write_csv(
         sites_fail_to_predict,
