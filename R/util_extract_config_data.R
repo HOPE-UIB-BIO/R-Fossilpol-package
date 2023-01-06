@@ -30,7 +30,7 @@ util_extract_config_data <- function() {
         lat_max = get_safely("lat_max"),
         alt_min = get_safely("alt_min"),
         alt_max = get_safely("alt_max"),
-        private_data = get_safely("private_data")
+        other_data = get_safely("other_data")
       ),
       Neotoma = list(
         dataset_type = get_safely("dataset_type"),
