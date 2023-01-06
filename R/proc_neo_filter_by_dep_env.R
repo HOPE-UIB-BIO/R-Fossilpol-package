@@ -1,8 +1,8 @@
-#' @title Filter Neotoma sequences by the selected depositional environments
-#' @param data_source Data.frame with sequences and their depositional environments
+#' @title Filter Neotoma records by the selected depositional environments
+#' @param data_source Data.frame with records and their depositional environments
 #' @param data_storage_path Path to the data storage folder
 #' @description The function will obtain all the depositional environments from
-#' Neotoma. Next, it will filter the sequences based on the selected
+#' Neotoma. Next, it will filter the records based on the selected
 #' depositional environments.
 #' @export
 proc_neo_filter_by_dep_env <-
@@ -21,7 +21,7 @@ proc_neo_filter_by_dep_env <-
     neotoma_dep_envt_types <-
       proc_neo_get_dep_env()
 
-    # Get list of all depositional environments for all selected sequences
+    # Get list of all depositional environments for all selected records
     #   and add all the hierarchical information
     dep_env_sel_data <-
       data_source %>%

@@ -14,7 +14,7 @@ chron_predict_all_ages(data_source, dir, predict_ages_denovo, sites_to_rerun)
 \item{predict_ages_denovo}{Setting to define if ages should be predicted from
 last models 'de novo'}
 
-\item{sites_to_rerun}{Vector with \code{dataset_id}s of sequences to rerun even
+\item{sites_to_rerun}{Vector with \code{dataset_id}s of records to rerun even
 if previous results are present}
 }
 \value{

@@ -26,7 +26,7 @@ proc_filter_out_duplicates <-
     if (
       is.null(n_subgroups)
     ) {
-      n_subgroups <- max(round(nrow(data_source) / 100), 1) # set 1 group per 100 sequences
+      n_subgroups <- max(round(nrow(data_source) / 100), 1) # set 1 group per 100 records
     }
 
     RUtilpol::check_class("n_subgroups", "numeric")

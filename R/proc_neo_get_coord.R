@@ -1,4 +1,4 @@
-#' @title Get coordinates of sequences from Neotoma list
+#' @title Get coordinates of records from Neotoma list
 #' @param datasets List of lists with Neotoma datasets
 proc_neo_get_coord <-
   function(datasets) {

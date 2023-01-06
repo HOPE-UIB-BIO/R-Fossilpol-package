@@ -1,4 +1,4 @@
-#' @title Recalibrate age-depth models for individual sequences
+#' @title Recalibrate age-depth models for individual records
 #' @param data_source_chron 
 #' Data.frame containing `dataset_id` and `chron_control_format`
 #' @param n_iterations Numeric. The number of iterations used by Bchron
@@ -8,7 +8,7 @@
 #' Numeric. The step size for every iteration to keep beyond
 #' the burnin used by Bchron
 #' @param time_to_stop
-#' Numeric. Time to wait until saving the sequence's `dataset_id` into
+#' Numeric. Time to wait until saving the record's `dataset_id` into
 #' `Crash_file`as unsuccessfully, due to freeze of calculation
 #' @param dir Character. Path to the data storage folder
 chron_recalibrate_individual <- function(data_source_chron,
@@ -57,11 +57,11 @@ chron_recalibrate_individual <- function(data_source_chron,
       row_n = dplyr::row_number()
     )
 
-  n_seq <- nrow(data_to_run)
+  n_ds <- nrow(data_to_run)
 
   RUtilpol::output_comment(
     msg = paste(
-      "Estimation will be done for", n_seq, "sequences"
+      "Estimation will be done for", n_ds, "records"
     )
   )
 
@@ -79,7 +79,7 @@ chron_recalibrate_individual <- function(data_source_chron,
       RUtilpol::output_comment(
         msg = paste0(
           "dataset: ", ..2, ". Number ", ..1, " out of ",
-          n_seq
+          n_ds
         )
       )
 

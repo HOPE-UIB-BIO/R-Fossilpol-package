@@ -1,5 +1,5 @@
 utils::globalVariables("where")
-#' @title Plot pollen diagram for all sequences
+#' @title Plot pollen diagram for all records
 #' @param data_source Data.frame with `dataset_id`, `counts_harmonised`, `levels`,
 #' and `region`
 #' @param dir Path to the data storage folder

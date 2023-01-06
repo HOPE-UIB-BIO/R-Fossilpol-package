@@ -32,7 +32,7 @@ chron_load_data_for_ad_modelling <-
     ) {
       RUtilpol::output_comment(
         paste(
-          "Filtering out sequences from 'Crash File'", "\n",
+          "Filtering out records from 'Crash File'", "\n",
           "The following sites are curently filtered out:", "\n",
           RUtilpol::paste_as_vector(crash_file$dataset_id)
         )

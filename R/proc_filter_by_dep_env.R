@@ -1,11 +1,11 @@
 #' @title Filter data by the depositional environments
 #'
-#' @param data_source Data.frame with sequences to be filtered
+#' @param data_source Data.frame with records to be filtered
 #' @param selection_data Data.frame with depositional environments presented in the data
 #' @param data_storage_path Path to the data storage folder
 #' @param dir_spec Specification of the folder name
 #' @description Use "stop-check" (see `stopcheck_table` function) to load/create
-#'  the table defined by the user. Next, it will filter the sequences in
+#'  the table defined by the user. Next, it will filter the records in
 #'  `data_source` based on the selected depositional environments.
 proc_filter_by_dep_env <-
   function(data_source, selection_data, data_storage_path, dir_spec) {

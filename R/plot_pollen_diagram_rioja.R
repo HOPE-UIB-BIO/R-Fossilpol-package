@@ -2,7 +2,7 @@
 #' @param data_percentages Data.frame pollen percentages
 #' @param levels Data.frame with level information
 #' @param y_var The name of the variable to be used as Y-axis in the chart
-#' @param dataset_id Unique ID of the sequences
+#' @param dataset_id Unique ID of the records
 #' @param min_n_occur Min occurrence of taxa to be displayed
 #' @param max_taxa Number of taxa to plotted per one page
 #' @param dir Folder to save the figure to

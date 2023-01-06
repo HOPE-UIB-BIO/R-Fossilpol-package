@@ -1,7 +1,7 @@
 #' @title Recalibrate all age-depth models base on chronology control tables
 #' @param data_source
 #' Data.frame containing `dataset_id` and `chron_control_format`
-#' @param batch_size Number of individual sequences re-calibrate in a single
+#' @param batch_size Number of individual records re-calibrate in a single
 #' batch using parallel computation
 #' @param number_of_cores Number of CPU cores to use in parallel computation
 #' @param default_iteration The number of iterations used by Bchron
@@ -15,13 +15,13 @@
 #' @param dir Path to the data storage folder
 #' @param batch_attempts Number of tries each batch should be considered
 #' before skipping it
-#' @param time_per_sequence
-#' Time (in sec) dedicated for each sequence to estimate
+#' @param time_per_record
+#' Time (in sec) dedicated for each record to estimate
 #' age-depth model. If it takes computer longer that selected value, estimation
 #' is considered as unsuccessful and skipped. The time value is multiplied by
 #' `iteration_multiplier` as more iteration required more time. Time for whole
-#' batch is calculated as `time_per_sequence` multiplied by
-#' `iteration_multiplier` multiplied by the number of sequences per batch
+#' batch is calculated as `time_per_record` multiplied by
+#' `iteration_multiplier` multiplied by the number of records per batch
 #' (which is estimated based on `number_of_cores`)
 #' @export
 chron_recalibrate_ad_models <- function(data_source,
@@ -33,7 +33,7 @@ chron_recalibrate_ad_models <- function(data_source,
                                         iteration_multiplier = 5,
                                         set_seed = 1234,
                                         batch_attempts = 3,
-                                        time_per_sequence = 120,
+                                        time_per_record = 120,
                                         dir) {
   RUtilpol::check_class("data_source", "data.frame")
 
@@ -61,7 +61,7 @@ chron_recalibrate_ad_models <- function(data_source,
 
   RUtilpol::check_class("batch_attempts", "numeric")
 
-  RUtilpol::check_class("time_per_sequence", "numeric")
+  RUtilpol::check_class("time_per_record", "numeric")
 
   RUtilpol::check_class("dir", "character")
 
@@ -73,16 +73,16 @@ chron_recalibrate_ad_models <- function(data_source,
   path_to_chron <-
     paste0(dir, "Data/Processed/Chronology/")
 
-  n_seq_to_run <-
+  n_ds_to_run <-
     nrow(data_source)
 
-  # test if there are any sequences to run AD modelling
+  # test if there are any records to run AD modelling
   if (
-    length(n_seq_to_run) < 1
+    length(n_ds_to_run) < 1
   ) {
     RUtilpol::output_comment(
       msg = paste(
-        "There are no sequences for AD calculation,",
+        "There are no records for AD calculation,",
         "re-calibration will be skipped in current run"
       )
     )
@@ -91,7 +91,7 @@ chron_recalibrate_ad_models <- function(data_source,
 
   RUtilpol::output_comment(
     paste(
-      n_seq_to_run,
+      n_ds_to_run,
       "age-depth model(s) will be recalibrated"
     )
   )
@@ -129,15 +129,15 @@ chron_recalibrate_ad_models <- function(data_source,
         "In case that the whole bach is unsuccessful all",
         batch_attempts, "times,",
         "another subroutine can be used to calculate age-depth models",
-        "for each sequence individually."
+        "for each record individually."
       )
     )
 
-    failed_seq <-
+    failed_ds <-
       chron_recalibrate_in_batches(
         data_source_chron = data_to_run,
         batch_size = batch_size,
-        time_per_sequence = time_per_sequence,
+        time_per_record = time_per_record,
         dir = dir,
         n_iterations = n_iterations,
         n_burn = n_burn,
@@ -147,25 +147,25 @@ chron_recalibrate_ad_models <- function(data_source,
         maximum_number_of_loops = batch_attempts
       )
 
-    n_seq_failed <- length(failed_seq)
+    n_ds_failed <- length(failed_ds)
 
     # if all succesfull
     if (
-      n_seq_failed < 1
+      n_ds_failed < 1
     ) {
       return()
     }
 
     data_to_run <-
       data_to_run %>%
-      dplyr::filter(dataset_id %in% failed_seq)
+      dplyr::filter(dataset_id %in% failed_ds)
 
-    n_seq_to_run <- n_seq_failed
+    n_ds_to_run <- n_ds_failed
   }
 
   RUtilpol::output_comment(
     msg = paste(
-      "Individual calculation will be done for", n_seq_to_run, "sequences"
+      "Individual calculation will be done for", n_ds_to_run, "records"
     )
   )
 

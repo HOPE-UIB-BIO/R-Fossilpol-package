@@ -1,6 +1,6 @@
 #' @title Get sample depth data from samples
 #' @param data_source Data.frame with samples saved as nested information
-#' @param min_n_levels Minimal number of levels for sequences to be included
+#' @param min_n_levels Minimal number of levels for records to be included
 #' @export
 proc_neo_get_sample_depth <-
   function(data_source,

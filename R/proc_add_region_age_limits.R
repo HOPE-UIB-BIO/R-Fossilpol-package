@@ -31,8 +31,8 @@ proc_add_region_age_limits <-
         sel_method = "age_limits",
         msg = paste(
           "Adjust age limits for each region.",
-          "'young_age' = the youngest age the sequence has to have.",
-          "'old_age' = the oldest age the the sequence has to have.",
+          "'young_age' = the youngest age the record has to have.",
+          "'old_age' = the oldest age the the record has to have.",
           "'end_of_interest_period' = levels beyond this age will be omitted."
         )
       )

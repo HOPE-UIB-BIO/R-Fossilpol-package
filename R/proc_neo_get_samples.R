@@ -29,7 +29,7 @@ proc_neo_get_samples <-
           sel_dataset_id = .y)) %>% 
       dplyr::bind_rows()
     
-    # only include sequences with some data
+    # only include records with some data
     neotoma_sample_data_clean <-
       neotoma_sample_data %>% 
       tidyr::drop_na(samples)
@@ -37,12 +37,12 @@ proc_neo_get_samples <-
     RUtilpol::stop_if_not(
       nrow(neotoma_sample_data_clean) > 0,
       false_msg = paste(
-        "There are 0 sequences with sample data based on the current download",
+        "There are 0 records with sample data based on the current download",
         "Please change the criteria and re-download."),
       true_msg = paste(
         "Sample data were extracted for",
         nrow(neotoma_sample_data_clean),
-        "sequences"))
+        "records"))
     
     return(neotoma_sample_data_clean)
   }

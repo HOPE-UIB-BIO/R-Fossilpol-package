@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_all_pollen_diagrams.R
 \name{plot_all_pollen_diagrams}
 \alias{plot_all_pollen_diagrams}
-\title{Plot pollen diagram for all sequences}
+\title{Plot pollen diagram for all records}
 \usage{
 plot_all_pollen_diagrams(
   data_source,
@@ -28,5 +28,5 @@ and \code{region}}
 \item{date}{Date to be used to save the figures}
 }
 \description{
-Plot pollen diagram for all sequences
+Plot pollen diagram for all records
 }

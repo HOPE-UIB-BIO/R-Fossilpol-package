@@ -14,7 +14,7 @@ proc_neo_get_chronologies <-
 
     RUtilpol::check_class("min_n_of_control_points", "numeric")
 
-    # extract chronologies for all sequences
+    # extract chronologies for all records
     chronologies <-
       neotoma_download %>%
       purrr::map("site") %>%
@@ -38,7 +38,7 @@ proc_neo_get_chronologies <-
     # drop datasets without chronologies and add n_chron_control
     chroncontrol_tables_clean <-
       chroncontrol_tables %>%
-      # filter out sequences without chronologies
+      # filter out records without chronologies
       dplyr::filter(!purrr::map_lgl(chron_control, is.null)) %>%
       tidyr::drop_na() %>%
       dplyr::mutate(

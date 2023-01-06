@@ -1,4 +1,4 @@
-#' @title Test if sequence is long enough for selected age criteria
+#' @title Test if record is long enough for selected age criteria
 #' @param data_source Data.frame with level ages
 #' @param age_limit_young Young age limit for selected site
 #' @param age_limit_old Old age limit for selected site

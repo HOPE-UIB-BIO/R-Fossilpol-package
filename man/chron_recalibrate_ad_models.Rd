@@ -14,14 +14,14 @@ chron_recalibrate_ad_models(
   iteration_multiplier = 5,
   set_seed = 1234,
   batch_attempts = 3,
-  time_per_sequence = 120,
+  time_per_record = 120,
   dir
 )
 }
 \arguments{
 \item{data_source}{Data.frame containing \code{dataset_id} and \code{chron_control_format}}
 
-\item{batch_size}{Number of individual sequences re-calibrate in a single
+\item{batch_size}{Number of individual records re-calibrate in a single
 batch using parallel computation}
 
 \item{number_of_cores}{Number of CPU cores to use in parallel computation}
@@ -41,12 +41,12 @@ the burnin used by Bchron}
 \item{batch_attempts}{Number of tries each batch should be considered
 before skipping it}
 
-\item{time_per_sequence}{Time (in sec) dedicated for each sequence to estimate
+\item{time_per_record}{Time (in sec) dedicated for each record to estimate
 age-depth model. If it takes computer longer that selected value, estimation
 is considered as unsuccessful and skipped. The time value is multiplied by
 \code{iteration_multiplier} as more iteration required more time. Time for whole
-batch is calculated as \code{time_per_sequence} multiplied by
-\code{iteration_multiplier} multiplied by the number of sequences per batch
+batch is calculated as \code{time_per_record} multiplied by
+\code{iteration_multiplier} multiplied by the number of records per batch
 (which is estimated based on \code{number_of_cores})}
 
 \item{dir}{Path to the data storage folder}

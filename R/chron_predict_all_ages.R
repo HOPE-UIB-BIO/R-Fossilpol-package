@@ -3,7 +3,7 @@
 #' @param dir Path to the data storage folder
 #' @param predict_ages_denovo Setting to define if ages should be predicted from
 #' last models 'de novo'
-#' @param sites_to_rerun Vector with `dataset_id`s of sequences to rerun even
+#' @param sites_to_rerun Vector with `dataset_id`s of records to rerun even
 #' if previous results are present
 #' @description Load the depth information from the last saved data assembly,
 #' then predict the ages using the age-depth models.
@@ -40,7 +40,7 @@ chron_predict_all_ages <- function(data_source,
     data_source %>%
     purrr::pluck("dataset_id")
 
-  # set all sequences to run as default
+  # set all records to run as default
   ds_to_run <- ds_with_levels
 
   # load the old pred ages
@@ -71,7 +71,7 @@ chron_predict_all_ages <- function(data_source,
   ) {
     ds_previous_age_prediction <-
       data_previous_age_prediction %>%
-      # filter out sequences marked to re-run
+      # filter out records marked to re-run
       dplyr::filter(!(dataset_id %in% sites_to_rerun)) %>%
       purrr::pluck("dataset_id")
   }
@@ -212,7 +212,7 @@ chron_predict_all_ages <- function(data_source,
     paste(
       "Ages were sucessfully predicted for",
       nrow(data_age_predicted_summary), "out of",
-      nrow(data_age_predicted), "sequences"
+      nrow(data_age_predicted), "records"
     )
   )
 
@@ -239,7 +239,7 @@ chron_predict_all_ages <- function(data_source,
 
       RUtilpol::output_comment(
         paste(
-          "There are several sequences, which fail to predict ages.", "\n",
+          "There are several records, which fail to predict ages.", "\n",
           "You can see them in:",
           sites_fail_path
         )

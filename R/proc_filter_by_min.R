@@ -1,4 +1,4 @@
-#' @title Filter sequences by minimal value
+#' @title Filter records by minimal value
 #' @param data_source Data.frame to be filtered
 #' @param var_name Name of the variable to be compared to
 #' @param min_n Criterion to be evaluated against

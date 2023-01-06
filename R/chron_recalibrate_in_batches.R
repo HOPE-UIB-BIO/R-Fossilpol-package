@@ -1,9 +1,9 @@
-#' @title Recalibrate the selected sequences in defined batches using parallel
+#' @title Recalibrate the selected records in defined batches using parallel
 #' computation
 #' @param data_source_chron
 #' Data.frame containing `dataset_id` and `chron_control_format`
 #' @param batch_size
-#' Numeric. Number of individual sequences re-calibrate in a single
+#' Numeric. Number of individual records re-calibrate in a single
 #' batch using parallel computation
 #' @param dir Character. Path to the data storage folder
 #' @param n_iterations Numeric. The number of iterations used by Bchron
@@ -18,17 +18,17 @@
 #' @param maximum_number_of_loops
 #' Numeric. Number of tries each batch should be considered
 #' before skipping it
-#' @param time_per_sequence Time (in sec) dedicated for each sequence to estimate
+#' @param time_per_record Time (in sec) dedicated for each record to estimate
 #' age-depth model. If it takes computer longer that selected value, estimation
 #' is considered as unsuccessful and skipped. The time value is multiplied by
 #' `iteration_multiplier` as more iteration required more time. Time for whole
-#' batch is calculated as `time_per_sequence` multiplied by 
-#' `iteration_multiplier` multiplied by the number of sequences per batch 
+#' batch is calculated as `time_per_record` multiplied by 
+#' `iteration_multiplier` multiplied by the number of records per batch 
 #' (which is estimated based on `number_of_cores`)
-#' @return Vector with names of sequences which failed to estimate
+#' @return Vector with names of records which failed to estimate
 chron_recalibrate_in_batches <- function(data_source_chron,
                                          batch_size = 1,
-                                         time_per_sequence = 120,
+                                         time_per_record = 120,
                                          dir,
                                          n_iterations = 10e3,
                                          n_burn = 2e3,
@@ -42,7 +42,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
 
   RUtilpol::check_class("batch_size", "numeric")
 
-  RUtilpol::check_class("time_per_sequence", "numeric")
+  RUtilpol::check_class("time_per_record", "numeric")
 
   RUtilpol::check_class("dir", "character")
 
@@ -74,8 +74,8 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     tibble::tibble(
       batch_number = 1:number_of_batches,
       batch_name = paste0("batch_", formatC(batch_number, width = 3, flag = 0)),
-      # list of sequences in each batch
-      sequence_list = purrr::map(
+      # list of records in each batch
+      record_list = purrr::map(
         .x = batch_number,
         .f = ~ data_source_chron %>%
           dplyr::slice(
@@ -87,13 +87,13 @@ chron_recalibrate_in_batches <- function(data_source_chron,
           ) %>%
           purrr::pluck("dataset_id")
       ),
-      # number of sequences in each batch
+      # number of records in each batch
       batch_size = purrr::map_dbl(
-        .x = sequence_list,
+        .x = record_list,
         .f = length
       ),
       # set a value for the process to wait (in seconds) for each batch
-      time_to_stop = (batch_size * time_per_sequence) *
+      time_to_stop = (batch_size * time_per_record) *
         max(
           c(
             (floor(iteration_multiplier / 2)),
@@ -114,7 +114,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     c(
       "batch_number",
       "batch_name",
-      "sequence_list",
+      "record_list",
       "batch_size",
       "time_to_stop",
       "done"
@@ -149,7 +149,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
       # subset data in the selected batch
       temp_data <-
         data_source_chron %>%
-        dplyr::filter(dataset_id %in% data_source_batch$sequence_list[[i]])
+        dplyr::filter(dataset_id %in% data_source_batch$record_list[[i]])
 
       # setup plan for parallel computation
       future::plan(
@@ -201,7 +201,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
         exists("bchron_temp", envir = current_env) == TRUE
       ) {
 
-        # save the batch as individual sequences
+        # save the batch as individual records
         purrr::walk2(
           .x = bchron_temp,
           .y = names(bchron_temp),
@@ -254,7 +254,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     )
   )
 
-  # get list of all sequences which did not estimate
+  # get list of all records which did not estimate
   failed_batches <-
     batch_success_table %>%
     dplyr::filter(done == FALSE)
@@ -265,10 +265,10 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     return()
   }
 
-  failed_seq <-
+  failed_ds <-
     failed_batches %>%
-    purrr::pluck("sequence_list") %>%
+    purrr::pluck("record_list") %>%
     unlist()
 
-  return(failed_seq)
+  return(failed_ds)
 }

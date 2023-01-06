@@ -2,7 +2,7 @@
 % Please edit documentation in R/proc_filter_all_data.R
 \name{proc_filter_all_data}
 \alias{proc_filter_all_data}
-\title{Filter out levels and sequences based on the criteria}
+\title{Filter out levels and records based on the criteria}
 \usage{
 proc_filter_all_data(
   data_source,
@@ -31,7 +31,7 @@ proc_filter_all_data(
 By default the columns are \code{levels}, \code{raw_counts}, \code{counts_harmonised}, and
 \code{age_uncertainty}}
 
-\item{filter_by_pollen_sum}{Logical. If true, levels and sequences will be
+\item{filter_by_pollen_sum}{Logical. If true, levels and records will be
 filtered out by \code{min_n_grains}, \code{target_n_grains}, \code{percentage_samples}}
 
 \item{min_n_grains}{Number of individual pollen grains which each level has
@@ -42,10 +42,10 @@ to have}
 
 \item{percentage_samples}{Threshold of number of levels with 'preferable' counts}
 
-\item{filter_by_age_limit}{Logical. If true, sequences will be filtered out
+\item{filter_by_age_limit}{Logical. If true, records will be filtered out
 based on their age limits, defined by \code{young_age} and \code{old_age}}
 
-\item{filter_by_extrapolation}{Logical. If true, sequences will be filtered
+\item{filter_by_extrapolation}{Logical. If true, records will be filtered
 out based on the age of the last chronology control point}
 
 \item{maximum_age_extrapolation}{Maximum age, which be can be extrapolated
@@ -54,10 +54,10 @@ beyond the oldest chronology control point}
 \item{filter_by_interest_region}{Logical. If true, filter out levels beyond
 the age of interest}
 
-\item{filter_by_number_of_levels}{Logical. If true, filter out sequences based
+\item{filter_by_number_of_levels}{Logical. If true, filter out records based
 on the number of levels}
 
-\item{min_n_levels}{Minimal number of levels each sequence has to have}
+\item{min_n_levels}{Minimal number of levels each record has to have}
 
 \item{use_age_quantiles}{Logical. Should 95th age quantile be used for data
 filtration? This will result in more stable data assembly between different
@@ -69,5 +69,5 @@ additional level in the old period? This will result of "bookend" level,
 which can help to provide anchor information after the period of interest}
 }
 \description{
-Filter out levels and sequences based on the criteria
+Filter out levels and records based on the criteria
 }

@@ -21,6 +21,7 @@ proc_get_merged_dataset <- function(data_storage_path, other_data = FALSE) {
       dir = paste0(data_storage_path, "/Data/Processed/Neotoma_processed")
     )
 
+
   RUtilpol::check_if_loaded(
     file_name = "neotoma_processed",
     env = current_env
@@ -50,6 +51,7 @@ proc_get_merged_dataset <- function(data_storage_path, other_data = FALSE) {
     neotoma_filtered <-
       neotoma_processed %>%
       dplyr::filter(!dataset_id %in% other_processed$dataset_id)
+
 
     # merge file together
     data_full <-

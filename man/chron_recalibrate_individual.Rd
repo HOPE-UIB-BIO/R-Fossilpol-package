@@ -2,7 +2,7 @@
 % Please edit documentation in R/chron_recalibrate_individual.R
 \name{chron_recalibrate_individual}
 \alias{chron_recalibrate_individual}
-\title{Recalibrate age-depth models for individual sequences}
+\title{Recalibrate age-depth models for individual records}
 \usage{
 chron_recalibrate_individual(
   data_source_chron,
@@ -23,11 +23,11 @@ chron_recalibrate_individual(
 \item{n_thin}{Numeric. The step size for every iteration to keep beyond
 the burnin used by Bchron}
 
-\item{time_to_stop}{Numeric. Time to wait until saving the sequence's \code{dataset_id} into
+\item{time_to_stop}{Numeric. Time to wait until saving the record's \code{dataset_id} into
 \code{Crash_file}as unsuccessfully, due to freeze of calculation}
 
 \item{dir}{Character. Path to the data storage folder}
 }
 \description{
-Recalibrate age-depth models for individual sequences
+Recalibrate age-depth models for individual records
 }

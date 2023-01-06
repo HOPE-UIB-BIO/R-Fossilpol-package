@@ -1,20 +1,20 @@
 utils::globalVariables("where")
 #' @title Detect and exclude duplicates
-#' @param data_source Data.frame with sequences
+#' @param data_source Data.frame with records
 #' @param source_var Character. Name of a column that indicates source of data
 #' @param n_subgroups Number of subgroups to split the data based on the
-#' geography. Sequences within subgroup will be tested only if subgroup
-#' contains sequences form different `source_var`
-#' @param maximal_distance Maximal Euclidean distance between two sequences to
+#' geography. Records within subgroup will be tested only if subgroup
+#' contains records form different `source_var`
+#' @param maximal_distance Maximal Euclidean distance between two records to
 #' consider them as material for comparison
-#' @return Data.frame with the suggested duplicates of sequences
-#' `distance` = Euclidean distance between sequences
+#' @return Data.frame with the suggested duplicates of records
+#' `distance` = Euclidean distance between records
 #' `similarity` = mean number of the exactly same columns
-#' @description  Function will split sequences based on their geographic
+#' @description  Function will split records based on their geographic
 #' location into `n_subgroups`. If subgroup contains data from multiple sources,
-#' Euclidean `distance` between all sequences combination will be calculated.
+#' Euclidean `distance` between all records combination will be calculated.
 #' Only combination with the distance up to `maximal_distance` will be kept.
-#' Next, selected columns will be compared between sequences and the average number of
+#' Next, selected columns will be compared between records and the average number of
 #' the exact same columns is returned `similarity`.
 proc_detect_duplicates <-
   function(data_source,

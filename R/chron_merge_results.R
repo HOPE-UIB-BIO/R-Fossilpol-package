@@ -139,7 +139,7 @@ chron_merge_results <-
     RUtilpol::stop_if_not(
       all(purrr::map_dbl(data_ages_sorted$levels, nrow) ==
         purrr::map_dbl(data_ages_sorted$raw_counts, nrow)),
-      true_msg = "All sequences have the same number of levels",
+      true_msg = "All records have the same number of levels",
       false_msg = paste(
         "The sorting of levels between 'levels' and 'raw_counts' was not",
         "successful."
