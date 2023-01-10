@@ -46,7 +46,10 @@ proc_neo_get_all_neotoma_datasets <- function(dataset_type,
 
   # use neotoma2 to get the selected sites
   sel_sites <-
-    neotoma2::get_sites(loc = loc)
+    neotoma2::get_sites(
+      loc = loc,
+      limit = 99999999
+    )
 
   # Transform into a data.frame
   sel_sites_df <-
