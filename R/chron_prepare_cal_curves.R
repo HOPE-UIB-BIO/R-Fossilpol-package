@@ -38,7 +38,7 @@ chron_prepare_cal_curves <-
       RUtilpol::get_latest_file_name(
         file_name = "calmixed",
         dir = system.file("data", package = "Bchron"),
-        silent = TRUE
+        verbose = TRUE
       )
 
     RUtilpol::stop_if_not(
@@ -97,7 +97,7 @@ chron_prepare_cal_curves <-
         RUtilpol::get_latest_file_name(
           file_name = postbomb_curve_names[i],
           dir = system.file("data", package = "Bchron"),
-          silent = TRUE
+          verbose = TRUE
         ) %>%
         is.na()
     }

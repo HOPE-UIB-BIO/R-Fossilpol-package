@@ -56,7 +56,7 @@ util_save_if_latests <- function(file_name,
     RUtilpol::get_latest_file_name(
       file_name = file_name,
       dir = dir,
-      silent = TRUE
+      verbose = TRUE
     )
 
   if (
@@ -86,7 +86,7 @@ util_save_if_latests <- function(file_name,
     RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
-      silent = TRUE
+      verbose = TRUE
     )
 
     if (
@@ -168,7 +168,7 @@ util_save_if_latests <- function(file_name,
     RUtilpol::check_if_loaded(
       file_name = "file_to_save",
       env = current_env,
-      silent = TRUE
+      verbose = TRUE
     )
 
     if (
