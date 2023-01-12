@@ -133,11 +133,11 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     )
 
     # For all batches that are not done
-    for (i in seq_along(data_source_batch$batch_name)) {
-      current_batch_n <- data_source_batch$batch_number[i]
+    for (i in seq_along(batch_success_table$batch_name)) {
+      current_batch_n <- batch_success_table$batch_number[i]
 
       if (
-        isTRUE(data_source_batch$done[i])
+        isTRUE(batch_success_table$done[i])
       ) {
         next
       }
@@ -149,7 +149,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
       # subset data in the selected batch
       temp_data <-
         data_source_chron %>%
-        dplyr::filter(dataset_id %in% data_source_batch$record_list[[i]])
+        dplyr::filter(dataset_id %in% batch_success_table$record_list[[i]])
 
       # setup plan for parallel computation
       future::plan(
@@ -185,7 +185,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
               # delete test run
               rm(bchron_temp_run, envir = current_env)
             },
-            timeout = data_source_batch$time_to_stop[[i]],
+            timeout = batch_success_table$time_to_stop[[i]],
             onTimeout = "silent"
           )
         },
@@ -216,7 +216,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
         )
 
         # mark status of batch
-        data_source_batch$done[i] <- TRUE
+        batch_success_table$done[i] <- TRUE
 
         RUtilpol::output_comment(
           msg = "attempt = successful"
@@ -232,7 +232,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
     }
 
     # if all batches are marked as succesfull, break
-    if (all(data_source_batch$done) == TRUE) break
+    if (all(batch_success_table$done) == TRUE) break
 
     # if cycle runs more times than it is a maximum number, break
     if (loop_counter >= maximum_number_of_loops) break
