@@ -51,7 +51,7 @@ stopcheck_table <-
       RUtilpol::get_latest_file_name(
         file_name = file_name,
         dir = dir,
-        silent = TRUE
+        verbose = TRUE
       )
 
     # choose function based on the 'method'
@@ -112,7 +112,7 @@ stopcheck_table <-
       }
     } else {
 
-      # load file (silently)
+      # load file (verbosely)
       final_file <-
         readr::read_csv(
           paste0(dir, "/", selection_file_name),
