@@ -81,7 +81,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
           dplyr::slice(
             seq(
               from = batch_size * (.x - 1) + 1,
-              to = min(c(batch_size * (.x), nrow(data_to_run))),
+              to = min(c(batch_size * (.x), nrow(data_source_chron))),
               by = 1
             )
           ) %>%
