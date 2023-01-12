@@ -123,8 +123,7 @@ chron_recalibrate_ad_models <- function(data_source,
     RUtilpol::output_comment(
       paste(
         "Several age-depth models will re-calibrated",
-        "at the same time using parralel computation in",
-        number_of_batches, "batches\n",
+        "at the same time using parralel computation in several batches\n",
         "Each batch will have", batch_attempts, "attempts to calculate.",
         "In case that the whole bach is unsuccessful all",
         batch_attempts, "times,",
