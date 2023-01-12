@@ -34,19 +34,22 @@ chron_prepare_cal_curves <-
     )
 
     # check if there is a mix curve file
-    name_of_mix_curve_file <-
-      RUtilpol::get_latest_file_name(
-        file_name = "calmixed",
-        dir = system.file("data", package = "Bchron"),
-        verbose = TRUE
-      )
+    mix_curve_file_present <-
+      stringr::str_detect(
+        string = list.files(
+          paste0(
+            system.file("data", package = "Bchron")
+          )
+        ),
+        pattern = "calmixed"
+      ) %>%
+      any()
 
     RUtilpol::stop_if_not(
-      is.na(name_of_mix_curve_file) == FALSE,
+      isTRUE(mix_curve_file_present),
       false_msg = "The mix curve was not copied in Bchron package",
       true_msg = "Mix curve was succesfully copied to Bchron package"
     )
-
 
     # Add post-bomb calibration curves to Bchron  -----
 
@@ -72,8 +75,8 @@ chron_prepare_cal_curves <-
     postbomb_curve_names <-
       c("nh_zone_1", "nh_zone_2", "nh_zone_3", "sh_zone_1_2", "sh_zone_3")
 
-    postbomb_curve_names_missing <-
-      rep(TRUE, length(postbomb_curve_names))
+    postbomb_curve_names_present <-
+      rep(FALSE, length(postbomb_curve_names))
 
     # save each curve into the Bchron package
     for (i in seq_along(postbomb_curve_names)) {
@@ -93,18 +96,21 @@ chron_prepare_cal_curves <-
       )
 
       # save if the postbomb curve is missing
-      postbomb_curve_names_missing[i] <-
-        RUtilpol::get_latest_file_name(
-          file_name = postbomb_curve_names[i],
-          dir = system.file("data", package = "Bchron"),
-          verbose = TRUE
+      postbomb_curve_names_present[i] <-
+        stringr::str_detect(
+          string = list.files(
+            paste0(
+              system.file("data", package = "Bchron")
+            )
+          ),
+          pattern = postbomb_curve_names[i]
         ) %>%
-        is.na()
+        any()
     }
 
     # check if all postbomb curves were successfully copied to Bchron
     RUtilpol::stop_if_not(
-      all(!postbomb_curve_names_missing),
+      all(postbomb_curve_names_present),
       false_msg = paste(
         "The following postbomb curves were NOT copied to Bchron package:",
         util.paste.as.vector(postbomb_curve_names[postbomb_curve_names_missing])
