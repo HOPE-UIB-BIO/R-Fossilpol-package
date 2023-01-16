@@ -49,7 +49,8 @@ chron_predict_all_ages <- function(data_source,
       file_name = "chron_predicted_ages",
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
-      )
+      ),
+      verbose = FALSE
     )
 
   RUtilpol::check_if_loaded(
@@ -102,7 +103,6 @@ chron_predict_all_ages <- function(data_source,
         .f = ~ {
           inner_frame <- sys.nframe()
           inner_env <- sys.frame(which = inner_frame)
-
 
           message(
             paste0(
@@ -223,7 +223,7 @@ chron_predict_all_ages <- function(data_source,
     sites_fail_to_predict <-
       data_age_predicted %>%
       dplyr::filter(!dataset_id %in% data_age_predicted_summary$dataset_id) %>%
-      dplyr::distinct(dataset_id, region, n_chron_control, age_type) %>%
+      dplyr::distinct(dataset_id) %>%
       dplyr::arrange(dataset_id)
 
     if (
@@ -251,10 +251,10 @@ chron_predict_all_ages <- function(data_source,
     }
   }
 
- RUtilpol::check_col_names(
-   "data_age_predicted_summary",
-   c("levels", "age_uncertainty")
- )
+  RUtilpol::check_col_names(
+    "data_age_predicted_summary",
+    c("levels", "age_uncertainty")
+  )
 
   res <- data_age_predicted_summary
 
