@@ -1,5 +1,5 @@
 #' @title Recalibrate age-depth models for individual records
-#' @param data_source_chron 
+#' @param data_source_chron
 #' Data.frame containing `dataset_id` and `chron_control_format`
 #' @param n_iterations Numeric. The number of iterations used by Bchron
 #' @param n_burn
@@ -138,7 +138,11 @@ chron_recalibrate_individual <- function(data_source_chron,
       )
 
       RUtilpol::save_latest_file(
-        object_to_save = result,
+        object_to_save = list(
+          chron_control_table = data_source_chron %>%
+            dplyr::filter(dataset_id == ..2),
+          ad_model = result
+        ),
         file_name = ..2,
         dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
         prefered_format = "rds",

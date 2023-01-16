@@ -22,8 +22,8 @@
 #' age-depth model. If it takes computer longer that selected value, estimation
 #' is considered as unsuccessful and skipped. The time value is multiplied by
 #' `iteration_multiplier` as more iteration required more time. Time for whole
-#' batch is calculated as `time_per_record` multiplied by 
-#' `iteration_multiplier` multiplied by the number of records per batch 
+#' batch is calculated as `time_per_record` multiplied by
+#' `iteration_multiplier` multiplied by the number of records per batch
 #' (which is estimated based on `number_of_cores`)
 #' @return Vector with names of records which failed to estimate
 chron_recalibrate_in_batches <- function(data_source_chron,
@@ -206,7 +206,11 @@ chron_recalibrate_in_batches <- function(data_source_chron,
           .x = bchron_temp,
           .y = names(bchron_temp),
           .f = ~ RUtilpol::save_latest_file(
-            object_to_save = .x,
+            object_to_save = list(
+              chron_control_table = temp_data %>%
+                dplyr::filter(dataset_id == .y),
+              ad_model = .x
+            ),
             file_name = .y,
             dir = paste0(dir, "Data/Processed/Chronology/Models_full/"),
             prefered_format = "rds",
