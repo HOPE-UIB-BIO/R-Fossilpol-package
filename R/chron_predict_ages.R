@@ -29,7 +29,7 @@ chron_predict_ages <-
     depth <- sample_data$depth
 
     age_position <-
-      predict(bchron_model, newPositions = depth)
+      Bchron:::predict.BchronologyRun(bchron_model, newPositions = depth)
 
     default_age_quantiles <- c(0.25, 0.33, 0.5, 0.666, 0.75, 0.95)
 
