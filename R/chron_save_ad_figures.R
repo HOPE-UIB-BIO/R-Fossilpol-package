@@ -146,7 +146,8 @@ chron_save_ad_figures <- function(dir,
                 dir, "Data/Processed/Chronology/Models_full/"
               ),
               verbose = FALSE
-            )
+            ) %>%
+            purrr::pluck("ad_model")
 
           if (
             isTRUE(

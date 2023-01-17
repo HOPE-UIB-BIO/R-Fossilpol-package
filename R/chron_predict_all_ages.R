@@ -46,7 +46,7 @@ chron_predict_all_ages <- function(data_source,
   # load the old pred ages
   data_previous_age_prediction <-
     RUtilpol::get_latest_file(
-      file_name = "chron_predicted_ages",
+      file_name = "predicted_ages",
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
       ),
@@ -106,6 +106,7 @@ chron_predict_all_ages <- function(data_source,
 
           message(
             paste0(
+              "\n",
               "dataset_id = ", .x
             )
           )
@@ -134,7 +135,7 @@ chron_predict_all_ages <- function(data_source,
             expr = {
               sel_ad_pred <-
                 chron_predict_ages(
-                  data_source = sel_ad_model,
+                  data_source = sel_ad_model$ad_model,
                   sample_data = .y
                 )
             },
@@ -145,9 +146,13 @@ chron_predict_all_ages <- function(data_source,
           if (
             isFALSE(
               exists("sel_ad_pred", envir = inner_env)
-            )) {
+            )
+          ) {
             return(NA_real_)
           }
+
+          # add chron control table to the list
+          sel_ad_pred$chron_control_table <- sel_ad_model$chron_control_table
 
           return(sel_ad_pred)
         }
@@ -184,14 +189,26 @@ chron_predict_all_ages <- function(data_source,
       age_uncertainty = purrr::map(
         .x = chron_predicted_ages,
         .f = ~ .x$age_position
+      ),
+      chron_control_table_nested = purrr::map(
+        .x = chron_predicted_ages,
+        .f = ~ .x$chron_control_table
       )
+    ) %>%
+    tidyr::hoist(
+      chron_control_table_nested,
+      "chron_control_format",
+      "chron_control_limits",
+      "age_type",
+      "n_chron_control"
     ) %>%
     dplyr::select(
       !dplyr::any_of(
         c(
           "fail_to_predict_ages",
           "chron_predicted_ages",
-          "sample_depth"
+          "sample_depth",
+          "chron_control_table_nested"
         )
       )
     )
@@ -205,7 +222,14 @@ chron_predict_all_ages <- function(data_source,
 
   RUtilpol::check_col_names(
     "data_age_predicted_summary",
-    c("levels", "age_uncertainty")
+    c(
+      "levels",
+      "age_uncertainty",
+      "chron_control_format",
+      "chron_control_limits",
+      "age_type",
+      "n_chron_control"
+    )
   )
 
   RUtilpol::output_comment(
@@ -250,11 +274,6 @@ chron_predict_all_ages <- function(data_source,
       )
     }
   }
-
-  RUtilpol::check_col_names(
-    "data_age_predicted_summary",
-    c("levels", "age_uncertainty")
-  )
 
   res <- data_age_predicted_summary
 
