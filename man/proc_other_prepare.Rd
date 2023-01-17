@@ -21,7 +21,7 @@ proc_other_prepare(
 
 \item{data_storage_path}{Path to the data storage folder}
 
-\item{min_n_levels}{Minimal number of levels for records to be included}
+\item{min_n_levels}{Minimal number of levels for sequences to be included}
 
 \item{long_min}{Limit for the smallest longitude}
 
