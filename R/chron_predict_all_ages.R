@@ -170,8 +170,7 @@ chron_predict_all_ages <- function(data_source,
 
   util_check_data_table(data_age_predicted)
 
-  # filter out unsuccessful age prediction and split Bchron output
-  #   into 2 columns
+  # filter out unsuccessful age prediction
   data_age_predicted_summary <-
     data_age_predicted %>%
     dplyr::mutate(
@@ -180,7 +179,67 @@ chron_predict_all_ages <- function(data_source,
         .f = ~ any(is.na(.x))
       )
     ) %>%
-    dplyr::filter(fail_to_predict_ages == FALSE) %>%
+    dplyr::filter(fail_to_predict_ages == FALSE)
+
+  RUtilpol::check_if_loaded(
+    file_name = "data_age_predicted_summary",
+    env = current_env
+  )
+
+  RUtilpol::check_class("data_age_predicted_summary", "data.frame")
+
+  # save sites that fail to run
+  if (
+    nrow(data_age_predicted_summary) != nrow(data_age_predicted)
+  ) {
+    sites_fail_to_predict <-
+      data_age_predicted %>%
+      dplyr::filter(!dataset_id %in% data_age_predicted_summary$dataset_id) %>%
+      dplyr::distinct(dataset_id) %>%
+      dplyr::arrange(dataset_id)
+
+    if (
+      nrow(sites_fail_to_predict) > 0
+    ) {
+      sites_fail_path <-
+        paste0(dir, "/Data/Processed/Chronology/Temporary_output/")
+
+      readr::write_csv(
+        sites_fail_to_predict,
+        paste0(sites_fail_path, "sites_fail_to_predict_", Sys.Date(), ".csv")
+      )
+
+      RUtilpol::output_warning(
+        paste(
+          "There are several records, which fail to predict ages.", "\n",
+          "You can see them in:",
+          sites_fail_path
+        )
+      )
+
+      RUtilpol::open_dir(
+        dir = sites_fail_path
+      )
+    }
+  }
+
+  RUtilpol::stop_if_not(
+    nrow(data_age_predicted_summary) > 1,
+    true_msg = RUtilpol::output_comment(
+      paste(
+        "Ages were sucessfully predicted for",
+        nrow(data_age_predicted_summary), "out of",
+        nrow(data_age_predicted), "records"
+      )
+    ),
+    false_msg = paste(
+      "Ages cannot be predictor for any record"
+    )
+  )
+
+  #   split Bchron output into several columns
+  res <-
+    data_age_predicted_summary %>%
     dplyr::mutate(
       levels = purrr::map(
         .x = chron_predicted_ages,
@@ -213,15 +272,8 @@ chron_predict_all_ages <- function(data_source,
       )
     )
 
-  RUtilpol::check_if_loaded(
-    file_name = "data_age_predicted_summary",
-    env = current_env
-  )
-
-  RUtilpol::check_class("data_age_predicted_summary", "data.frame")
-
   RUtilpol::check_col_names(
-    "data_age_predicted_summary",
+    "res",
     c(
       "levels",
       "age_uncertainty",
@@ -231,52 +283,6 @@ chron_predict_all_ages <- function(data_source,
       "n_chron_control"
     )
   )
-
-  RUtilpol::output_comment(
-    paste(
-      "Ages were sucessfully predicted for",
-      nrow(data_age_predicted_summary), "out of",
-      nrow(data_age_predicted), "records"
-    )
-  )
-
-  # save sites that fail to run
-  if (
-    nrow(data_age_predicted_summary) != nrow(data_age_predicted)
-  ) {
-    sites_fail_to_predict <-
-      data_age_predicted %>%
-      dplyr::filter(!dataset_id %in% data_age_predicted_summary$dataset_id) %>%
-      dplyr::distinct(dataset_id) %>%
-      dplyr::arrange(dataset_id)
-
-    if (
-      nrow(sites_fail_to_predict) > 0
-    ) {
-      sites_fail_path <-
-        paste0(dir, "/Data/Processed/Chronology/Temporary_output/")
-
-      readr::write_csv(
-        sites_fail_to_predict,
-        paste0(sites_fail_path, "sites_fail_to_predict_", Sys.Date(), ".csv")
-      )
-
-      RUtilpol::output_comment(
-        paste(
-          "There are several records, which fail to predict ages.", "\n",
-          "You can see them in:",
-          sites_fail_path
-        )
-      )
-
-      RUtilpol::open_dir(
-        dir = sites_fail_path
-      )
-    }
-  }
-
-  res <- data_age_predicted_summary
-
   # merge predicted data with the previous saved
   if (
     isTRUE(is_previous_age_present)
@@ -287,7 +293,7 @@ chron_predict_all_ages <- function(data_source,
       dplyr::bind_rows(
         data_age_predicted_summary
       ) %>%
-      dplyr::distinct(dataset_id)
+      dplyr::distinct(dataset_id, .keep_all = TRUE)
   }
 
   return(res)
