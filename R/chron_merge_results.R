@@ -55,7 +55,7 @@ chron_merge_results <-
     # load Chronology
     chron_output <-
       RUtilpol::get_latest_file(
-        file_name = "chron_predicted_ages",
+        file_name = "predicted_ages",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Predicted_ages"
         )
