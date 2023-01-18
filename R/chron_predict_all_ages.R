@@ -283,15 +283,16 @@ chron_predict_all_ages <- function(data_source,
       "n_chron_control"
     )
   )
+
   # merge predicted data with the previous saved
   if (
     isTRUE(is_previous_age_present)
   ) {
     res <-
       data_previous_age_prediction %>%
-      dplyr::filter(!dataset_id %in% data_age_predicted_summary) %>%
+      dplyr::filter(!dataset_id %in% res$dataset_id) %>%
       dplyr::bind_rows(
-        data_age_predicted_summary
+        res
       ) %>%
       dplyr::distinct(dataset_id, .keep_all = TRUE)
   }
