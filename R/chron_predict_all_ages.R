@@ -270,6 +270,10 @@ chron_predict_all_ages <- function(data_source,
           "chron_control_table_nested"
         )
       )
+    ) %>%
+    dplyr::mutate(
+      chron_control_format = RUtilpol:::flatten_list_by_one(chron_control_format),
+      chron_control_limits = RUtilpol:::flatten_list_by_one(chron_control_limits)
     )
 
   RUtilpol::check_col_names(
