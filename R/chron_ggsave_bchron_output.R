@@ -52,7 +52,7 @@ chron_ggsave_bchron_output <-
     )
 
     Bchron_plot <-
-      plot(data_source) +
+      Bchron:::plot.BchronologyRun(data_source) +
       ggplot2::theme_classic() +
       ggplot2::theme(
         text = ggplot2::element_text(size = text_size),

@@ -57,10 +57,6 @@ chron_save_ad_figures <- function(dir,
     false_msg = paste("Did not detect any age-depth models")
   )
 
-  RUtilpol::get_latest_file(
-    file_name = "chron_mod_output"
-  )
-
   ds_present_unique <-
     RUtilpol::get_clean_name(ds_present) %>%
     unique() %>%
@@ -140,7 +136,7 @@ chron_save_ad_figures <- function(dir,
     ) {
       cat(" - detected sites", "\n")
 
-      purrr::map(
+      purrr::walk(
         .x = data_sub$dataset_id,
         .f = ~ {
           sel_ad_model <-
@@ -150,18 +146,29 @@ chron_save_ad_figures <- function(dir,
                 dir, "Data/Processed/Chronology/Models_full/"
               ),
               verbose = FALSE
-            )
+            ) %>%
+            purrr::pluck("ad_model")
 
-          chron_ggsave_bchron_output(
-            data_source = sel_ad_model,
-            dataset_id = .y,
-            dir = save_dir,
-            text_size = text_size,
-            line_size = line_size,
-            image_width = image_width,
-            image_height = image_height,
-            image_units = image_units,
-            image_format = image_format
+          if (
+            isTRUE(
+              is.na(sel_ad_model)
+            )
+          ) {
+            return()
+          }
+
+          try(
+            expr = chron_ggsave_bchron_output(
+              data_source = sel_ad_model,
+              dataset_id = .x,
+              dir = save_dir,
+              text_size = text_size,
+              line_size = line_size,
+              image_width = image_width,
+              image_height = image_height,
+              image_units = image_units,
+              image_format = image_format
+            )
           )
         }
       )

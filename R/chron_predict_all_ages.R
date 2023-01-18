@@ -46,10 +46,11 @@ chron_predict_all_ages <- function(data_source,
   # load the old pred ages
   data_previous_age_prediction <-
     RUtilpol::get_latest_file(
-      file_name = "chron_predicted_ages",
+      file_name = "predicted_ages",
       dir = paste0(
         dir, "/Data/Processed/Chronology/Predicted_ages"
-      )
+      ),
+      verbose = FALSE
     )
 
   RUtilpol::check_if_loaded(
@@ -103,9 +104,9 @@ chron_predict_all_ages <- function(data_source,
           inner_frame <- sys.nframe()
           inner_env <- sys.frame(which = inner_frame)
 
-
           message(
             paste0(
+              "\n",
               "dataset_id = ", .x
             )
           )
@@ -134,7 +135,7 @@ chron_predict_all_ages <- function(data_source,
             expr = {
               sel_ad_pred <-
                 chron_predict_ages(
-                  data_source = sel_ad_model,
+                  data_source = sel_ad_model$ad_model,
                   sample_data = .y
                 )
             },
@@ -145,9 +146,13 @@ chron_predict_all_ages <- function(data_source,
           if (
             isFALSE(
               exists("sel_ad_pred", envir = inner_env)
-            )) {
+            )
+          ) {
             return(NA_real_)
           }
+
+          # add chron control table to the list
+          sel_ad_pred$chron_control_table <- sel_ad_model$chron_control_table
 
           return(sel_ad_pred)
         }
@@ -165,8 +170,7 @@ chron_predict_all_ages <- function(data_source,
 
   util_check_data_table(data_age_predicted)
 
-  # filter out unsuccessful age prediction and split Bchron output
-  #   into 2 columns
+  # filter out unsuccessful age prediction
   data_age_predicted_summary <-
     data_age_predicted %>%
     dplyr::mutate(
@@ -175,26 +179,7 @@ chron_predict_all_ages <- function(data_source,
         .f = ~ any(is.na(.x))
       )
     ) %>%
-    dplyr::filter(fail_to_predict_ages == FALSE) %>%
-    dplyr::mutate(
-      levels = purrr::map(
-        .x = chron_predicted_ages,
-        .f = ~ .x$ages
-      ),
-      age_uncertainty = purrr::map(
-        .x = chron_predicted_ages,
-        .f = ~ .x$age_position
-      )
-    ) %>%
-    dplyr::select(
-      !dplyr::any_of(
-        c(
-          "fail_to_predict_ages",
-          "chron_predicted_ages",
-          "sample_depth"
-        )
-      )
-    )
+    dplyr::filter(fail_to_predict_ages == FALSE)
 
   RUtilpol::check_if_loaded(
     file_name = "data_age_predicted_summary",
@@ -203,19 +188,6 @@ chron_predict_all_ages <- function(data_source,
 
   RUtilpol::check_class("data_age_predicted_summary", "data.frame")
 
-  RUtilpol::check_col_names(
-    "data_age_predicted_summary",
-    c("levels", "age_uncertainty")
-  )
-
-  RUtilpol::output_comment(
-    paste(
-      "Ages were sucessfully predicted for",
-      nrow(data_age_predicted_summary), "out of",
-      nrow(data_age_predicted), "records"
-    )
-  )
-
   # save sites that fail to run
   if (
     nrow(data_age_predicted_summary) != nrow(data_age_predicted)
@@ -223,7 +195,7 @@ chron_predict_all_ages <- function(data_source,
     sites_fail_to_predict <-
       data_age_predicted %>%
       dplyr::filter(!dataset_id %in% data_age_predicted_summary$dataset_id) %>%
-      dplyr::distinct(dataset_id, region, n_chron_control, age_type) %>%
+      dplyr::distinct(dataset_id) %>%
       dplyr::arrange(dataset_id)
 
     if (
@@ -237,7 +209,7 @@ chron_predict_all_ages <- function(data_source,
         paste0(sites_fail_path, "sites_fail_to_predict_", Sys.Date(), ".csv")
       )
 
-      RUtilpol::output_comment(
+      RUtilpol::output_warning(
         paste(
           "There are several records, which fail to predict ages.", "\n",
           "You can see them in:",
@@ -251,12 +223,66 @@ chron_predict_all_ages <- function(data_source,
     }
   }
 
- RUtilpol::check_col_names(
-   "data_age_predicted_summary",
-   c("levels", "age_uncertainty")
- )
+  RUtilpol::stop_if_not(
+    nrow(data_age_predicted_summary) > 1,
+    true_msg = RUtilpol::output_comment(
+      paste(
+        "Ages were sucessfully predicted for",
+        nrow(data_age_predicted_summary), "out of",
+        nrow(data_age_predicted), "records"
+      )
+    ),
+    false_msg = paste(
+      "Ages cannot be predictor for any record"
+    )
+  )
 
-  res <- data_age_predicted_summary
+  #   split Bchron output into several columns
+  res <-
+    data_age_predicted_summary %>%
+    dplyr::mutate(
+      levels = purrr::map(
+        .x = chron_predicted_ages,
+        .f = ~ .x$ages
+      ),
+      age_uncertainty = purrr::map(
+        .x = chron_predicted_ages,
+        .f = ~ .x$age_position
+      ),
+      chron_control_table_nested = purrr::map(
+        .x = chron_predicted_ages,
+        .f = ~ .x$chron_control_table
+      )
+    ) %>%
+    tidyr::hoist(
+      chron_control_table_nested,
+      "chron_control_format",
+      "chron_control_limits",
+      "age_type",
+      "n_chron_control"
+    ) %>%
+    dplyr::select(
+      !dplyr::any_of(
+        c(
+          "fail_to_predict_ages",
+          "chron_predicted_ages",
+          "sample_depth",
+          "chron_control_table_nested"
+        )
+      )
+    )
+
+  RUtilpol::check_col_names(
+    "res",
+    c(
+      "levels",
+      "age_uncertainty",
+      "chron_control_format",
+      "chron_control_limits",
+      "age_type",
+      "n_chron_control"
+    )
+  )
 
   # merge predicted data with the previous saved
   if (
@@ -264,11 +290,11 @@ chron_predict_all_ages <- function(data_source,
   ) {
     res <-
       data_previous_age_prediction %>%
-      dplyr::filter(!dataset_id %in% data_age_predicted_summary) %>%
+      dplyr::filter(!dataset_id %in% res$dataset_id) %>%
       dplyr::bind_rows(
-        data_age_predicted_summary
+        res
       ) %>%
-      dplyr::distinct(dataset_id)
+      dplyr::distinct(dataset_id, .keep_all = TRUE)
   }
 
   return(res)
