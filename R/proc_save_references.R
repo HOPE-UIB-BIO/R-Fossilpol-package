@@ -353,9 +353,9 @@ proc_save_references <- function(data_source,
       include_directories = FALSE,
       mode = "mirror"
     )
-
-    RUtilpol::open_dir(
-      dir = refference_path
-    )
   }
+
+  RUtilpol::open_dir(
+    dir = refference_path
+  )
 }
