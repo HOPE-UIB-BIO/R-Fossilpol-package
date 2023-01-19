@@ -143,7 +143,9 @@ plot_map_of_data <- function(data_source,
     ggplot2::theme(
       text = ggplot2::element_text(size = text_size),
       line = ggplot2::element_line(linewidth = line_size),
-      legend.position = legend_position
+      legend.position = legend_position,
+      legend.text = ggplot2::element_text(size = text_size * 0.5),
+      legend.title = ggplot2::element_text(size = text_size * 0.75),
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(ncol = 2),

@@ -85,7 +85,8 @@ plot_age_lenght_of_data <- function(data_source,
       line = ggplot2::element_line(linewidth = line_size),
       text = ggplot2::element_text(size = text_size),
       legend.position = legend_position,
-      axis.line.y = ggplot2::element_blank(),
+      legend.text = ggplot2::element_text(size = text_size * 0.5),
+      legend.title = ggplot2::element_text(size = text_size * 0.75),
       axis.text.y = ggplot2::element_blank(),
       axis.ticks.y = ggplot2::element_blank()
     ) +
