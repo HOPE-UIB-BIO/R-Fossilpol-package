@@ -341,7 +341,7 @@ proc_save_references <- function(data_source,
         pattern = dir, replacement = ""
       )
 
-    zip::zip(
+    RUtilpol::zip_files(
       zipfile = paste0(refference_path, "reproducibility_bundle.zip"),
       files = c(
         "R/00_Config_file.R",
