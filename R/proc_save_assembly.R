@@ -5,6 +5,7 @@
 #' @param user_sel_variables Vector with variables, which have to be present in the
 #' final data assembly
 #' @param dir Path to the data storage folder
+#' @export
 proc_save_assembly <-
   function(data_source,
            select_final_variables,

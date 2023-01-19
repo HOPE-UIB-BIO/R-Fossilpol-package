@@ -307,15 +307,15 @@ util_make_datastorage_folders <- function(dir) {
     !any(list.files(paste0(dir, "/Outputs")) %in% c("Tables"))
   ) {
     dir.create(
-      path = paste0(dir, "/Outputs/Tables")
+      path = paste0(dir, "/Outputs")
     )
   }
 
   if (
-    !any(list.files(paste0(dir, "/Outputs/Tables")) %in% c("Meta_and_references"))
+    !any(list.files(paste0(dir, "/Outputs")) %in% c("Meta_and_references"))
   ) {
     dir.create(
-      path = paste0(dir, "/Outputs/Tables/Meta_and_references")
+      path = paste0(dir, "/Outputs/Meta_and_references")
     )
   }
 }
