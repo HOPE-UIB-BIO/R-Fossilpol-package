@@ -15,6 +15,7 @@ plot_graphical_summary(
   line_size = 1,
   line_width = 0.1,
   text_size = 16,
+  legend_position = c("none", "bottom", "top", "left", "right"),
   color_palette = NULL
 )
 }
@@ -39,6 +40,10 @@ ommited?}
 \item{line_width}{Numeric. Width of a line for axis}
 
 \item{text_size}{Numeric. Text size for axis}
+
+\item{legend_position}{Character. If legend present, where it should be
+placed? Default is "none", which will not display legend.
+See \code{legend.position} in \code{\link[ggplot2:theme]{ggplot2::theme()}}}
 
 \item{color_palette}{A vector with cuntom color palette. Only used when
 \code{grouping_variable} is selected}

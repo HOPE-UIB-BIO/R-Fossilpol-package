@@ -11,9 +11,6 @@
 #' `NA` will produce no border lines
 #' @param map_data_margin Numeric. Number of degrees set as a margin aroud data
 #' to be ploted
-#' @param legend_position Character. If legend present, where it should be
-#' placed? Default is "none", which will not display legend.
-#' See `legend.position` in [ggplot2::theme()]
 #' @export
 #' @seealso [plot_graphical_summary()], [plot_age_lenght_of_data()],
 #' [plot_count_of_data()],

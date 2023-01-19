@@ -11,6 +11,9 @@
 #' @param line_size Numeric. Line width
 #' @param line_width Numeric. Width of a line for axis
 #' @param text_size Numeric. Text size for axis
+#' @param legend_position Character. If legend present, where it should be
+#' placed? Default is "none", which will not display legend.
+#' See `legend.position` in [ggplot2::theme()]
 #' @param color_palette A vector with cuntom color palette. Only used when
 #' `grouping_variable` is selected
 #' @description Create 2-3 plots of graphical summary of data compilation.
@@ -35,6 +38,13 @@ plot_graphical_summary <- function(data_source,
                                    line_size = 1,
                                    line_width = 0.1,
                                    text_size = 16,
+                                   legend_position = c(
+                                     "none",
+                                     "bottom",
+                                     "top",
+                                     "left",
+                                     "right"
+                                   ),
                                    color_palette = NULL) {
   RUtilpol::check_class("data_source", "data.frame")
   RUtilpol::check_color("col_default")
@@ -68,6 +78,21 @@ plot_graphical_summary <- function(data_source,
 
     def_colour <- grouping_variable
 
+    RUtilpol::check_class("legend_position", "character")
+
+    RUtilpol::check_vector_values(
+      "legend_position",
+      c(
+        "bottom",
+        "top",
+        "left",
+        "right",
+        "none"
+      )
+    )
+
+    legend_position <- match.arg(legend_position)
+
     if (
       isFALSE(is.null(color_palette))
     ) {
@@ -91,11 +116,11 @@ plot_graphical_summary <- function(data_source,
       point_colour = def_colour,
       point_colour_accent = col_dark,
       col_map_fill = col_light,
-      col_map_borders = col_default,
+      col_map_borders = col_dark,
       map_data_margin = 1,
       text_size = text_size,
       line_size = line_size,
-      legend_position = "bottom"
+      legend_position = legend_position
     )
 
   p_count <-
@@ -106,7 +131,7 @@ plot_graphical_summary <- function(data_source,
       ouline_colour = col_dark,
       line_size = line_size,
       text_size = text_size,
-      legend_position = "bottom"
+      legend_position = legend_position
     )
 
   p_age_length <-
@@ -117,7 +142,7 @@ plot_graphical_summary <- function(data_source,
       line_colour = def_colour,
       text_size = text_size,
       line_size = line_size,
-      legend_position = "bottom"
+      legend_position = legend_position
     )
 
   plot_list <-
@@ -148,7 +173,7 @@ plot_graphical_summary <- function(data_source,
       plotlist = plot_list,
       nrow = 1,
       common.legend = TRUE,
-      legend = "bottom",
+      legend = legend_position,
       labels = LETTERS[seq_along(plot_list)]
     )
 
