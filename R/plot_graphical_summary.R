@@ -99,7 +99,10 @@ plot_graphical_summary <- function(data_source,
       RUtilpol::check_class("color_palette", "character")
 
       assertthat::assert_that(
-        purrr::pluck(data_source, grouping_variable) %in% names(color_palette),
+        all(
+          purrr::pluck(data_source, grouping_variable) %in%
+            names(color_palette)
+        ),
         msg = paste(
           "The provided `color_palette` does not cointain all values",
           "present in", RUtilpol::paste_as_vector(grouping_variable)
