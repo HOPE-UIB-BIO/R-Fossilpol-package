@@ -234,6 +234,10 @@ proc_save_references <- function(data_source,
   if (
     "graphical_summary" %in% selected_outputs
   ) {
+    RUtilpol::output_comment(
+      msg = "Saving graphical summary"
+    )
+
     graphical_summary <-
       plot_graphical_summary(
         data_source = data_source,
