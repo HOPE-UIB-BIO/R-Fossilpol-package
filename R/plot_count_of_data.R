@@ -107,15 +107,15 @@ plot_count_of_data <- function(data_source,
       legend.text = ggplot2::element_text(size = text_size * 0.5),
       legend.title = ggplot2::element_text(size = text_size * 0.75),
       axis.text.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank(),
-      axis.title.x = ggplot2::element_blank()
+      axis.ticks.x = ggplot2::element_blank()
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(ncol = 2),
       color = ggplot2::guide_legend(ncol = 2)
     ) +
     ggplot2::labs(
-      y = "Number of datasets"
+      y = "Number of datasets",
+      x = ""
     )
 
   if (
