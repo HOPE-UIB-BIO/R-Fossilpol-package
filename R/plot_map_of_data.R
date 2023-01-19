@@ -145,8 +145,8 @@ plot_map_of_data <- function(data_source,
       legend.title = ggplot2::element_text(size = text_size * 0.75),
     ) +
     ggplot2::guides(
-      fill = ggplot2::guide_legend(ncol = 2),
-      color = ggplot2::guide_legend(ncol = 2)
+      fill = ggplot2::guide_legend(nrow = 2),
+      color = ggplot2::guide_legend(nrow = 2)
     )
 
   p_1 <-

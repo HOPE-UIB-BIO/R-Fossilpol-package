@@ -91,8 +91,8 @@ plot_age_lenght_of_data <- function(data_source,
       axis.ticks.y = ggplot2::element_blank()
     ) +
     ggplot2::guides(
-      fill = ggplot2::guide_legend(ncol = 2),
-      color = ggplot2::guide_legend(ncol = 2)
+      fill = ggplot2::guide_legend(nrow = 2),
+      color = ggplot2::guide_legend(nrow = 2)
     ) +
     ggplot2::labs(
       y = "Dataset ID",
