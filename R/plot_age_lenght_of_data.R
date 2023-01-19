@@ -39,7 +39,7 @@ plot_age_lenght_of_data <- function(data_source,
   RUtilpol::check_class("line_colour", "character")
 
   if (
-    isFALSE(RUtilpol::is_colors(line_colour))
+    isFALSE(RUtilpol::is_color(line_colour))
   ) {
     RUtilpol::check_col_names("data_source", line_colour)
   } else {
@@ -99,7 +99,7 @@ plot_age_lenght_of_data <- function(data_source,
     )
 
   if (
-    RUtilpol::is_colors(line_colour)
+    RUtilpol::is_color(line_colour)
   ) {
     p_1 <-
       p_0 +

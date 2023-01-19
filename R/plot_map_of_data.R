@@ -50,7 +50,7 @@ plot_map_of_data <- function(data_source,
   )
 
   if (
-    isFALSE(RUtilpol::is_colors(point_colour))
+    isFALSE(RUtilpol::is_color(point_colour))
   ) {
     RUtilpol::check_col_names("data_source", point_colour)
   } else {
@@ -167,7 +167,7 @@ plot_map_of_data <- function(data_source,
     )
 
   if (
-    RUtilpol::is_colors(point_colour)
+    RUtilpol::is_color(point_colour)
   ) {
     p_3 <-
       p_2 +

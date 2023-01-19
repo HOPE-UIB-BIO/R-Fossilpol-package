@@ -25,7 +25,7 @@ plot_count_of_data <- function(data_source,
   RUtilpol::check_class("fill_colour", "character")
 
   if (
-    isFALSE(RUtilpol::is_colors(fill_colour))
+    isFALSE(RUtilpol::is_color(fill_colour))
   ) {
     RUtilpol::check_col_names("data_source", fill_colour)
   } else {
@@ -58,7 +58,7 @@ plot_count_of_data <- function(data_source,
   legend_position <- match.arg(legend_position)
 
   if (
-    isFALSE(RUtilpol::is_colors(fill_colour))
+    isFALSE(RUtilpol::is_color(fill_colour))
   ) {
     data_to_use <-
       data_source %>%
@@ -120,7 +120,7 @@ plot_count_of_data <- function(data_source,
     )
 
   if (
-    RUtilpol::is_colors(fill_colour)
+    RUtilpol::is_color(fill_colour)
   ) {
     p_1 <-
       p_0 +
