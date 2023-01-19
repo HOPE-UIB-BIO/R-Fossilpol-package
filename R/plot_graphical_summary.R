@@ -172,10 +172,10 @@ plot_graphical_summary <- function(data_source,
   }
 
   res <-
-    ggpubr::ggarrange(
+    RUtilpol::arrange_plotlist(
       plotlist = plot_list,
       nrow = 1,
-      common.legend = TRUE,
+      common_legend = TRUE,
       legend = legend_position,
       labels = LETTERS[seq_along(plot_list)]
     )

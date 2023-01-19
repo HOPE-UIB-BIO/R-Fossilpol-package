@@ -15,7 +15,6 @@ Imports:
     furrr,
     future,
     ggplot2,
-    ggpubr,
     glue,
     grDevices,
     here,
