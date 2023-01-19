@@ -86,15 +86,15 @@ plot_graphical_summary <- function(data_source,
   p_map <-
     plot_map_of_data(
       data_source = data_source,
-      map_data_margin = 1,
       point_size = point_size,
       point_alpha = 1,
       point_colour = def_colour,
       point_colour_accent = col_dark,
-      text_size = text_size,
-      line_size = line_size,
       col_map_fill = col_light,
       col_map_borders = col_default,
+      map_data_margin = 1,
+      text_size = text_size,
+      line_size = line_size,
       legend_position = "bottom"
     )
 
@@ -120,22 +120,12 @@ plot_graphical_summary <- function(data_source,
       legend_position = "bottom"
     )
 
-  if (
-    is.null(grouping_variable)
-  ) {
-    plot_list <-
-      list(
-        p_map,
-        p_age_length
-      )
-  } else {
-    plot_list <-
-      list(
-        p_map,
-        p_count,
-        p_age_length
-      )
-  }
+  plot_list <-
+    list(
+      p_map,
+      p_count,
+      p_age_length
+    )
 
   if (
     isFALSE(is.null(color_palette))

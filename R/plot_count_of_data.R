@@ -129,6 +129,12 @@ plot_count_of_data <- function(data_source,
         stat = "identity",
         colour = ouline_colour,
         linewidth = outline_width
+      ) +
+      ggplot2::geom_text(
+        ggplot2::aes(label = n),
+        vjust = 0,
+        nudge_y = 2,
+        size = text_size
       )
   } else {
     p_1 <-
