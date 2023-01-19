@@ -15,6 +15,7 @@ Imports:
     furrr,
     future,
     ggplot2,
+    ggpubr,
     glue,
     grDevices,
     here,
@@ -42,7 +43,8 @@ Imports:
     tidyr,
     tidyselect,
     usethis,
-    utils
+    utils,
+    zip
 Remotes:
     NeotomaDB/neotoma2,
     HOPE-UIB-BIO/R-Utilpol-package
