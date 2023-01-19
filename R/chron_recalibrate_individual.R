@@ -103,7 +103,7 @@ chron_recalibrate_individual <- function(data_source_chron,
       try(
         expr = {
           # try to run Bchron within `time_to_stop`  time window
-          R.utils::withTimeout(
+          RUtilpol::do_in_time(
             expr = {
               result <-
                 chron_run_bchron(
@@ -114,7 +114,7 @@ chron_recalibrate_individual <- function(data_source_chron,
                 )
             },
             timeout = time_to_stop,
-            onTimeout = "silent"
+            envir = current_env
           )
         }
       )

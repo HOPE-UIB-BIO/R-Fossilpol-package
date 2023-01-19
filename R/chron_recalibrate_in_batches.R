@@ -157,12 +157,14 @@ chron_recalibrate_in_batches <- function(data_source_chron,
         workers = number_of_cores
       )
 
+      inner_env <- environment()
+
       # try to run Chronology
       try(
         expr = {
           # compute within time period. If longer than `time_to_stop`,
           #   stop computation
-          R.utils::withTimeout(
+          RUtilpol::do_in_time(
             expr = {
               bchron_temp_run <-
                 furrr::future_map(
@@ -186,7 +188,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
               rm(bchron_temp_run, envir = current_env)
             },
             timeout = batch_success_table$time_to_stop[[i]],
-            onTimeout = "silent"
+            envir = inner_env
           )
         },
         silent = TRUE

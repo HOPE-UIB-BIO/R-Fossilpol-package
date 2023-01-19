@@ -26,7 +26,6 @@ Imports:
     methods,
     neotoma2,
     purrr,
-    R.utils,
     raster,
     rcarbon,
     readr (>= 2.0.0),
