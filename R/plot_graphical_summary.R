@@ -8,8 +8,8 @@
 #' @param col_light Character. Name of a lighter color
 #' @param col_dark Character. Name of a darker color
 #' @param point_size Numeric. Size of a point
-#' @param line_size Numeric. Line width
-#' @param line_width Numeric. Width of a line for axis
+#' @param line_width  Numeric. Line width
+#' @param line_size Numeric. Width of a line for axis
 #' @param text_size Numeric. Text size for axis
 #' @param legend_position Character. If legend present, where it should be
 #' placed? Default is "none", which will not display legend.
@@ -35,8 +35,8 @@ plot_graphical_summary <- function(data_source,
                                    col_light = "gray90",
                                    col_dark = "gray30",
                                    point_size = 3,
-                                   line_size = 1,
-                                   line_width = 0.1,
+                                   line_width = 1,
+                                   line_size = 0.1,
                                    text_size = 16,
                                    legend_position = c(
                                      "none",
@@ -115,7 +115,7 @@ plot_graphical_summary <- function(data_source,
     plot_map_of_data(
       data_source = data_source,
       point_size = point_size,
-      point_alpha = 1,
+      point_alpha = 0.75,
       point_colour = def_colour,
       point_colour_accent = col_dark,
       col_map_fill = col_light,
@@ -140,8 +140,8 @@ plot_graphical_summary <- function(data_source,
   p_age_length <-
     plot_age_lenght_of_data(
       data_source = data_source,
-      line_width = 1,
-      line_alpha = 1,
+      line_width = line_width,
+      line_alpha = 0.75,
       line_colour = def_colour,
       text_size = text_size,
       line_size = line_size,

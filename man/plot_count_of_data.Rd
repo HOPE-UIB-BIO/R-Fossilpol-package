@@ -24,7 +24,7 @@ a variable in \code{data_source}}
 
 \item{ouline_colour}{Numeric. Colour of a outline of each bar}
 
-\item{line_size}{Numeric. Line width}
+\item{line_size}{Numeric. Width of a line for axis}
 
 \item{text_size}{Numeric. Text size for axis}
 

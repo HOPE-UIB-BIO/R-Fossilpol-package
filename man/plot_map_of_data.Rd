@@ -41,7 +41,7 @@ to be ploted}
 
 \item{text_size}{Numeric. Text size for axis}
 
-\item{line_size}{Numeric. Line width}
+\item{line_size}{Numeric. Width of a line for axis}
 
 \item{legend_position}{Character. If legend present, where it should be
 placed? Default is "none", which will not display legend.

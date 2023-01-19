@@ -12,8 +12,8 @@ plot_graphical_summary(
   col_light = "gray90",
   col_dark = "gray30",
   point_size = 3,
-  line_size = 1,
-  line_width = 0.1,
+  line_width = 1,
+  line_size = 0.1,
   text_size = 16,
   legend_position = c("none", "bottom", "top", "left", "right"),
   color_palette = NULL
@@ -35,9 +35,9 @@ ommited?}
 
 \item{point_size}{Numeric. Size of a point}
 
-\item{line_size}{Numeric. Line width}
+\item{line_width}{Numeric. Line width}
 
-\item{line_width}{Numeric. Width of a line for axis}
+\item{line_size}{Numeric. Width of a line for axis}
 
 \item{text_size}{Numeric. Text size for axis}
 
