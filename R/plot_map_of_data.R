@@ -157,13 +157,20 @@ plot_map_of_data <- function(data_source,
       size = line_size
     )
 
-  p_2 <-
-    p_1 +
-    ggplot2::geom_point(
-      size = point_size + 1,
-      alpha = point_alpha,
-      colour = point_colour_accent
-    )
+  if (
+    isFALSE(is.null(point_colour_accent))
+  ) {
+    p_2 <-
+      p_1 +
+      ggplot2::geom_point(
+        size = point_size + 1,
+        alpha = point_alpha,
+        colour = point_colour_accent
+      )
+  } else {
+    p_2 <-
+      p_1
+  }
 
   if (
     RUtilpol::is_color(point_colour)
@@ -190,13 +197,20 @@ plot_map_of_data <- function(data_source,
       )
   }
 
-  p_4 <-
-    p_3 +
-    ggplot2::geom_point(
-      size = max(0.1, point_size / 10),
-      alpha = point_alpha,
-      colour = point_colour_accent
-    )
+  if (
+    isFALSE(is.null(point_colour_accent))
+  ) {
+    p_4 <-
+      p_3 +
+      ggplot2::geom_point(
+        size = max(0.1, point_size / 10),
+        alpha = point_alpha,
+        colour = point_colour_accent
+      )
+  } else {
+    p_4 <-
+      p_3
+  }
 
   return(p_4)
 }
