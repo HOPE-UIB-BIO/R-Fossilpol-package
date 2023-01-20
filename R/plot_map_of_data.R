@@ -56,7 +56,7 @@ plot_map_of_data <- function(data_source,
 
   RUtilpol::check_class(
     "point_colour_accent",
-    c("character", "null")
+    c("character", "NULL")
   )
 
   if (
