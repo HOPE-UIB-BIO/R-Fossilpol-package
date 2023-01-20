@@ -265,6 +265,7 @@ proc_save_references <- function(data_source,
       msg = "Saving reproducibility package"
     )
 
+    # - stopcheck tables -----
     stop_check_tables <-
       tibble::tribble(
         ~table_name, ~file_name, ~path,
@@ -299,19 +300,53 @@ proc_save_references <- function(data_source,
       ) %>%
       purrr::pluck("file_name_full")
 
+    # - harmonisation tables -----
+    harm_path <- "Data/Input/Harmonisation_tables/"
     harm_tables <- NULL
 
     if (
       "harmonisation_region" %in% names(data_source)
     ) {
-      harm_tables <-
+      harm_regions <-
         tibble::tibble(
           harmonisation_region = data_source$harmonisation_region %>%
             unique() %>%
             sort()
+        )
+    } else {
+      files_in_harm_folder <-
+        list.files(
+          paste0(dir, harm_path)
         ) %>%
+        RUtilpol::get_clean_name() %>%
+        unique()
+
+      files_in_harm_folder <-
+        files_in_harm_folder[
+          stringr::str_detect(
+            string = files_in_harm_folder,
+            pattern =  "taxa_reference_table",
+            negate = TRUE
+          )
+        ]
+
+      harm_regions <-
+        tibble::enframe(
+          files_in_harm_folder
+        ) %>%
+        rlang::set_names(
+          nm = c("id", "harmonisation_region")
+        ) %>%
+        dplyr::select(-id)
+    }
+
+    if (
+      nrow(harm_regions) > 0
+    ) {
+      harm_tables <-
+        harm_regions %>%
         dplyr::mutate(
-          path = "Data/Input/Harmonisation_tables/",
+          path = harm_path,
           path_full = paste0(dir, path),
           latest_file = purrr::map2_chr(
             .x = path_full,
@@ -334,6 +369,21 @@ proc_save_references <- function(data_source,
         purrr::pluck("file_name_full")
     }
 
+    # add all last taxa refencence table
+    harm_tables <-
+      c(
+        harm_tables,
+        RUtilpol::get_latest_file_name(
+          file_name = "taxa_reference_table",
+          dir = paste0(dir, harm_path),
+          verbose = FALSE
+        ) %>%
+          paste0(harm_path, .)
+      ) %>%
+      unique() %>%
+      sort()
+
+    # - spatial files -----
     spatial_files <-
       list.files(
         path = paste0(dir, "Data/Input/Spatial"),
@@ -345,6 +395,7 @@ proc_save_references <- function(data_source,
         pattern = dir, replacement = ""
       )
 
+    # - zip it! -----
     RUtilpol::zip_files(
       zipfile = paste0(refference_path, "reproducibility_bundle.zip"),
       files = c(
