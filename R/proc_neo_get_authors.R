@@ -2,8 +2,7 @@
 #' @param neotoma_download List of lists with Neotoma data
 #' @param dataset_ids List of all dataset_id to extract contact information
 #' @param dir Path to the data storage folder
-#' @param download_new Logical. Download the full info about authors? Time
-#' consuming
+#' @param download_new Logical. Download the full info about authors?
 #' @export
 proc_neo_get_authors <-
   function(neotoma_download, dataset_ids, dir, download_new = TRUE) {
@@ -18,13 +17,15 @@ proc_neo_get_authors <-
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
+    dir <- RUtilpol::add_slash_to_path(dir)
+
     RUtilpol::output_heading(
       msg = "Extracting information about dataset authors"
     )
 
     # get all site data
     neotoma_download_sites <-
-      proc_neo_get_sites(neotoma_download)
+      RFossilpol:::proc_neo_get_sites(neotoma_download)
 
     # extract the PI information
     neotoma_sites_meta_pi <-
@@ -73,50 +74,61 @@ proc_neo_get_authors <-
 
     author_data_path <-
       paste0(
-        dir, "/Data/Input/Author_info"
+        dir, "Data/Input/Author_info/"
       )
 
-    # Check the presence of previous data
-    download_confirm <- download_new
+    author_individual_path <-
+      paste0(author_data_path, "individual/")
 
     if (
-      download_confirm == TRUE
-    ) {
-      download_confirm <-
-        util_confirm_based_on_presence(
-          file_name = "neotoma_author_data",
-          dir = author_data_path,
-          msg = "Detected previous download of Author information, do you want to re-do it?"
+      isFALSE(
+        any(
+          "individual" %in% list.files(author_data_path)
         )
+      )
+    ) {
+      dir.create(
+        author_individual_path
+      )
     }
 
     # if download
     if (
-      download_confirm == TRUE
+      isTRUE(download_new)
     ) {
       # get all author ids
       all_author_ids <-
         unique(neotoma_sites_meta_pi$author_id) %>%
-        stringr::str_replace(., "_neotoma", "") %>%
-        as.numeric() %>%
         sort()
 
-      RUtilpol::output_comment(
-        msg = "Start to download Neotoma author data"
-      )
+      # get all missing names
+      author_absent <-
+        RFossilpol:::util_get_missing_ds_names(
+          dir = author_individual_path,
+          name_vector = all_author_ids
+        )
 
-      # download all into about authors
-      neotoma_author_data <-
-        purrr::map_dfr(
-          .x = seq_along(all_author_ids),
+      if (
+        length(author_absent) > 0
+      ) {
+        RUtilpol::output_comment(
+          msg = "Start to download Neotoma author data"
+        )
+
+        # download all into about authors
+        purrr::walk(
+          .x = seq_along(author_absent),
           .f = ~ {
 
             # output progress
-            cat(paste0(.x, " in ", length(all_author_ids), "\n"))
+            cat(paste0(.x, " in ", length(author_absent), "\n"))
 
             res <-
               httr::GET(
-                paste0("https://api.neotomadb.org/v2.0/data/contacts/", all_author_ids[.x])
+                paste0(
+                  "https://api.neotomadb.org/v2.0/data/contacts/",
+                  author_absent[.x]
+                )
               )
 
             if (
@@ -126,28 +138,40 @@ proc_neo_get_authors <-
                 httr::content(res)$data %>%
                 purrr::pluck(1)
 
-              tibble::tibble(
-                author_id = paste0(all_author_ids[.x], "_neotoma"),
-                first_name = RUtilpol::replace_null_with_na(author_info$givennames),
-                last_name = RUtilpol::replace_null_with_na(author_info$familyname),
-                email = RUtilpol::replace_null_with_na(author_info$email),
-                Department = RUtilpol::replace_null_with_na(author_info$address),
-                url = RUtilpol::replace_null_with_na(author_info$url)
-              ) %>%
-                return()
-            } else {
-              tibble::tibble(
-                author_id = paste0(author_info$contactid, "_neotoma"),
-                first_name = NA,
-                last_name = NA,
-                email = NA,
-                adress = NA,
-                url = NA
-              ) %>%
-                return()
+              author_info_table <-
+                tibble::tibble(
+                  author_id = author_absent[.x],
+                  first_name = RUtilpol::replace_null_with_na(
+                    author_info$givennames
+                  ),
+                  last_name = RUtilpol::replace_null_with_na(
+                    author_info$familyname
+                  ),
+                  email = RUtilpol::replace_null_with_na(
+                    author_info$email
+                  ),
+                  Department = RUtilpol::replace_null_with_na(
+                    author_info$address
+                  ),
+                  url = RUtilpol::replace_null_with_na(
+                    author_info$url
+                  )
+                )
+
+              RUtilpol::save_latest_file(
+                object_to_save = author_info_table,
+                file_name = author_info_table$author_id,
+                dir = author_individual_path,
+                prefered_format = "rds",
+                use_sha = TRUE,
+                verbose = FALSE
+              )
+
+              rm(author_info, author_info_table)
             }
           }
         )
+      }
     } else {
       suppressWarnings(
         try(
@@ -161,26 +185,38 @@ proc_neo_get_authors <-
       )
     }
 
-
     if (
-      exists("neotoma_author_data", envir = current_env)
+      isFALSE(exists("neotoma_author_data", envir = current_env))
     ) {
+      # load all dataset
+      neotoma_author_data <-
+        purrr::map_dfr(
+          .x = all_author_ids,
+          .f = purrr::possibly(
+            .f = ~ RUtilpol::get_latest_file(
+              file_name = .x,
+              dir = author_individual_path,
+              verbose = FALSE
+            )
+          )
+        )
+
+      # save if needed
       RUtilpol::save_latest_file(
         object_to_save = neotoma_author_data,
         dir = author_data_path,
         prefered_format = "rds",
         use_sha = TRUE
       )
-
-      neotoma_author_info <-
-        neotoma_sites_meta_pi %>%
-        dplyr::left_join(
-          neotoma_author_data,
-          by = "author_id"
-        )
-    } else {
-      neotoma_author_info <- neotoma_sites_meta_pi
     }
+
+    neotoma_author_info <-
+      neotoma_sites_meta_pi %>%
+      dplyr::left_join(
+        neotoma_author_data,
+        by = "author_id"
+      )
+
 
     RUtilpol::stop_if_not(
       nrow(neotoma_author_info) > 0,
