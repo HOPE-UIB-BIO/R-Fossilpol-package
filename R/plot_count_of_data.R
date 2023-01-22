@@ -165,7 +165,7 @@ plot_count_of_data <- function(data_source,
         ggplot2::aes(label = fill_var_wrap),
         angle = 90,
         hjust = 0,
-        nudge_y = max_value * 0.1,
+        nudge_y = max_value * 0.05,
         size = text_size * 0.2
       ) +
       ggplot2::labs(
