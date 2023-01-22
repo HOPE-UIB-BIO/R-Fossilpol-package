@@ -1,15 +1,15 @@
 #' @title A bar plot with number of records in dataset compilation
 #' @inheritParams plot_map_of_data
-#' @param fill_colour Character. Color of each bar. Can be also a name of
+#' @param point_color Character. Color of lollipops. Can be also a name of
 #' a variable in `data_source`
-#' @param outline_width Numeric. Width of a outline of each bar
-#' @param ouline_colour Numeric. Colour of a outline of each bar
+#' @param point_size Numeric. Size of a lollipop
+#' @param ouline_colour Numeric. Colour of a outline of lollipol
 #' @export
 #' @seealso [plot_graphical_summary()], [plot_map_of_data()],
 #' [plot_age_lenght_of_data()]
 plot_count_of_data <- function(data_source,
-                               fill_colour = "gray80",
-                               outline_width = 0.1,
+                               point_color = "gray80",
+                               point_size = 10,
                                ouline_colour = "gray30",
                                line_size = 0.1,
                                text_size = 16,
@@ -22,17 +22,17 @@ plot_count_of_data <- function(data_source,
                                )) {
   RUtilpol::check_class("data_source", "data.frame")
 
-  RUtilpol::check_class("fill_colour", "character")
+  RUtilpol::check_class("point_color", "character")
 
   if (
-    isFALSE(RUtilpol::is_color(fill_colour))
+    isFALSE(RUtilpol::is_color(point_color))
   ) {
-    RUtilpol::check_col_names("data_source", fill_colour)
+    RUtilpol::check_col_names("data_source", point_color)
   } else {
-    RUtilpol::check_color("fill_colour")
+    RUtilpol::check_color("point_color")
   }
 
-  RUtilpol::check_class("outline_width", "numeric")
+  RUtilpol::check_class("point_size", "numeric")
 
   RUtilpol::check_class("ouline_colour", "character")
 
@@ -58,13 +58,13 @@ plot_count_of_data <- function(data_source,
   legend_position <- match.arg(legend_position)
 
   if (
-    isFALSE(RUtilpol::is_color(fill_colour))
+    isFALSE(RUtilpol::is_color(point_color))
   ) {
     data_to_use <-
       data_source %>%
-      dplyr::count(get(fill_colour)) %>%
+      dplyr::count(get(point_color)) %>%
       dplyr::rename(
-        fill_var = `get(fill_colour)`
+        fill_var = `get(point_color)`
       ) %>%
       dplyr::mutate(
         fill_var_wrap = stringr::str_wrap(
@@ -106,8 +106,8 @@ plot_count_of_data <- function(data_source,
       legend.position = legend_position,
       legend.text = ggplot2::element_text(size = text_size * 0.5),
       legend.title = ggplot2::element_text(size = text_size * 0.75),
-      axis.text.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
+      axis.text = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank()
     ) +
     ggplot2::guides(
       fill = ggplot2::guide_legend(nrow = 2),
@@ -118,43 +118,60 @@ plot_count_of_data <- function(data_source,
       x = ""
     )
 
+  max_value <-
+    max(data_to_use$n)
+
+  p_1 <-
+    p_0 +
+    ggplot2::geom_segment(
+      ggplot2::aes(
+        xend = forcats::fct_reorder(fill_var, -n),
+        yend = 0
+      ),
+      colour = ouline_colour
+    ) +
+    ggplot2::geom_point(
+      size = point_size + 1,
+      col = ouline_colour
+    )
+
   if (
-    RUtilpol::is_color(fill_colour)
+    RUtilpol::is_color(point_color)
   ) {
-    p_1 <-
-      p_0 +
-      ggplot2::geom_bar(
-        fill = fill_colour,
-        stat = "identity",
-        colour = ouline_colour,
-        linewidth = outline_width
+    p_2 <-
+      p_1 +
+      ggplot2::geom_point(
+        col = point_color,
+        size = point_size
       ) +
       ggplot2::geom_text(
         ggplot2::aes(label = n),
-        vjust = 0,
-        nudge_y = 2,
-        size = text_size
+        size = text_size * 0.2
       )
   } else {
-    p_1 <-
-      p_0 +
-      ggplot2::geom_bar(
-        ggplot2::aes(fill = fill_var),
-        stat = "identity",
-        colour = ouline_colour,
-        linewidth = outline_width
+    p_2 <-
+      p_1 +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          col = fill_var
+        ),
+        size = point_size
+      ) +
+      ggplot2::geom_text(
+        ggplot2::aes(label = n),
+        size = text_size * 0.2
       ) +
       ggplot2::geom_text(
         ggplot2::aes(label = fill_var_wrap),
         angle = 90,
         hjust = 0,
-        nudge_y = 2,
+        nudge_y = max_value * 0.1,
         size = text_size * 0.2
       ) +
       ggplot2::labs(
-        fill = fill_colour
+        color = point_color
       )
   }
 
-  return(p_1)
+  return(p_2)
 }
