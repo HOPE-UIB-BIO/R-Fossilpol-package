@@ -49,16 +49,15 @@ See \code{legend.position} in \code{\link[ggplot2:theme]{ggplot2::theme()}}}
 \code{grouping_variable} is selected}
 }
 \description{
-Create 2-3 plots of graphical summary of data compilation.
+Create three plots of graphical summary of data compilation.
 When \code{grouping_variable} is specified, the selected variable will be used for
 grouping and coloring.
 Types of graph:
 \itemize{
 \item Map - map of geographical location with each record represented as a point
+\item Count of data - A lollipop plot with a number of records in each group
 \item age length - age limits of records, with ech record represented by a
 single line
-\item Count of data - Only used when \code{grouping_variable} is selected. A bar plot
-with number of records in each group
 }
 }
 \seealso{

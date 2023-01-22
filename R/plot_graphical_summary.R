@@ -16,15 +16,14 @@
 #' See `legend.position` in [ggplot2::theme()]
 #' @param color_palette A vector with cuntom color palette. Only used when
 #' `grouping_variable` is selected
-#' @description Create 2-3 plots of graphical summary of data compilation.
+#' @description Create three plots of graphical summary of data compilation.
 #' When `grouping_variable` is specified, the selected variable will be used for
 #' grouping and coloring.
 #' Types of graph:
 #' * Map - map of geographical location with each record represented as a point
+#' * Count of data - A lollipop plot with a number of records in each group
 #' * age length - age limits of records, with ech record represented by a
 #' single line
-#' * Count of data - Only used when `grouping_variable` is selected. A bar plot
-#' with number of records in each group
 #' @seealso [plot_map_of_data()], [plot_age_lenght_of_data()],
 #' [plot_count_of_data()],
 #' @export
@@ -129,8 +128,8 @@ plot_graphical_summary <- function(data_source,
   p_count <-
     plot_count_of_data(
       data_source = data_source,
-      fill_colour = def_colour,
-      outline_width = line_width,
+      point_color = def_colour,
+      point_size = point_size * 2,
       ouline_colour = col_dark,
       line_size = line_size,
       text_size = text_size,

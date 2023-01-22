@@ -6,8 +6,8 @@
 \usage{
 plot_count_of_data(
   data_source,
-  fill_colour = "gray80",
-  outline_width = 0.1,
+  point_color = "gray80",
+  point_size = 10,
   ouline_colour = "gray30",
   line_size = 0.1,
   text_size = 16,
@@ -17,12 +17,12 @@ plot_count_of_data(
 \arguments{
 \item{data_source}{Data.frame to containing the dataset compilation}
 
-\item{fill_colour}{Character. Color of each bar. Can be also a name of
+\item{point_color}{Character. Color of lollipops. Can be also a name of
 a variable in \code{data_source}}
 
-\item{outline_width}{Numeric. Width of a outline of each bar}
+\item{point_size}{Numeric. Size of a lollipop}
 
-\item{ouline_colour}{Numeric. Colour of a outline of each bar}
+\item{ouline_colour}{Numeric. Colour of a outline of lollipol}
 
 \item{line_size}{Numeric. Width of a line for axis}
 
