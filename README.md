@@ -1,14 +1,17 @@
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# Fossilpol-R-package:package:
+# RFossilpol package:package:<img src="man/figures/fossilpol_logo.png" align="right" width="400" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of the RFossilpol:package: is to provide tools for **FOSSILPOL
-workflow**. See more information about it on the dedicated [FOSSILPOL
-website](https://hope-uib-bio.github.io/FOSSILPOL-website/)
+This repo is a part of the **FOSSILPOL** project. Learn more about the
+project on the [project
+websites](https://hope-uib-bio.github.io/FOSSILPOL-website/)
+
+The goal of the {`RFossilpol`}:package: is to provide functions for
+**FOSSILPOL workflow**.
 
 ## Installation
 
