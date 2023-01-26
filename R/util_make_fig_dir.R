@@ -5,6 +5,7 @@
 #' @return NULL
 #' @description Create a series of folders for all `region_vector` with
 #' `sel_date` inside of `dir`
+#' @keywords internal
 util_make_fig_dir <-
   function(dir, region_vector, sel_date) {
     RUtilpol::check_class("dir", "character")

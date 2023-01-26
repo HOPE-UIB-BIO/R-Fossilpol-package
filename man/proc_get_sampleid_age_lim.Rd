@@ -35,3 +35,4 @@ Exclude levels which are beyond the \code{age_limit}
 User can use age quantiles instead of set ages using \code{test_quantiles} or
 keep one level beyond the age extra i.e. \code{bookend}
 }
+\keyword{internal}

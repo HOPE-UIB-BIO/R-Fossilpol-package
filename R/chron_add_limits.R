@@ -1,5 +1,6 @@
 #' @title Add limits of each chronology control table
 #' @param data_source Data.frame with `chron_control_format`
+#' @keywords internal
 chron_add_limits <-
   function(data_source) {
     RUtilpol::check_class("data_source", "data.frame")

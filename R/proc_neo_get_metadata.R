@@ -1,6 +1,7 @@
 #' @title Obtain meta information from Neotoma download
 #' @param neotoma_download List of lists with Neotoma data
 #' @return Data.frame with meta information such as site names, coordinates, doi, etc
+#' @keywords internal
 proc_neo_get_metadata <-
   function(neotoma_download) {
     RUtilpol::check_class("neotoma_download", "list")

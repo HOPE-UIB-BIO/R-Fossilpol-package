@@ -12,3 +12,4 @@ proc_neo_get_coord(datasets)
 \description{
 Get coordinates of records from Neotoma list
 }
+\keyword{internal}

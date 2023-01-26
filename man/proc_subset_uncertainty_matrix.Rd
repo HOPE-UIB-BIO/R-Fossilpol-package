@@ -17,3 +17,4 @@ Matrix only including the columns in \code{level_vector}
 \description{
 Subset levels in data.frame by the vector of \code{sample_ids}
 }
+\keyword{internal}

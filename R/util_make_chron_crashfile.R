@@ -1,5 +1,6 @@
 #' @title Make Bchron Crash file
 #' @param dir Path to the directory
+#' @keywords internal
 util_make_chron_crashfile <-
   function(dir) {
     RUtilpol::check_class("dir", "character")

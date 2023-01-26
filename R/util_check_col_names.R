@@ -6,6 +6,7 @@
 #' `r lifecycle::badge("deprecated")`
 #' Function will test the presence of ALL names in `var_list`
 #' within the `data_source` data.frame and return error message
+#' @keywords internal
 util_check_col_names <-
   function(data_source, var_list) {
     lifecycle::deprecate_warn(

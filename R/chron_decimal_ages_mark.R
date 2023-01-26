@@ -8,6 +8,7 @@
 #' marking ages with place
 #' @description Detect ages or radiocarbon control points, which have
 #' decimal places are are between 80 and 120.
+#' @keywords internal
 chron_decimal_ages_mark <-
   function(data_source,
            only_rc = TRUE,

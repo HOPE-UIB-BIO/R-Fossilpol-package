@@ -2,6 +2,7 @@
 #' @title Get names of missing datasets
 #' @param dir Character. Path to the folder with files
 #' @param name_vector Vector with names of datasets.
+#' @keywords internal
 util_get_missing_ds_names <- function(dir, name_vector) {
 
   # pre-alocate that all records are missing

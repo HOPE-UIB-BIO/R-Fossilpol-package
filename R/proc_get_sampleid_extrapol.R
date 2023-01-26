@@ -9,6 +9,7 @@
 #' @description Select only levels, which has the age (our quantiles)
 #'   younger than last chron.control point + `maximum_age_extrapolation` &
 #'   older than first chron.control point - `maximum_age_extrapolation`
+#' @keywords internal
 proc_get_sampleid_extrapol <-
   function(data_level,
            data_chron_control_limits,

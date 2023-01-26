@@ -7,6 +7,7 @@
 #' @description Use "stop-check" (see `stopcheck_table` function) to load/create
 #'  the table defined by the user. Next, it will filter the records in
 #'  `data_source` based on the selected depositional environments.
+#' @keywords internal
 proc_filter_by_dep_env <-
   function(data_source, selection_data, data_storage_path, dir_spec) {
     RUtilpol::check_class("data_source", "data.frame")

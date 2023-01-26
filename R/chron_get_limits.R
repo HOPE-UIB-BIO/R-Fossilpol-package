@@ -1,6 +1,7 @@
 #' @title Detect the youngest and oldest age of chronology control points
 #' @param data_source Chronology control table
 #' @return Vector with youngest and oldest.
+#' @keywords internal
 chron_get_limits <-
   function(data_source) {
     RUtilpol::check_class("data_source", "data.frame")

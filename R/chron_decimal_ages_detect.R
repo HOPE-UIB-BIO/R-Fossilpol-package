@@ -4,6 +4,7 @@
 #' @return Logical
 #' @description Test if chronology control table has a potential candidate
 #' of Percentage modern carbon
+#' @keywords internal
 chron_decimal_ages_detect <-
   function(data_source,
            rc_control_types = NULL) {

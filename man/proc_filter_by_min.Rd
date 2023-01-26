@@ -16,3 +16,4 @@ proc_filter_by_min(data_source, var_name, min_n)
 \description{
 Filter records by minimal value
 }
+\keyword{internal}

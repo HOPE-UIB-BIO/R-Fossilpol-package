@@ -25,3 +25,4 @@ Use "stop-check" (see \code{stopcheck_table} function) to load/create
 the table defined by the user. Next, it will filter the records in
 \code{data_source} based on the selected depositional environments.
 }
+\keyword{internal}

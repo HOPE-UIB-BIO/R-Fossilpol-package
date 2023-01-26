@@ -4,6 +4,7 @@
 #' @param rc_control_types Vector with all RC types
 #' @return Logical
 #' @description  Detect radiocarbon ages with negative values
+#' @keywords internal
 chron_check_negative_rc_ages <-
   function(data_source,
            postbomb_age = 199,

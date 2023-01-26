@@ -4,6 +4,7 @@
 #' @description Create a table with one row, that include `dataset_id`
 #' and nested table with all the sample info.
 #' @return Data.frame for each of the datasets with nested sample data
+#' @keywords internal
 proc_neo_extract_samples <-
   function(data_source,
            sel_dataset_id) {
