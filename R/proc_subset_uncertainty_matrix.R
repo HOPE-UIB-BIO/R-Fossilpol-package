@@ -2,6 +2,7 @@
 #' @param data_source Matrix including `sample_id` as columns
 #' @param level_vector Vector of `sample_ids`
 #' @return Matrix only including the columns in `level_vector`
+#' @keywords internal
 proc_subset_uncertainty_matrix <-
   function(data_source,
            level_vector) {

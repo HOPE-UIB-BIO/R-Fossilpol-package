@@ -16,3 +16,4 @@ The function will obtain the all depositional environments from
 Neotoma. Next, it will filter the sequences based on the selected
 depositional environments.
 }
+\keyword{internal}

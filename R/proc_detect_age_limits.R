@@ -7,6 +7,7 @@
 #' @description Test if the youngest limit of any level is younger than
 #' age limit as well as if the oldest limit of any level is older than age
 #' limit
+#' @keywords internal
 proc_detect_age_limits <-
   function(data_source,
            age_limit_young,

@@ -6,6 +6,7 @@
 #' @description Will create data set with count data that should
 #' contain pollen types within `sel_eco_group`. The default provide
 #' the counts for the pollen data.
+#' @keywords internal
 proc_neo_extract_counts <-
   function(data_source,
            sel_var_element = "pollen",

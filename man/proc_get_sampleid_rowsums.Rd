@@ -18,3 +18,4 @@ Vector with valid sample_ids
 Calculates pollen sum and test if each level has more pollen
 sum than \code{min_n_grains}.
 }
+\keyword{internal}

@@ -2,6 +2,7 @@
 #' @param data_source Data.frame to be filtered
 #' @param var_name Name of the variable to be compared to
 #' @param min_n Criterion to be evaluated against
+#' @keywords internal
 proc_filter_by_min <-
   function(data_source, var_name, min_n) {
     RUtilpol::check_class("data_source", "data.frame")

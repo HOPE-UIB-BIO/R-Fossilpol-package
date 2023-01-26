@@ -13,7 +13,6 @@
 #'  on the data `lat` and `long`. If `fill_na` == TRUE, function will search for
 #'  the most common value in the increasing distance of `distance_step`.
 #'  Function will stop search if all values are found.
-
 #' @export
 geo_assign_tif <-
   function(data_source,

@@ -12,3 +12,4 @@ chron_add_limits(data_source)
 \description{
 Add limits of each chronology control table
 }
+\keyword{internal}

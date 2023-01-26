@@ -15,3 +15,4 @@ Data.frame with meta information such as site names, coordinates, doi, etc
 \description{
 Obtain meta information from Neotoma download
 }
+\keyword{internal}

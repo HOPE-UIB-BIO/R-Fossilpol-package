@@ -1,5 +1,6 @@
 #' @title Get coordinates of records from Neotoma list
 #' @param datasets List of lists with Neotoma datasets
+#' @keywords internal
 proc_neo_get_coord <-
   function(datasets) {
     RUtilpol::check_class("datasets", "list")

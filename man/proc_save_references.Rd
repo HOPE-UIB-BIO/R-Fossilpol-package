@@ -12,7 +12,7 @@ proc_save_references(
     "graphical_summary", "reproducibility_bundle"),
   dir,
   image_width = 20,
-  image_height = 7,
+  image_height = 12,
   image_units = c("in", "cm", "mm", "px"),
   ...
 )

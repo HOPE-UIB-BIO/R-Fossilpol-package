@@ -6,6 +6,7 @@
 #' @param lat_max Limit for the largest latitude
 #' @param alt_min Limit for the smallest altitude
 #' @param alt_max Limit for the largest altitude
+#' @keywords internal
 proc_filter_by_geography <-
   function(data_source,
            long_min = NA,

@@ -8,6 +8,7 @@
 #' @param max_age_error Maximum error value to accept
 #' @param guess_depth Maximum depth to be accepted "Guess" as valid type
 #' @param min_n_of_control_points Minimal number of chronology control points
+#' @keywords internal
 chron_prepare_control_tables <-
   function(data_source,
            chron_control_types,

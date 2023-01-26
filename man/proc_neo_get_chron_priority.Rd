@@ -20,3 +20,4 @@ Data.frame with the selected chronology
 Look into all chronologies, select the best one
 by the \code{chron_order}
 }
+\keyword{internal}

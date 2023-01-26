@@ -15,3 +15,4 @@ Vector with youngest and oldest.
 \description{
 Detect the youngest and oldest age of chronology control points
 }
+\keyword{internal}

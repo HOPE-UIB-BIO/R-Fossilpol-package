@@ -1,4 +1,5 @@
 #' @title Obtain the table of depositional environments from Neotoma
+#' @keywords internal
 proc_neo_get_dep_env <-
   function() {
     # Get relevant tables with information from Neotoma API

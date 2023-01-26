@@ -13,8 +13,7 @@ proc_neo_get_authors(neotoma_download, dataset_ids, dir, download_new = TRUE)
 
 \item{dir}{Path to the data storage folder}
 
-\item{download_new}{Logical. Download the full info about authors? Time
-consuming}
+\item{download_new}{Logical. Download the full info about authors?}
 }
 \description{
 Obtain information about authors of datasets

@@ -4,6 +4,7 @@
 #' @description The function will obtain the all depositional environments from
 #' Neotoma. Next, it will filter the sequences based on the selected
 #' depositional environments.
+#' @keywords internal
 proc_other_filter_by_dep_env <- function(data_source, data_storage_path) {
   RUtilpol::check_class("data_source", "data.frame")
 

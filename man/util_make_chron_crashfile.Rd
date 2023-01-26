@@ -12,3 +12,4 @@ util_make_chron_crashfile(dir)
 \description{
 Make Bchron Crash file
 }
+\keyword{internal}

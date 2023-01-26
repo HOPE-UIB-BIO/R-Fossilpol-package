@@ -3,6 +3,7 @@
 #' by `variable_vec`and `valid_id`.
 #' @param variable_vec Vector with names of columns which should be filtered
 #' @return Data assembly with all level-related columns filtered by `valid_id`
+#' @keywords internal
 proc_subset_all_data_by_id <-
   function(data_source,
            variable_vec = c(

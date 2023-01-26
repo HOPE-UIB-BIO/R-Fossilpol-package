@@ -5,6 +5,7 @@
 #' @return Data.frame with the selected chronology
 #' @description Look into all chronologies, select the best one
 #' by the `chron_order`
+#' @keywords internal
 proc_neo_get_chron_priority <-
   function(data_source,
            dataset_name,

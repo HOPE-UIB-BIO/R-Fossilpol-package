@@ -10,6 +10,7 @@
 #' @description Exclude levels which are beyond the `age_limit`
 #' User can use age quantiles instead of set ages using `test_quantiles` or
 #' keep one level beyond the age extra i.e. `bookend`
+#' @keywords internal
 proc_get_sampleid_age_lim <-
   function(data_source,
            age_limit,

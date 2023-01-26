@@ -5,6 +5,7 @@
 #' @param chron_control_types Named list with `chroncontrol_included_types` and
 #' `radiocarbon_control_types`
 #' @param dir Path to the data storage folder
+#' @keywords internal
 chron_fix_pmc <-
   function(data_source, chron_control_types, dir) {
     RUtilpol::check_class("data_source", "data.frame")

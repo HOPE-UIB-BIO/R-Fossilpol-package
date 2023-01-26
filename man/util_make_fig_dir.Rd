@@ -17,3 +17,4 @@ util_make_fig_dir(dir, region_vector, sel_date)
 Create a series of folders for all \code{region_vector} with
 \code{sel_date} inside of \code{dir}
 }
+\keyword{internal}

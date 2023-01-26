@@ -4,6 +4,7 @@
 #' @return Vector with valid sample_ids
 #' @description Calculates pollen sum and test if each level has more pollen
 #' sum than `min_n_grains`.
+#' @keywords internal
 proc_get_sampleid_rowsums <-
   function(data_source,
            min_n_grains) {

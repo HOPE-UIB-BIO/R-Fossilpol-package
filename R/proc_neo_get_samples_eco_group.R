@@ -1,5 +1,6 @@
 #' @title Extract all ecological groups from dataset
 #' @param data_source Data.frame with samples saved as nested information
+#' @keywords internal
 proc_neo_get_samples_eco_group <-
   function(data_source) {
     RUtilpol::check_class("data_source", "data.frame")

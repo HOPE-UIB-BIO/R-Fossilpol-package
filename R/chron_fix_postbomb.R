@@ -7,6 +7,7 @@
 #' @param set_postbomb_age Age determining the start of period using postbomb
 #' curves. Default value is  199 as all postbomb curves are able to handle
 #' values younger than 199
+#' @keywords internal
 chron_fix_postbomb <-
   function(data_source, chron_control_types, set_postbomb_age = 199) {
     RUtilpol::check_class("data_source", "data.frame")
