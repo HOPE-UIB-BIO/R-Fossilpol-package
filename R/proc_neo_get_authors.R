@@ -25,7 +25,7 @@ proc_neo_get_authors <-
 
     # get all site data
     neotoma_download_sites <-
-      RFossilpol:::proc_neo_get_sites(neotoma_download)
+      proc_neo_get_sites(neotoma_download)
 
     # extract the PI information
     neotoma_sites_meta_pi <-
@@ -103,7 +103,7 @@ proc_neo_get_authors <-
 
       # get all missing names
       author_absent <-
-        RFossilpol:::util_get_missing_ds_names(
+        util_get_missing_ds_names(
           dir = author_individual_path,
           name_vector = all_author_ids
         )
