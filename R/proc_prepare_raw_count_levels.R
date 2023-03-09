@@ -1,4 +1,3 @@
-utils::globalVariables("where")
 #' @title Format count and depth data
 #' @param data_source Data.frame with `raw_counts` and `sample_depth`
 #' @description `sample_depth` Data.frame will be sorted by `depth` and then
@@ -190,7 +189,7 @@ proc_prepare_raw_count_levels <-
           .f = ~ .x %>%
             dplyr::mutate(
               dplyr::across(
-                where(is.numeric),
+                tidyselect::where(is.numeric),
                 ~ tidyr::replace_na(.x, 0)
               )
             )

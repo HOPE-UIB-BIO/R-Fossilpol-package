@@ -1,4 +1,3 @@
-utils::globalVariables("where")
 #' @title Detect and exclude duplicates
 #' @param data_source Data.frame with records
 #' @param source_var Character. Name of a column that indicates source of data
@@ -21,6 +20,7 @@ proc_detect_duplicates <-
            source_var = "source_of_data",
            n_subgroups = 1,
            maximal_distance = 5) {
+
     RUtilpol::check_class("data_source", "data.frame")
 
     RUtilpol::check_col_names("data_source", c("lat", "long", eval(source_var)))
@@ -54,7 +54,7 @@ proc_detect_duplicates <-
       ) %>%
       dplyr::mutate(
         dplyr::across(
-          where(is.numeric),
+          tidyselect::where(is.numeric),
           scale
         )
       )
@@ -79,7 +79,7 @@ proc_detect_duplicates <-
 
     if (
       length(source_var_levels) < 2
-      ) {
+    ) {
       RUtilpol::output_comment(
         msg = paste("There is only 1 possible source of data:", source_var_levels)
       )
@@ -99,7 +99,7 @@ proc_detect_duplicates <-
       dplyr::ungroup() %>%
       dplyr::mutate(
         dplyr::across(
-          where(is.numeric),
+          tidyselect::where(is.numeric),
           ~ tidyr::replace_na(.x, 0)
         )
       ) %>%
@@ -109,7 +109,7 @@ proc_detect_duplicates <-
 
     if (
       length(intresting_subgroups) > 0
-      ) {
+    ) {
       RUtilpol::output_comment(
         msg = paste0(
           "Detected potential regions of duplicates, N = ",
@@ -166,7 +166,7 @@ proc_detect_duplicates <-
           tibble::as_tibble() %>%
           dplyr::mutate(
             dplyr::across(
-              where(is.factor),
+              tidyselect::where(is.factor),
               as.character
             )
           ) %>%
@@ -278,7 +278,7 @@ proc_detect_duplicates <-
 
         if (
           i == 1
-          ) {
+        ) {
           final_result <- posible_candidates
         } else {
           final_result <-

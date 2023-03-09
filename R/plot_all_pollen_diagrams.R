@@ -1,4 +1,3 @@
-utils::globalVariables("where")
 #' @title Plot pollen diagram for all records
 #' @param data_source Data.frame with `dataset_id`, `counts_harmonised`, `levels`,
 #' and `region`
@@ -15,6 +14,7 @@ plot_all_pollen_diagrams <-
            max_taxa = 20,
            y_var = c("age", "depth"),
            date) {
+
     RUtilpol::check_class("data_source", "data.frame")
 
     RUtilpol::check_col_names(
@@ -61,7 +61,7 @@ plot_all_pollen_diagrams <-
             ) %>%
             dplyr::mutate(
               dplyr::across(
-                where(is.numeric),
+                tidyselect::where(is.numeric),
                 ~ (.x / row_sum) * 100
               )
             ) %>%
