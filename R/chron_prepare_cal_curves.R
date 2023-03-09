@@ -21,7 +21,7 @@ chron_prepare_cal_curves <-
       )
 
     # wrap function in so it does not output mesage
-    capture.output(
+    utils::capture.output(
       # creta a mix curve and place is inside of Bchron package
       Bchron::createCalCurve(
         name = "calmixed",
@@ -84,7 +84,7 @@ chron_prepare_cal_curves <-
         IntCal::ccurve(cc = i, postbomb = TRUE)
 
       # wrap function in so it does not output message
-      capture.output(
+      utils::capture.output(
         Bchron::createCalCurve(
           name = postbomb_curve_names[i],
           calAges = selected_curve[, 1],
