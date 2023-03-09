@@ -179,7 +179,7 @@ setMethod(
       ) %>%
       dplyr::distinct(author_id, .keep_all = TRUE) %>%
       dplyr::arrange(last_name, first_name, author_id)
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -225,7 +225,7 @@ setMethod(
       ) %>%
       dplyr::distinct(affiliation_id, .keep_all = TRUE) %>%
       dplyr::arrange(affiliation_id, Department)
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -271,7 +271,7 @@ setMethod(
       ) %>%
       dplyr::distinct() %>%
       dplyr::arrange(author_id, affiliation_id)
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -317,7 +317,7 @@ setMethod(
       ) %>%
       dplyr::distinct() %>%
       dplyr::arrange(dataset_id, sitename)
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -364,7 +364,7 @@ setMethod(
       dplyr::distinct() %>%
       dplyr::arrange(dataset_id, author_id) %>%
       tidyr::drop_na()
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -410,7 +410,7 @@ setMethod(
       ) %>%
       dplyr::distinct() %>%
       dplyr::arrange(dataset_id)
-    validObject(theObject)
+    methods::validObject(theObject)
     return(theObject)
   }
 )
@@ -517,7 +517,7 @@ setMethod(
       dplyr::arrange(dataset_id, sitename)
 
 
-    validObject(theObject)
+    methods::validObject(theObject)
 
     return(theObject)
   }
