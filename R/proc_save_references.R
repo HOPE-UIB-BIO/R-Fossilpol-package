@@ -67,7 +67,7 @@ proc_save_references <- function(data_source,
 
   RUtilpol::check_class("dir", "character")
 
-  dir <- RUtilpol:::add_slash_to_path(dir)
+  dir <- RUtilpol::add_slash_to_path(dir)
 
   refference_path <-
     paste0(dir, "Outputs/Meta_and_references/")
