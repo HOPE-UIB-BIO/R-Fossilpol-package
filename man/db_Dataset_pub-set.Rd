@@ -8,6 +8,8 @@ db_Dataset_pub(theObject) <- value
 }
 \arguments{
 \item{theObject}{object of proj_db_class class}
+
+\item{value}{object to assign}
 }
 \description{
 Insert in the table with publication linked to datasets

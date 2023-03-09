@@ -155,6 +155,7 @@ setMethod(
 
 #' @title Insert in Author table
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Authors<-",
   def = function(theObject, value) standardGeneric("db_Authors<-")
@@ -162,6 +163,7 @@ methods::setGeneric(
 
 #' @title Insert in Author table
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Authors<-",
@@ -201,6 +203,7 @@ setMethod(
 
 #' @title Insert in the Affiliation table
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Affiliations<-",
   def = function(theObject, value) standardGeneric("db_Affiliations<-")
@@ -208,6 +211,7 @@ methods::setGeneric(
 
 #' @title Insert in the Affiliation table
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Affiliations<-",
@@ -247,6 +251,7 @@ setMethod(
 
 #' @title Insert in table linking Authors and Affiliations
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Auth_aff_tab<-",
   def = function(theObject, value) standardGeneric("db_Auth_aff_tab<-")
@@ -254,6 +259,7 @@ methods::setGeneric(
 
 #' @title Insert in table linking Authors and Affiliations
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Auth_aff_tab<-",
@@ -293,6 +299,7 @@ setMethod(
 
 #' @title Insert in  the table with datasets information
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Datasets_id_tab<-",
   def = function(theObject, value) standardGeneric("db_Datasets_id_tab<-")
@@ -300,6 +307,7 @@ methods::setGeneric(
 
 #' @title Insert in the table with datasets information
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Datasets_id_tab<-",
@@ -339,6 +347,7 @@ setMethod(
 
 #' @title Insert in the table linking Authors and Datasets
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Auth_dataset_tab<-",
   def = function(theObject, value) standardGeneric("db_Auth_dataset_tab<-")
@@ -346,6 +355,7 @@ methods::setGeneric(
 
 #' @title Insert in the table linking Authors and Datasets
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Auth_dataset_tab<-",
@@ -386,6 +396,7 @@ setMethod(
 
 #' @title Insert in the table with publication linked to datasets
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 methods::setGeneric(
   name = "db_Dataset_pub<-",
   def = function(theObject, value) standardGeneric("db_Dataset_pub<-")
@@ -393,6 +404,7 @@ methods::setGeneric(
 
 #' @title Insert in the table with publication linked to datasets
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be added but duplicates will be removed
 setMethod(
   f = "db_Dataset_pub<-",
@@ -417,6 +429,7 @@ setMethod(
 
 #' @title Add data to the database
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be automatically added to the specific tables
 #' but duplicates will be removed
 methods::setGeneric(
@@ -426,6 +439,7 @@ methods::setGeneric(
 
 #' @title Add data to the database
 #' @param theObject object of proj_db_class class
+#' @param value object to assign
 #' @description New data will be automatically added to the specific tables
 #' but duplicates will be removed
 #' @export
@@ -523,6 +537,8 @@ setMethod(
   }
 )
 
+#' @title Function show summary of the database
+#' @param theObject object of proj_db_class class
 default_show <-
   function(theObject) {
     authors_table <-
@@ -548,7 +564,7 @@ default_show <-
   }
 
 #' @title Show summary of the database
-#' @param theObject object of proj_db_class class
+#' @param object object of proj_db_class class
 setMethod(
   f = "show",
   signature = "proj_db_class",
