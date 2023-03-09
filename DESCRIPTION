@@ -17,7 +17,6 @@ Imports:
     future,
     ggplot2,
     grDevices,
-    here,
     httr,
     IntCal,
     janitor,
