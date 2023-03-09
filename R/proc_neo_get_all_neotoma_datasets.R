@@ -53,7 +53,7 @@ proc_neo_get_all_neotoma_datasets <- function(dataset_type,
 
   # Transform into a data.frame
   sel_sites_df <-
-    neotoma2:::as.data.frame(sel_sites) %>%
+    neotoma2::as.data.frame(sel_sites) %>%
     dplyr::rename(
       altitude = elev
     )
@@ -89,7 +89,7 @@ proc_neo_get_all_neotoma_datasets <- function(dataset_type,
     neotoma2::filter(datasettype %in% dataset_type) %>%
     # turn into datasets
     neotoma2::datasets() %>%
-    neotoma2:::as.data.frame() %>%
+    neotoma2::as.data.frame() %>%
     # rename the column for back compatibility
     dplyr::rename(
       dsid = datasetid
