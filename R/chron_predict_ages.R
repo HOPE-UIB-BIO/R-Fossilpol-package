@@ -11,6 +11,10 @@ chron_predict_ages <-
   function(data_source,
            sample_data,
            target_age_quantile = 0.95) {
+    assertthat::assert_that(
+      requireNamespace("Bchron"),
+      msg = "Please attach Bchron by `library(Bchron)`"
+    )
     RUtilpol::check_class("data_source", "BchronologyRun")
 
     RUtilpol::check_class("sample_data", "data.frame")
@@ -29,7 +33,7 @@ chron_predict_ages <-
     depth <- sample_data$depth
 
     age_position <-
-      Bchron:::predict.BchronologyRun(bchron_model, newPositions = depth)
+      predict(bchron_model, newPositions = depth)
 
     default_age_quantiles <- c(0.25, 0.33, 0.5, 0.666, 0.75, 0.95)
 
