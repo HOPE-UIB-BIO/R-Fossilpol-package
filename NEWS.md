@@ -35,6 +35,7 @@
 
 - move utility to {[RUtilpol](https://github.com/HOPE-UIB-BIO/R-Utilpol-package)} package ([#16](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/16), [#17](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/17), [#28](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/28))
 - replace `R.utils::withTimeout()` with `RUtilpol::do_in_time()` ([#35](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/35))
+- Spatial data is handled by {RUtilpol} ([#47](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/47))
 
 ## Package documentation and UI
 
