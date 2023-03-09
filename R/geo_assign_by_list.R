@@ -80,7 +80,7 @@ geo_assign_by_list <-
 
     for (i in seq_along(info_to_assign_all$var_name)) {
       res <-
-        geo_assign_value(
+         RUtilpol::geo_assign_value(
           data_source = res,
           dir = info_to_assign_all$dir[i],
           sel_method = info_to_assign_all$sel_method[i],
