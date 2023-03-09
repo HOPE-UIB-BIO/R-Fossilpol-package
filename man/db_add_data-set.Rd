@@ -8,6 +8,8 @@ db_add_data(theObject) <- value
 }
 \arguments{
 \item{theObject}{object of proj_db_class class}
+
+\item{value}{object to assign}
 }
 \description{
 New data will be automatically added to the specific tables

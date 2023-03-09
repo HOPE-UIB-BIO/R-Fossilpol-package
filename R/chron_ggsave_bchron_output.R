@@ -18,8 +18,12 @@ chron_ggsave_bchron_output <-
            image_height,
            image_units = c("in", "cm", "mm", "px"),
            image_format = ".pdf") {
-    current_frame <- sys.nframe()
+    assertthat::assert_that(
+      requireNamespace("Bchron"),
+      msg = "Please attach Bchron by `library(Bchron)`"
+    )
 
+    current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
     RUtilpol::check_class("data_source", "BchronologyRun")
@@ -52,7 +56,7 @@ chron_ggsave_bchron_output <-
     )
 
     Bchron_plot <-
-      Bchron:::plot.BchronologyRun(data_source) +
+      plot(data_source) +
       ggplot2::theme_classic() +
       ggplot2::theme(
         text = ggplot2::element_text(size = text_size),

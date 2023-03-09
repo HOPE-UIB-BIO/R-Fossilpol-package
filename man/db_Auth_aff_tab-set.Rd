@@ -8,6 +8,8 @@ db_Auth_aff_tab(theObject) <- value
 }
 \arguments{
 \item{theObject}{object of proj_db_class class}
+
+\item{value}{object to assign}
 }
 \description{
 Insert in table linking Authors and Affiliations
