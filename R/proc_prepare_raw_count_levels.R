@@ -30,7 +30,7 @@ proc_prepare_raw_count_levels <-
         ),
         raw_counts = purrr::map(
           .x = raw_counts,
-          .f = ~ proc_rename_column(
+          .f = ~ RUtilpol::rename_column(
             data_source = .x,
             old_name = "sample.id",
             new_name = "sample_id"
@@ -43,7 +43,7 @@ proc_prepare_raw_count_levels <-
         ),
         sample_depth = purrr::map(
           .x = sample_depth,
-          .f = ~ proc_rename_column(
+          .f = ~ RUtilpol::rename_column(
             data_source = .x,
             old_name = "sample.id",
             new_name = "sample_id"
