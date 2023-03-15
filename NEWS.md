@@ -31,6 +31,10 @@
 - "Private" to "Other" ([#24](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/24))
 - "sequence" to "record" ([#25](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/25))
 
+## Progress bars
+
+- add progress bar to most `purrr::map*()` functions ([#48](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/48))
+
 ## Utility functions
 
 - move utility to {[RUtilpol](https://github.com/HOPE-UIB-BIO/R-Utilpol-package)} package ([#16](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/16), [#17](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/17), [#28](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/28))
