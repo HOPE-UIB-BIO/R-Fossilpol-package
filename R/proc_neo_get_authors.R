@@ -33,7 +33,6 @@ proc_neo_get_authors <-
         .x = dataset_ids,
         .f = purrr::possibly(
           .f = ~ {
-
             # save the dataset_id
             sel_dataset_id <- .x
 
@@ -117,12 +116,9 @@ proc_neo_get_authors <-
 
         # download all into about authors
         purrr::walk(
+          .progress = "Downloading individual authors",
           .x = seq_along(author_absent),
           .f = ~ {
-
-            # output progress
-            cat(paste0(.x, " in ", length(author_absent), "\n"))
-
             res <-
               httr::GET(
                 paste0(

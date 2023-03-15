@@ -5,8 +5,8 @@
 #' @return List with all downloaded records
 #' @export
 proc_neo_download_records <- function(allds,
-                                        dir,
-                                        n_tries = 10) {
+                                      dir,
+                                      n_tries = 10) {
   RUtilpol::check_class("allds", "data.frame")
 
   RUtilpol::check_col_names("allds", "dsid")
@@ -68,16 +68,10 @@ proc_neo_download_records <- function(allds,
 
   # download all records individually
   purrr::walk(
+    .progress = "Downloading individual records",
     .x = 1:n_ds_to_download,
     .f = ~ {
       sel_ds_name <- ds_absent[.x]
-
-      # output progress
-      cat(
-        paste(
-          "downloading", .x, "of", n_ds_to_download
-        )
-      )
 
       # repeat for 'n_tries' or until successfully download the record
       for (i in 1:n_tries) {
@@ -94,13 +88,9 @@ proc_neo_download_records <- function(allds,
         if (
           res$status_code == 200 # NOTE: status_code 200 = success
         ) {
-
           # extract the data
           output <-
             httr::content(res)$data[[1]]
-
-          # output 'success'
-          cat(" - success", "\n")
 
           RUtilpol::save_latest_file(
             object_to_save = output,
@@ -114,12 +104,8 @@ proc_neo_download_records <- function(allds,
           # break from loop
           break
         } else {
-
           # save output as nothing
           output <- NULL
-
-          # output 'success'
-          cat(" - fail", "\n")
         }
 
         # delete the result and output
@@ -155,13 +141,7 @@ proc_neo_download_records <- function(allds,
     list.files(
       path_to_indiv_folder
     ) %>%
-     RUtilpol::get_clean_name()
-
-  RUtilpol::output_comment(
-    paste(
-      "Compiling records together"
-    )
-  )
+    RUtilpol::get_clean_name()
 
   result_list <-
     subset(
@@ -170,6 +150,7 @@ proc_neo_download_records <- function(allds,
     ) %>%
     rlang::set_names() %>%
     purrr::map(
+      .progress = "Compiling records together",
       .f = ~ RUtilpol::get_latest_file(
         file_name = .x,
         dir = path_to_indiv_folder,

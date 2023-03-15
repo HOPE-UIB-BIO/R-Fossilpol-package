@@ -14,7 +14,6 @@ plot_all_pollen_diagrams <-
            max_taxa = 20,
            y_var = c("age", "depth"),
            date) {
-
     RUtilpol::check_class("data_source", "data.frame")
 
     RUtilpol::check_col_names(
@@ -105,26 +104,21 @@ plot_all_pollen_diagrams <-
 
     data_filtered_percentages %>%
       purrr::pwalk(
+        .progress = "Saving figure for each record",
         .l = list(
           .$data_percent, # ..1
           .$levels, # ..2
           .$dataset_id, # ..3
           .$region # ..4
         ),
-        .f = ~ {
-          RUtilpol::output_comment(
-            msg = paste0("Saving figure for dataset ", ..3)
-          )
-
-          plot_pollen_diagram_rioja(
-            data_percentages = ..1,
-            levels = ..2,
-            dataset_id = ..3,
-            min_n_occur = min_n_occur,
-            max_taxa = max_taxa,
-            dir = paste0(save_path, ..4, "/")
-          )
-        }
+        .f = ~ plot_pollen_diagram_rioja(
+          data_percentages = ..1,
+          levels = ..2,
+          dataset_id = ..3,
+          min_n_occur = min_n_occur,
+          max_taxa = max_taxa,
+          dir = paste0(save_path, ..4, "/")
+        )
       )
 
     RUtilpol::open_dir(

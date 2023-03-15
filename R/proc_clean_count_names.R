@@ -56,14 +56,11 @@ proc_clean_count_names <-
       verbose = FALSE
     )
 
-    RUtilpol::output_heading(
-      msg = "Cleaning taxon names"
-    )
-
     data_clean_names <-
       data_full_filtered %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Cleaning taxon names",
           .x = raw_counts,
           .f = ~ proc_clean_column_names(
             data_source = .x,
