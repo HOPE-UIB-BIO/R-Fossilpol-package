@@ -61,9 +61,11 @@ proc_neo_extract_samples <-
         # create a nested tibble with one r
         temp_data <-
           data_source %>%
-          purrr::map_dfr(
+          purrr::map(
             "datum",
-             .progress = "Transforming records into a table") %>%
+            .progress = "Transforming records into a table"
+          ) %>%
+          purrr::list_rbind() %>%
           dplyr::mutate(
             sample_id = sample_id_list$sample_id
           ) %>%

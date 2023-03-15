@@ -64,10 +64,11 @@ util_check_data_assembly <-
         dplyr::bind_cols(
           missing_vars %>%
             purrr::set_names() %>%
-            purrr::map_dfc(
+            purrr::map(
               .x = .,
               .f = ~ rep(NA, nrow(data_source))
-            )
+            ) %>%
+            purrr::list_cbind()
         )
     } else {
       RUtilpol::output_comment(
