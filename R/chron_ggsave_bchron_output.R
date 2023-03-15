@@ -8,6 +8,7 @@
 #' @param image_height Height of image
 #' @param image_units Units to measure image
 #' @param image_format Format of figure
+#' @param verbose Should a message be output?
 chron_ggsave_bchron_output <-
   function(data_source,
            dataset_id,
@@ -17,7 +18,8 @@ chron_ggsave_bchron_output <-
            image_width,
            image_height,
            image_units = c("in", "cm", "mm", "px"),
-           image_format = ".pdf") {
+           image_format = ".pdf",
+           verbose = FALSE) {
     assertthat::assert_that(
       requireNamespace("Bchron"),
       msg = "Please attach Bchron by `library(Bchron)`"
@@ -48,12 +50,18 @@ chron_ggsave_bchron_output <-
 
     RUtilpol::check_class("image_format", "character")
 
+    RUtilpol::check_class("verbose", "logical")
+
     site_name <- paste0("dataset_", dataset_id, image_format)
     site_title <- paste0("dataset_id = ", dataset_id)
 
-    cat(
-      paste(" - - saving file", site_name), "\n"
-    )
+    if (
+      isTRUE(verbose)
+    ) {
+      cat(
+        paste(" - - saving file", site_name), "\n"
+      )
+    }
 
     Bchron_plot <-
       plot(data_source) +
