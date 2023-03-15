@@ -139,14 +139,14 @@ chron_fix_pmc <-
 
         RUtilpol::check_col_names("potential_pmc_marked", "need_to_correct")
 
-        # back-transform  points which are marked as percentage carbon
+        # back-transform points which are marked as percentage carbon
         potential_pmc_fixed <-
           potential_pmc_marked %>%
           dplyr::mutate(
             chron_control_format = ifelse(
               need_to_correct == TRUE,
               purrr::map(
-                .progress = TRUE,
+                .progress = "back-transform points which are marked as percentage carbon",
                 .x = chron_control_format,
                 .f = ~ chron_change_pmc_to_ages(
                   data_source = .x
