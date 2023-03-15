@@ -21,18 +21,23 @@ proc_neo_get_chron_priority <-
     # extract the chronology list
     chronology_list <-
       data_source %>%
-      purrr::map("chronology")
+      purrr::map(
+        "chronology",
+        .progress = "Extracting chronologies as a list"
+      )
 
     # check if there is at least one valid chronology
     if (
       is.null(chronology_list[[1]]$chronologyid) == FALSE
     ) {
-
       # create table with the chronology type and id and join the chron_order
       chron_table <-
         tibble::tibble(
           type = chronology_list %>%
-            purrr::map("chronology") %>%
+            purrr::map(
+              "chronology",
+              .progress = "Tranforming chronologies into a table"
+            ) %>%
             purrr::map_chr("modelagetype"),
           chronology_id = chronology_list %>%
             purrr::map_chr("chronologyid")

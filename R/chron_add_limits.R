@@ -12,6 +12,7 @@ chron_add_limits <-
       data_source %>%
       dplyr::mutate(
         chron_control_limits = purrr::map(
+          .progress = "Extracting limits from chronology control tables",
           .x = chron_control_format,
           .f = ~ chron_get_limits(
             data_source = .x

@@ -57,6 +57,7 @@ chron_fix_pmc <-
           ),
           # mark those points which are potential percentage radiocarbon
           pmc_marked = purrr::map(
+            .progress = "Flagging potential percentage radiocarbon",
             .x = chron_control_merge,
             .f = ~ chron_decimal_ages_mark(
               data_source = .x,
@@ -145,6 +146,7 @@ chron_fix_pmc <-
             chron_control_format = ifelse(
               need_to_correct == TRUE,
               purrr::map(
+                .progress = TRUE,
                 .x = chron_control_format,
                 .f = ~ chron_change_pmc_to_ages(
                   data_source = .x

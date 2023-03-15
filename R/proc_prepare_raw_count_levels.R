@@ -77,11 +77,13 @@ proc_prepare_raw_count_levels <-
       data_sample_id_fix %>%
       dplyr::mutate(
         sample_depth = purrr::map(
+          .progress = "Making all 'sample_id' as 'character' in 'sample_depth'",
           .x = sample_depth,
           .f = ~ .x %>%
             dplyr::mutate(sample_id = as.character(sample_id))
         ),
         raw_counts = purrr::map(
+          .progress = "Making all 'sample_id' as 'character' in 'raw_counts'",
           .x = raw_counts,
           .f = ~ .x %>%
             dplyr::mutate(sample_id = as.character(sample_id))
@@ -104,15 +106,13 @@ proc_prepare_raw_count_levels <-
     # 3. Sorting the levels ----
     #--------------------------------------------------#
 
-    RUtilpol::output_comment(
-      msg = "Sorting levels by depth"
-    )
 
     # sort sample_depth by depth and drop NA
     data_sample_depth_sort <-
       data_sample_id %>%
       dplyr::mutate(
         sample_depth = purrr::map(
+          .progress = "Sorting levels by depth",
           .x = sample_depth,
           .f = ~ .x %>%
             dplyr::arrange(depth) %>%
@@ -160,10 +160,6 @@ proc_prepare_raw_count_levels <-
     # 4. Replace NA with zeros  ----
     #--------------------------------------------------#
 
-    RUtilpol::output_comment(
-      msg = "Replacing 'NA' with '0' for all taxa"
-    )
-
     suppressWarnings(
       data_raw_counts_all_numeric <-
         data_raw_counts_filtered %>%
@@ -185,6 +181,7 @@ proc_prepare_raw_count_levels <-
       data_raw_counts_all_numeric %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Replacing 'NA' with '0' for all taxa",
           .x = raw_counts,
           .f = ~ .x %>%
             dplyr::mutate(
@@ -202,14 +199,11 @@ proc_prepare_raw_count_levels <-
     # 5. Sum taxa together and drop empty rows and columns  ----
     #--------------------------------------------------#
 
-    RUtilpol::output_comment(
-      msg = "Filtering out 'empty' taxa and levels"
-    )
-
     data_raw_counts_no_empty_taxa <-
       data_raw_counts_no_NA %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Filtering out 'empty' taxa and levels",
           .x = raw_counts,
           .f = ~ {
             counts <-
