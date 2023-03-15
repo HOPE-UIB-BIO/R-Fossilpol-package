@@ -19,21 +19,17 @@ proc_neo_get_authors <-
 
     dir <- RUtilpol::add_slash_to_path(dir)
 
-    RUtilpol::output_heading(
-      msg = "Extracting information about dataset authors"
-    )
-
     # get all site data
     neotoma_download_sites <-
       proc_neo_get_sites(neotoma_download)
 
     # extract the PI information
     neotoma_sites_meta_pi <-
-      purrr::map_dfr(
+      purrr::map(
+        .progress = "Extracting information about dataset authors",
         .x = dataset_ids,
         .f = purrr::possibly(
           .f = ~ {
-
             # save the dataset_id
             sel_dataset_id <- .x
 
@@ -51,7 +47,7 @@ proc_neo_get_authors <-
 
             # extract info about each author
             res_table <-
-              purrr::map_dfr(
+              purrr::map(
                 .x = 1:n_authors,
                 .f = ~
                   tibble::tibble(
@@ -59,7 +55,8 @@ proc_neo_get_authors <-
                     author_id = paste0(author_info[[.x]]$contactid, "_neotoma")
                   ) %>%
                     return()
-              )
+              ) %>%
+              purrr::list_rbind()
 
             return(res_table)
           },
@@ -69,7 +66,8 @@ proc_neo_get_authors <-
             author_id = NA
           )
         )
-      )
+      ) %>%
+      purrr::list_rbind()
 
 
     author_data_path <-
@@ -117,12 +115,9 @@ proc_neo_get_authors <-
 
         # download all into about authors
         purrr::walk(
+          .progress = "Downloading individual authors",
           .x = seq_along(author_absent),
           .f = ~ {
-
-            # output progress
-            cat(paste0(.x, " in ", length(author_absent), "\n"))
-
             res <-
               httr::GET(
                 paste0(
@@ -190,7 +185,8 @@ proc_neo_get_authors <-
     ) {
       # load all dataset
       neotoma_author_data <-
-        purrr::map_dfr(
+        purrr::map(
+          .progress = "Compiling all author data",
           .x = all_author_ids,
           .f = purrr::possibly(
             .f = ~ RUtilpol::get_latest_file(
@@ -199,7 +195,8 @@ proc_neo_get_authors <-
               verbose = FALSE
             )
           )
-        )
+        ) %>%
+        purrr::list_rbind()
 
       # save if needed
       RUtilpol::save_latest_file(

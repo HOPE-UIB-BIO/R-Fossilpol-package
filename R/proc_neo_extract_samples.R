@@ -34,13 +34,15 @@ proc_neo_extract_samples <-
       if (
         nrow(sample_table) > 0
       ) {
-
         # create a list with sample id replicated X times, where x is the number
         #   of taxa (this is needed for adding the sample id in future)
         sample_id_list <-
           data_source %>%
           purrr::set_names(nm = sample_table$sample_id) %>%
-          purrr::map("datum") %>%
+          purrr::map(
+            "datum",
+            .progress = "Creating a reference list"
+          ) %>%
           base::summary() %>%
           as.data.frame() %>%
           tibble::as_tibble() %>%
@@ -59,7 +61,11 @@ proc_neo_extract_samples <-
         # create a nested tibble with one r
         temp_data <-
           data_source %>%
-          purrr::map_dfr("datum") %>%
+          purrr::map(
+            "datum",
+            .progress = "Transforming records into a table"
+          ) %>%
+          purrr::list_rbind() %>%
           dplyr::mutate(
             sample_id = sample_id_list$sample_id
           ) %>%

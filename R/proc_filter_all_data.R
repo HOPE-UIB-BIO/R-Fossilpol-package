@@ -137,15 +137,12 @@ proc_filter_all_data <-
 
     # Sort LEVELS by Age -----
 
-    RUtilpol::output_heading(
-      msg = "Sorting levels by age"
-    )
-
     data_ages_sorted <-
       data_unique %>%
       # sort the samples by ages
       dplyr::mutate(
         valid_id = purrr::map(
+          .progress = "Sorting levels by age",
           .x = levels,
           .f = ~ .x %>%
             dplyr::arrange(age) %>%
@@ -175,6 +172,7 @@ proc_filter_all_data <-
       # check only levels which have unique age
       dplyr::mutate(
         valid_id = purrr::map(
+          .progress = "Checking whether levels have unique age",
           .x = levels,
           .f = ~ .x %>%
             dplyr::mutate(age_diff = c(1, diff(age))) %>%
@@ -207,15 +205,12 @@ proc_filter_all_data <-
     if (
       filter_by_pollen_sum == TRUE
     ) {
-      RUtilpol::output_heading(
-        msg = "Filtering levels by pollen sums"
-      )
-
       data_pollen_sum_filtered <-
         data_ages_unique_age %>%
         # get valid sample_id
         dplyr::mutate(
           valid_id = purrr::map2(
+            .progress = "Filtering levels by pollen sums",
             .x = counts_harmonised,
             .y = pollen_percentage,
             .f = ~ proc_get_sampleid_rowsums(
@@ -305,10 +300,6 @@ proc_filter_all_data <-
     if (
       filter_by_age_limit == TRUE
     ) {
-      RUtilpol::output_heading(
-        msg = "Filtering records by age limits"
-      )
-
       RUtilpol::stop_if_not(
         any(
           purrr::map_lgl(data_percentage_filtered$young_age, is.na),
@@ -317,7 +308,7 @@ proc_filter_all_data <-
           isFALSE(),
         false_msg = paste(
           "There are some missing data for 'young_age' and 'old_age',",
-          "which are needed for selected filtering.",
+          "which are needed for selected filtering by age limits.",
           msg
         ),
         true_msg = paste("All data have a age criterium")
@@ -327,6 +318,7 @@ proc_filter_all_data <-
         data_percentage_filtered %>%
         dplyr::mutate(
           fullfil_test = purrr::pmap_lgl(
+            .progress = "Filtering records by age limits",
             .l = list(levels, young_age, old_age),
             .f = ~ proc_detect_age_limits(
               data_source = ..1,
@@ -358,14 +350,11 @@ proc_filter_all_data <-
     if (
       filter_by_extrapolation == TRUE
     ) {
-      RUtilpol::output_heading(
-        msg = "Filtering out levels beyond last chron.control point (extrapolation)"
-      )
-
       data_extrapolation_filtered <-
         data_age_filtered %>%
         dplyr::mutate(
           valid_id = purrr::map2(
+            .progress = "Filtering out levels beyond the last chron.control point (extrapolation)",
             .x = levels,
             .y = chron_control_limits,
             .f = ~ proc_get_sampleid_extrapol(
@@ -388,22 +377,20 @@ proc_filter_all_data <-
 
       RUtilpol::check_class("data_extrapolation_filtered", "data.frame")
 
-      RUtilpol::output_comment("All levels beyond last chron.control point were filtered out")
+      RUtilpol::output_comment(
+        "All levels beyond last chron.control point were filtered out"
+      )
 
       util_check_data_table(data_extrapolation_filtered)
     } else {
       data_extrapolation_filtered <- data_age_filtered
     }
 
-    # Filter out LEVELS beyond age limit  -----
+    # Filter out LEVELS beyond the age limit  -----
 
     if (
       filter_by_interest_region == TRUE
     ) {
-      RUtilpol::output_heading(
-        msg = "Filtering out levels beyond age limits"
-      )
-
       RUtilpol::stop_if_not(
         any(
           purrr::map_lgl(
@@ -414,7 +401,7 @@ proc_filter_all_data <-
           isFALSE(),
         false_msg = paste(
           "There are some missing data for 'end_of_interest_period',",
-          "which are needed for selected filtering.",
+          "which are needed for selected filtering of levels beyond age limits.",
           msg
         ),
         true_msg = paste("All data have a age criterium")
@@ -424,6 +411,7 @@ proc_filter_all_data <-
         data_extrapolation_filtered %>%
         dplyr::mutate(
           valid_id = purrr::map2(
+            .progress = "Filtering out levels beyond the age limits",
             .x = levels,
             .y = end_of_interest_period,
             .f = ~ proc_get_sampleid_age_lim(

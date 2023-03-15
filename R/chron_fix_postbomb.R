@@ -31,6 +31,7 @@ chron_fix_postbomb <-
       data_source %>%
       dplyr::mutate(
         need_to_correct = purrr::map_lgl(
+          .progress = "Checking potential candidates for postbomb",
           .x = chron_control_format,
           .f = ~ chron_check_negative_rc_ages(
             data_source = .x,
@@ -65,13 +66,14 @@ chron_fix_postbomb <-
       utils::View(dataset_with_potential_postbomb)
     }
 
-    # add postbomb curve to chron control points which needed it
+    # add a postbomb curve to chron control points which needed it
     data_post_bomb_fixed <-
       data_post_bomb %>%
       dplyr::mutate(
         chron_control_format = ifelse(
           need_to_correct == TRUE,
           purrr::map2(
+            .progress = "Adding a postbomb curve",
             .x = chron_control_format,
             .y = postbomb_curve_name,
             .f = ~ chron_add_postbomb_curve(

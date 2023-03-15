@@ -62,16 +62,13 @@ proc_neo_get_raw_counts <-
       )
     )
 
-    RUtilpol::output_comment(
-      msg = "Extracting raw counts"
-    )
-
     # extract raw counts
     # !!! this takes time !!!
     sample_counts <-
       data_source %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Extracting raw counts",
           .x = samples,
           .f = ~ proc_neo_extract_counts(
             data_source = .x,

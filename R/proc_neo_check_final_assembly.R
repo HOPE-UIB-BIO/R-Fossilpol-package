@@ -15,6 +15,7 @@ proc_neo_check_final_assembly <-
       data_source %>%
       dplyr::mutate(
         sample_depth = purrr::map2(
+          .progress = "Checking whenever count data and depth-ages have same number of levels",
           .x = sample_depth,
           .y = raw_counts,
           .f = ~ .x %>%

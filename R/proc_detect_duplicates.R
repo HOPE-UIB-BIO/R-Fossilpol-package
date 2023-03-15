@@ -174,6 +174,7 @@ proc_detect_duplicates <-
           dplyr::rowwise() %>%
           dplyr::mutate(
             distance = purrr::map2_dbl(
+              .progress = "Estimating differences between records",
               .x = dataset_A,
               .y = dataset_B,
               .f = ~ {

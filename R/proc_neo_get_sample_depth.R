@@ -16,6 +16,7 @@ proc_neo_get_sample_depth <-
       data_source %>%
       dplyr::mutate(
         sample_depth = purrr::map(
+          .progress = "Extracting sample depth",
           .x = samples,
           .f = ~ .x %>%
             dplyr::select(

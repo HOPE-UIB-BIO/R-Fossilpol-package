@@ -67,6 +67,7 @@ chron_prepare_control_tables <-
       data_source %>%
       dplyr::mutate(
         chron_control_format = purrr::map2(
+          .progress = "Preparing chronology control tables",
           .x = chron_control,
           .y = curve_name,
           .f = ~ chron_format_table(
@@ -82,7 +83,9 @@ chron_prepare_control_tables <-
         )
       ) %>%
       # update the number of control points
-      dplyr::mutate(n_chron_control = purrr::map_dbl(chron_control_format, nrow))
+      dplyr::mutate(
+        n_chron_control = purrr::map_dbl(chron_control_format, nrow)
+      )
 
     RUtilpol::check_if_loaded(
       file_name = "data_formated",

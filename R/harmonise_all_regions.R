@@ -57,23 +57,17 @@ harmonise_all_regions <-
         by = "harmonisation_region"
       ) %>%
       dplyr::mutate(
-        counts_harmonised = pmap(
+        counts_harmonised = purrr::pmap(
+          .progress = "harmonisation of a region",
           .l = list(dataset_id, raw_counts, harm_table),
-          .f = ~ {
-            RUtilpol::output_comment(
-              msg = paste("Dataset", ..1)
-            )
-
-            harmonise_taxa(
-              data_source = ..2,
-              harmonisation_table = ..3,
-              original_name = original_name,
-              harm_name = harm_level,
-              exclude_taxa = exclude_taxa,
-              pollen_grain_test = pollen_grain_test
-            ) %>%
-              return()
-          }
+          .f = ~ harmonise_taxa(
+            data_source = ..2,
+            harmonisation_table = ..3,
+            original_name = original_name,
+            harm_name = harm_level,
+            exclude_taxa = exclude_taxa,
+            pollen_grain_test = pollen_grain_test
+          )
         )
       ) %>%
       dplyr::select(-harm_table)

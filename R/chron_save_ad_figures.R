@@ -137,6 +137,7 @@ chron_save_ad_figures <- function(dir,
       cat(" - detected sites", "\n")
 
       purrr::walk(
+        .progress = "saving individual plots",
         .x = data_sub$dataset_id,
         .f = ~ {
           sel_ad_model <-
@@ -167,7 +168,8 @@ chron_save_ad_figures <- function(dir,
               image_width = image_width,
               image_height = image_height,
               image_units = image_units,
-              image_format = image_format
+              image_format = image_format,
+              verbose = FALSE
             )
           )
         }

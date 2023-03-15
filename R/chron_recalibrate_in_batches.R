@@ -205,6 +205,7 @@ chron_recalibrate_in_batches <- function(data_source_chron,
 
         # save the batch as individual records
         purrr::walk2(
+          .progress = "saving batch as individual records",
           .x = bchron_temp,
           .y = names(bchron_temp),
           .f = ~ RUtilpol::save_latest_file(
