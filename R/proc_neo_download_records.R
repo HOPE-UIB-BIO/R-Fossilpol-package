@@ -50,91 +50,94 @@ proc_neo_download_records <- function(allds,
   if (
     n_ds_to_download < 1
   ) {
-    usethis::ui_done("All selected records are downloaded")
-    return()
+    usethis::ui_done("All selected records are already downloaded")
   }
 
-  RUtilpol::output_comment(
-    paste(
-      n_ds_to_download,
-      "record(s) will be downloaded"
-    )
-  )
-
-  # path to the Neotoma API
-  rawdownload <-
-    "https://api.neotomadb.org/v2.0/data/downloads"
-
-
-  # download all records individually
-  purrr::walk(
-    .progress = "Downloading individual records",
-    .x = 1:n_ds_to_download,
-    .f = ~ {
-      sel_ds_name <- ds_absent[.x]
-
-      # repeat for 'n_tries' or until successfully download the record
-      for (i in 1:n_tries) {
-        current_frame <- sys.nframe()
-        current_env <- sys.frame(which = current_frame)
-
-        # download the record
-        res <-
-          httr::GET(
-            paste0(rawdownload, "/", sel_ds_name)
-          )
-
-        # if it was successful download
-        if (
-          res$status_code == 200 # NOTE: status_code 200 = success
-        ) {
-          # extract the data
-          output <-
-            httr::content(res)$data[[1]]
-
-          RUtilpol::save_latest_file(
-            object_to_save = output,
-            file_name = sel_ds_name,
-            dir = path_to_indiv_folder,
-            prefered_format = "rds",
-            use_sha = TRUE,
-            verbose = FALSE
-          )
-
-          # break from loop
-          break
-        } else {
-          # save output as nothing
-          output <- NULL
-        }
-
-        # delete the result and output
-        rm(res, output, envir = current_env)
-      }
-    }
-  )
-
-  # check again if all are downloaded
-  # extract the records which were not successfully downloaded
-  cannot_download <-
-    util_get_missing_ds_names(
-      dir = path_to_indiv_folder,
-      name_vector = ds_vector
-    )
-
   if (
-    length(cannot_download) == 0
+    n_ds_to_download > 0
   ) {
-    usethis::ui_done("All selected records were downloaded")
-  } else {
-    usethis::ui_oops(
+    RUtilpol::output_comment(
       paste(
-        length(cannot_download), "out of", nrow(allds),
-        "records were NOT downloaded.", "\n",
-        "Specifically, dataset IDs:",
-        RUtilpol::paste_as_vector(cannot_download)
+        n_ds_to_download,
+        "record(s) will be downloaded"
       )
     )
+
+    # path to the Neotoma API
+    rawdownload <-
+      "https://api.neotomadb.org/v2.0/data/downloads"
+
+
+    # download all records individually
+    purrr::walk(
+      .progress = "Downloading individual records",
+      .x = 1:n_ds_to_download,
+      .f = ~ {
+        sel_ds_name <- ds_absent[.x]
+
+        # repeat for 'n_tries' or until successfully download the record
+        for (i in 1:n_tries) {
+          current_frame <- sys.nframe()
+          current_env <- sys.frame(which = current_frame)
+
+          # download the record
+          res <-
+            httr::GET(
+              paste0(rawdownload, "/", sel_ds_name)
+            )
+
+          # if it was successful download
+          if (
+            res$status_code == 200 # NOTE: status_code 200 = success
+          ) {
+            # extract the data
+            output <-
+              httr::content(res)$data[[1]]
+
+            RUtilpol::save_latest_file(
+              object_to_save = output,
+              file_name = sel_ds_name,
+              dir = path_to_indiv_folder,
+              prefered_format = "rds",
+              use_sha = TRUE,
+              verbose = FALSE
+            )
+
+            # break from loop
+            break
+          } else {
+            # save output as nothing
+            output <- NULL
+          }
+
+          # delete the result and output
+          rm(res, output, envir = current_env)
+        }
+      }
+    )
+
+    # check again if all are downloaded
+    # extract the records which were not successfully downloaded
+    cannot_download <-
+      util_get_missing_ds_names(
+        dir = path_to_indiv_folder,
+        name_vector = ds_vector
+      )
+
+    if (
+      length(cannot_download) == 0
+    ) {
+      usethis::ui_done("All selected records were downloaded")
+    } else {
+      usethis::ui_oops(
+        paste(
+          length(cannot_download), "out of", nrow(allds),
+          "records were NOT downloaded.", "\n",
+          "Specifically, dataset IDs:",
+          RUtilpol::paste_as_vector(cannot_download)
+        )
+      )
+    }
   }
 
   ds_present <-
