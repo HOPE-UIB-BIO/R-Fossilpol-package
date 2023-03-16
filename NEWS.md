@@ -6,9 +6,9 @@
 
 ### Neotoma download
 
-- {neotoma2} package is used for site selection ([#14](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/14), [#27](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/27))
 - download pollen records one-by-one ([#18](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/18))
 - download Neotoma authors one-by-one ([#41](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/41))
+- {neotoma2} package can be used for site selection but is not set as defualt due to performance issues (very slow) ([#14](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/14), [#27](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/27), [#49](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/49))
 
 ### Chronology
 
