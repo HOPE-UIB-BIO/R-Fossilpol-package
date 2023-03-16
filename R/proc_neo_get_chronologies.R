@@ -24,7 +24,8 @@ proc_neo_get_chronologies <-
     # get relevant chronologies based on the chron_order
     # !!! this will take a while !!!
     chroncontrol_tables <-
-      purrr::map2_dfr(
+      purrr::map(
+        .progress = "get relevant chronologies based on the chron_order",
         .x = chronologies,
         .y = names(chronologies),
         .f = ~ proc_neo_get_chron_priority(
@@ -33,7 +34,7 @@ proc_neo_get_chronologies <-
           chron_order_table = chron_order
         )
       ) %>%
-      dplyr::bind_rows()
+      purrr::list_rbind()
 
     # drop datasets without chronologies and add n_chron_control
     chroncontrol_tables_clean <-
