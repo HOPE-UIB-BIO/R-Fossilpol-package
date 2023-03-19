@@ -22,7 +22,7 @@ proc_neo_get_samples <- function(neotoma_download) {
   # extract samples into a table
   # !!! this takes time !!!
   neotoma_sample_data <-
-    purrr::map2( 
+    purrr::map2(
       .progress = "extracting samples into a table",
       .x = neotoma_samples,
       .y = names(neotoma_samples),
@@ -32,7 +32,7 @@ proc_neo_get_samples <- function(neotoma_download) {
       )
     ) %>%
     purrr::list_rbind()
-  
+
   # only include records with some data
   neotoma_sample_data_clean <-
     neotoma_sample_data %>%
