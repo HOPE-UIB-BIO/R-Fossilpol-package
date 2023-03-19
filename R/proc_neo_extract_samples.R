@@ -20,15 +20,11 @@ proc_neo_extract_samples <- function(data_source,
       tibble::tibble(
         sample_id = data_source %>%
           purrr::map_chr(
-            .f = ~ .x %>%
-              purrr::pluck("sampleid") %>%
-              as.character()
+            .f = ~ as.character(.x[["sampleid"]])
           ),
         depth = data_source %>%
           purrr::map_dbl(
-            .f = ~ .x %>%
-              purrr::pluck("depth" %>%
-                as.character())
+            .f = ~ as.double(.x[["depth"]])
           )
       ),
     silent = TRUE
@@ -47,8 +43,7 @@ proc_neo_extract_samples <- function(data_source,
         data_source %>%
         purrr::set_names(nm = sample_table$sample_id) %>%
         purrr::map(
-          "datum",
-          .progress = "Creating a reference list"
+          .f = ~ .x[["datum"]]
         ) %>%
         base::summary() %>%
         as.data.frame() %>%
@@ -69,25 +64,9 @@ proc_neo_extract_samples <- function(data_source,
       temp_data <-
         data_source %>%
         purrr::map(
-          .f = ~ .x %>%
-            purrr::pluck("datum"),
+          .f = ~ .x[["datum"]]
         ) %>%
-        purrr::list_flatten() %>%
-        purrr::map(
-          .progress = "Transforming records into a table",
-          .f = ~ .x %>%
-            unlist() %>%
-            as.data.frame() %>%
-            tibble::rownames_to_column("name") %>%
-            rlang::set_names(
-              nm = c("name", "value")
-            ) %>%
-            tidyr::pivot_wider(
-              names_from = "name",
-              values_from = "value"
-            )
-        ) %>%
-        purrr::list_rbind() %>%
+        dplyr::bind_rows() %>%
         dplyr::mutate(
           sample_id = sample_id_list$sample_id
         ) %>%
