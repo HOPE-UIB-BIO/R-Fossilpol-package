@@ -25,7 +25,7 @@ proc_neo_get_chron_priority <-
 
     # check if there is at least one valid chronology
     if (
-      isFALSE(is.null(chronology_list[[1]]$chronologyid))
+      is.null(chronology_list[[1]]$chronologyid) == FALSE
     ) {
       # create table with the chronology type and id and join the chron_order
       chron_table <-
