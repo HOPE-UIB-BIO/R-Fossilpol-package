@@ -21,10 +21,7 @@ proc_neo_get_chron_priority <-
     # extract the chronology list
     chronology_list <-
       data_source %>%
-      purrr::map(
-        "chronology",
-        .progress = "Extracting chronologies as a list"
-      )
+      purrr::map("chronology")
 
     # check if there is at least one valid chronology
     if (
@@ -34,13 +31,16 @@ proc_neo_get_chron_priority <-
       chron_table <-
         tibble::tibble(
           type = chronology_list %>%
-            purrr::map(
-              "chronology",
-              .progress = "Tranforming chronologies into a table"
-            ) %>%
-            purrr::map_chr("modelagetype"),
+            purrr::map("chronology") %>%
+            purrr::map_chr(
+              .f = ~ .x[["modelagetype"]] %>%
+                as.character()
+            ),
           chronology_id = chronology_list %>%
-            purrr::map_chr("chronologyid")
+            purrr::map_chr(
+              .f = ~ .x[["chronologyid"]] %>%
+                as.character()
+            )
         ) %>%
         dplyr::mutate(index = dplyr::row_number()) %>%
         dplyr::left_join(
@@ -78,39 +78,39 @@ proc_neo_get_chron_priority <-
         tibble::tibble(
           depth = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("depth", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("depth", .x) %>%
+              as.numeric()
+          ),
           thickness = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("thickness", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("thickness", .x) %>%
+              as.numeric()
+          ),
           chroncontrolage = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("chroncontrolage", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontrolage", .x) %>%
+              as.numeric()
+          ),
           agelimitolder = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("agelimitolder", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("agelimitolder", .x) %>%
+              as.numeric()
+          ),
           agelimityounger = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("agelimityounger", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("agelimityounger", .x) %>%
+              as.numeric()
+          ),
           chroncontrolid = purrr::map_chr(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("chroncontrolid", .x)
-          ) %>%
-            as.character(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontrolid", .x) %>%
+              as.character()
+          ),
           chroncontroltype = purrr::map_chr(
             .x = selected_chronology,
-            .f = ~ RUtilpol::extract_var_from_list("chroncontroltype", .x)
-          ) %>%
-            as.character(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontroltype", .x) %>%
+              as.character()
+          ),
           dataset_id = dataset_name,
           age_type = selected_type
         ) %>%

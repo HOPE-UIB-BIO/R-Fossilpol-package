@@ -34,26 +34,30 @@ proc_neo_get_metadata <-
         # site id
         siteid = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ RUtilpol::extract_var_from_list("siteid", .x)
+            .f = ~ RUtilpol::extract_var_from_list("siteid", .x) %>%
+              as.character()
           ),
 
         # site name
         sitename = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ RUtilpol::extract_var_from_list("sitename", .x)
+            .f = ~ RUtilpol::extract_var_from_list("sitename", .x) %>%
+              as.character()
           ),
 
         # collection handle
         handle = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map_chr(
-            .f = ~ RUtilpol::extract_var_from_list("handle", .x)
+            .f = ~ RUtilpol::extract_var_from_list("handle", .x) %>%
+              as.character()
           ),
 
         # full coordinates
         coord = neotoma_download_sites %>%
           purrr::map_chr(
-            .f = ~ RUtilpol::extract_var_from_list("geography", .x)
+            .f = ~ RUtilpol::extract_var_from_list("geography", .x) %>%
+              as.character()
           ) %>%
           stringr::str_replace(., ".*\\[", "") %>%
           stringr::str_replace(., "\\].*", ""),
@@ -69,21 +73,26 @@ proc_neo_get_metadata <-
         # altitude
         altitude = neotoma_download_sites %>%
           purrr::map_dbl(
-            .f = ~ RUtilpol::extract_var_from_list("altitude", .x)
+            .f = ~ RUtilpol::extract_var_from_list("altitude", .x) %>%
+              as.double()
           ),
 
         # depositional environment
         depositionalenvironment = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map_chr(
-            .f = ~ RUtilpol::extract_var_from_list("depositionalenvironment", .x)
+            .f = ~ RUtilpol::extract_var_from_list(
+              "depositionalenvironment", .x
+            ) %>%
+              as.character()
           ),
         doi = neotoma_download_sites %>%
           purrr::map("collectionunit") %>%
           purrr::map("dataset") %>%
           purrr::map_chr(
             .f = ~ RUtilpol::extract_var_from_list("doi", .x) %>%
-              unlist()
+              unlist() %>%
+              as.character()
           )
       ) %>%
       dplyr::select(!dplyr::any_of("coord")) # do not include full coords
