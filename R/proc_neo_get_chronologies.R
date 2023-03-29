@@ -24,8 +24,8 @@ proc_neo_get_chronologies <-
     # get relevant chronologies based on the chron_order
     # !!! this will take a while !!!
     chroncontrol_tables <-
-      purrr::map(
-        .progress = "get relevant chronologies based on the chron_order",
+      purrr::map2(
+        .progress = "Getting relevant chronologies based on the chron_order",
         .x = chronologies,
         .y = names(chronologies),
         .f = ~ proc_neo_get_chron_priority(
