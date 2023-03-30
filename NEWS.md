@@ -14,6 +14,10 @@
 
 - small fixes regarding switching to the new version of {purrr} ([#51](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/51))
 
+### Merging source data
+
+- small issue with assigning `data_publicity` ([#53](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/53))
+
 ### Chronology
 
 - save age-depth models as individual files ([#21](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/21))
