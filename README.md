@@ -13,6 +13,10 @@ websites](https://hope-uib-bio.github.io/FOSSILPOL-website/)
 The goal of the {`RFossilpol`}:package: is to provide functions for
 **FOSSILPOL workflow**.
 
+## NEWS
+
+Check the recent package updates on the [NEWS page](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/blob/main/NEWS.md)
+
 ## Installation
 
 You can install the development version of RFossilpol:package: from
