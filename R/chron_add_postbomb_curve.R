@@ -11,31 +11,31 @@ chron_add_postbomb_curve <-
            post_bomb_cal_curve,
            postbomb_age = 199,
            rc_control_types = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c("chroncontroltype", "chroncontrolage", "cal_curves")
     )
 
-    util_check_class("post_bomb_cal_curve", "character")
+    RUtilpol::check_class("post_bomb_cal_curve", "character")
 
-    util_check_class("postbomb_age", "numeric")
+    RUtilpol::check_class("postbomb_age", "numeric")
 
-    util_check_class("rc_control_types", c("character", "NULL"))
+    RUtilpol::check_class("rc_control_types", c("character", "NULL"))
 
     data_with_postbomb <-
       data_source %>%
       dplyr::mutate(
         cal_curves = ifelse(
-          chroncontroltype %in% rc_control_types &&
+          chroncontroltype %in% rc_control_types &
             chroncontrolage < postbomb_age,
           post_bomb_cal_curve,
           cal_curves
         )
       )
 
-    util_check_col_names("data_with_postbomb", "cal_curves")
+    RUtilpol::check_col_names("data_with_postbomb", "cal_curves")
 
     return(data_with_postbomb)
   }

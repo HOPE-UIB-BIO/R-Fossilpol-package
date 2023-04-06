@@ -12,3 +12,4 @@ proc_neo_get_samples_eco_group(data_source)
 \description{
 Extract all ecological groups from dataset
 }
+\keyword{internal}

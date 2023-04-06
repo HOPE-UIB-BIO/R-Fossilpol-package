@@ -7,11 +7,11 @@
 #' @seealso geo_assign_value
 geo_assign_by_list <-
   function(data_source, dir, optional_info_to_assign) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("optional_info_to_assign", "data.frame")
+    RUtilpol::check_class("optional_info_to_assign", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "optional_info_to_assign",
       c(
         "var_name",
@@ -74,13 +74,13 @@ geo_assign_by_list <-
 
     res <- data_source
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Assign information based on geographical position"
     )
 
     for (i in seq_along(info_to_assign_all$var_name)) {
       res <-
-        geo_assign_value(
+         RUtilpol::geo_assign_value(
           data_source = res,
           dir = info_to_assign_all$dir[i],
           sel_method = info_to_assign_all$sel_method[i],

@@ -17,15 +17,15 @@ stopcheck_table <-
            sel_method = c("default", "chron_control", "harm_table", "duplicates", "age_limits"),
            msg = "",
            stop_session = TRUE) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("file_name", "character")
+    RUtilpol::check_class("file_name", "character")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("sel_method", "character")
+    RUtilpol::check_class("sel_method", "character")
 
-    util_check_vector_values(
+    RUtilpol::check_vector_values(
       "sel_method",
       c(
         "default",
@@ -38,7 +38,7 @@ stopcheck_table <-
 
     sel_method <- match.arg(sel_method)
 
-    util_check_class("msg", "character")
+    RUtilpol::check_class("msg", "character")
 
     current_frame <- sys.nframe()
     parent_frame <- sys.parent()
@@ -48,9 +48,10 @@ stopcheck_table <-
 
     # get the name of the file (or NA if missig)
     selection_file_name <-
-      util_check_the_latest_file(
+      RUtilpol::get_latest_file_name(
         file_name = file_name,
-        dir = dir
+        dir = dir,
+        verbose = TRUE
       )
 
     # choose function based on the 'method'
@@ -77,25 +78,17 @@ stopcheck_table <-
     if (
       is.na(selection_file_name)
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Did not detect any previous file, continue to create new one"
       )
 
-      assign(file_name,
-        sel_file,
-        envir = current_env
-      )
-
       # Save
-      util_save_if_latests(
+      RUtilpol::save_latest_file(
+        object_to_save = sel_file,
         file_name = file_name,
         dir = dir,
-        prefered_format = "csv",
-        compress = FALSE
+        prefered_format = "csv"
       )
-
-      # remove from global env
-      rm(list = file_name, envir = current_env)
 
       # Output message
       usethis::ui_info(
@@ -107,19 +100,19 @@ stopcheck_table <-
       )
 
       # open the folder
-      util_open_dir(dir)
+      RUtilpol::open_dir(dir)
 
       if (
         stop_session == TRUE
       ) {
         # stop session
-        util_stop_quietly()
+        RUtilpol::stop_quietly()
       } else {
         return(NA_real_)
       }
     } else {
 
-      # load file (silently)
+      # load file (verbosely)
       final_file <-
         readr::read_csv(
           paste0(dir, "/", selection_file_name),
@@ -162,23 +155,13 @@ stopcheck_table <-
           rewrite_confirm == TRUE
         ) {
 
-          # assign to global environment
-          #   (`util_save_if_latests` has to be in global env.)
-          assign(file_name,
-            sel_file,
-            envir = current_env
-          )
-
           # Save
-          util_save_if_latests(
+          RUtilpol::save_latest_file(
+            object_to_save = sel_file,
             file_name = file_name,
             dir = dir,
-            prefered_format = "csv",
-            compress = FALSE
+            prefered_format = "csv"
           )
-
-          # remove from global env
-          rm(list = file_name, envir = current_env)
 
           # Output message
           usethis::ui_info(
@@ -197,14 +180,14 @@ stopcheck_table <-
           )
 
           # open the folder
-          util_open_dir(dir)
+          RUtilpol::open_dir(dir)
         }
 
         if (
           stop_session == TRUE
         ) {
           # stop session
-          util_stop_quietly()
+          RUtilpol::stop_quietly()
         } else {
           return(NA_real_)
         }

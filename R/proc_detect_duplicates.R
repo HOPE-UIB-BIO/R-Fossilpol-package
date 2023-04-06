@@ -1,40 +1,40 @@
-utils::globalVariables("where")
 #' @title Detect and exclude duplicates
-#' @param data_source Data.frame with sequences
+#' @param data_source Data.frame with records
 #' @param source_var Character. Name of a column that indicates source of data
 #' @param n_subgroups Number of subgroups to split the data based on the
-#' geography. Sequences within subgroup will be tested only if subgroup
-#' contains sequences form different `source_var`
-#' @param maximal_distance Maximal Euclidean distance between two sequences to
+#' geography. Records within subgroup will be tested only if subgroup
+#' contains records form different `source_var`
+#' @param maximal_distance Maximal Euclidean distance between two records to
 #' consider them as material for comparison
-#' @return Data.frame with the suggested duplicates of sequences
-#' `distance` = Euclidean distance between sequences
+#' @return Data.frame with the suggested duplicates of records
+#' `distance` = Euclidean distance between records
 #' `similarity` = mean number of the exactly same columns
-#' @description  Function will split sequences based on their geographic
+#' @description  Function will split records based on their geographic
 #' location into `n_subgroups`. If subgroup contains data from multiple sources,
-#' Euclidean `distance` between all sequences combination will be calculated.
+#' Euclidean `distance` between all records combination will be calculated.
 #' Only combination with the distance up to `maximal_distance` will be kept.
-#' Next, selected columns will be compared between sequences and the average number of
+#' Next, selected columns will be compared between records and the average number of
 #' the exact same columns is returned `similarity`.
 proc_detect_duplicates <-
   function(data_source,
            source_var = "source_of_data",
            n_subgroups = 1,
            maximal_distance = 5) {
-    util_check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("lat", "long", eval(source_var)))
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("source_var", "character")
+    RUtilpol::check_col_names("data_source", c("lat", "long", eval(source_var)))
 
-    util_check_class("n_subgroups", "numeric")
+    RUtilpol::check_class("source_var", "character")
+
+    RUtilpol::check_class("n_subgroups", "numeric")
 
     assertthat::assert_that(
       n_subgroups > 0,
       msg = "'n_subgroups' must be larger than 0"
     )
 
-    util_check_class("maximal_distance", "numeric")
+    RUtilpol::check_class("maximal_distance", "numeric")
 
     assertthat::assert_that(
       maximal_distance > 0,
@@ -54,7 +54,7 @@ proc_detect_duplicates <-
       ) %>%
       dplyr::mutate(
         dplyr::across(
-          where(is.numeric),
+          tidyselect::where(is.numeric),
           scale
         )
       )
@@ -66,7 +66,7 @@ proc_detect_duplicates <-
       data_source %>%
       dplyr::mutate(subgroup = clusters_selection$cluster)
 
-    util_check_col_names("data_w", "subgroup")
+    RUtilpol::check_col_names("data_w", "subgroup")
 
     # detect all the possible sources of data
     source_var_levels <-
@@ -79,8 +79,8 @@ proc_detect_duplicates <-
 
     if (
       length(source_var_levels) < 2
-      ) {
-      util_output_comment(
+    ) {
+      RUtilpol::output_comment(
         msg = paste("There is only 1 possible source of data:", source_var_levels)
       )
       return(NA)
@@ -99,7 +99,7 @@ proc_detect_duplicates <-
       dplyr::ungroup() %>%
       dplyr::mutate(
         dplyr::across(
-          where(is.numeric),
+          tidyselect::where(is.numeric),
           ~ tidyr::replace_na(.x, 0)
         )
       ) %>%
@@ -109,8 +109,8 @@ proc_detect_duplicates <-
 
     if (
       length(intresting_subgroups) > 0
-      ) {
-      util_output_comment(
+    ) {
+      RUtilpol::output_comment(
         msg = paste0(
           "Detected potential regions of duplicates, N = ",
           length(intresting_subgroups)
@@ -166,7 +166,7 @@ proc_detect_duplicates <-
           tibble::as_tibble() %>%
           dplyr::mutate(
             dplyr::across(
-              where(is.factor),
+              tidyselect::where(is.factor),
               as.character
             )
           ) %>%
@@ -174,6 +174,7 @@ proc_detect_duplicates <-
           dplyr::rowwise() %>%
           dplyr::mutate(
             distance = purrr::map2_dbl(
+              .progress = "Estimating differences between records",
               .x = dataset_A,
               .y = dataset_B,
               .f = ~ {
@@ -209,7 +210,7 @@ proc_detect_duplicates <-
           ) %>%
           dplyr::ungroup()
 
-        util_check_col_names(
+        RUtilpol::check_col_names(
           "combination_grid",
           c(
             "distance",
@@ -245,7 +246,7 @@ proc_detect_duplicates <-
             different = TRUE
           )
 
-        util_check_col_names(
+        RUtilpol::check_col_names(
           "comparison_table_temp",
           c("var", "different")
         )
@@ -271,14 +272,14 @@ proc_detect_duplicates <-
               )
             )
 
-          util_check_col_names("comparison_table", "different")
+          RUtilpol::check_col_names("comparison_table", "different")
 
           posible_candidates$similarity[j] <- mean(comparison_table$different)
         }
 
         if (
           i == 1
-          ) {
+        ) {
           final_result <- posible_candidates
         } else {
           final_result <-
@@ -288,7 +289,7 @@ proc_detect_duplicates <-
         }
       }
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0(
           "Returning ", nrow(final_result), " of potential duplicates"
         )
@@ -299,7 +300,7 @@ proc_detect_duplicates <-
         dplyr::mutate(distance = round(distance, digits = 2)) %>%
         return()
     } else {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Did not detect any potential duplicates"
       )
 

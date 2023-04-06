@@ -9,21 +9,38 @@ proc_neo_get_all_neotoma_datasets(
   long_min,
   long_max,
   lat_min,
-  lat_max
+  lat_max,
+  use_api_directly = TRUE,
+  loc
 )
 }
 \arguments{
-\item{dataset_type}{Type of dataset to use}
+\item{dataset_type}{Character. Type of dataset to use}
 
-\item{long_min}{Limit for the smallest longitude}
+\item{long_min}{Numeric. Limit for the smallest longitude}
 
-\item{long_max}{Limit for the largest longitude}
+\item{long_max}{Numeric. Limit for the largest longitude}
 
-\item{lat_min}{Limit for the smallest latitude}
+\item{lat_min}{Numeric. Limit for the smallest latitude}
 
-\item{lat_max}{Limit for the largest latitude}
+\item{lat_max}{Numeric. Limit for the largest latitude}
+
+\item{use_api_directly}{Logical. Use directly Neotoma API.
+If false, the function will use {neotoma2} package (currently slower).}
+
+\item{loc}{Optional. Used only if \code{use_api_directly} is set to \code{FALSE}.
+Argument is passed to \code{neotoma2::get_sites}. See details.}
 }
 \description{
 Download all datasets from Neotoma and subset only those for
 selected \code{dataset_type} and within selected geographical limits
+}
+\details{
+The function is extracting the datasets_id of all datasets with the
+\code{dataset_type}. If \code{use_api_directly} set to \code{FALSE}, the function will call
+\code{neotoma2::get_sites} function, which allows aditional possibilities
+of selection (e.g. polygon). See {neotoma2} documentation
+}
+\seealso{
+\code{\link[neotoma2:get_sites]{neotoma2::get_sites()}}
 }

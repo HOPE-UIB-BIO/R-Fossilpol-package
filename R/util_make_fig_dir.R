@@ -5,13 +5,14 @@
 #' @return NULL
 #' @description Create a series of folders for all `region_vector` with
 #' `sel_date` inside of `dir`
+#' @keywords internal
 util_make_fig_dir <-
   function(dir, region_vector, sel_date) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("region_vector", "character")
+    RUtilpol::check_class("region_vector", "character")
 
-    util_check_class("sel_date", "Date")
+    RUtilpol::check_class("sel_date", "Date")
 
     suppressWarnings(
       dir.create(

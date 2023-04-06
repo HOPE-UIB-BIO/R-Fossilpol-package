@@ -35,3 +35,4 @@ chron_prepare_control_tables(
 Format chronology control tables and filter out tables with specific
 number of control points
 }
+\keyword{internal}

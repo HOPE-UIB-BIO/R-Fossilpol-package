@@ -7,11 +7,12 @@
 util_check_data_table(data_source, msg = "")
 }
 \arguments{
-\item{data_source}{Data.frame of sequences}
+\item{data_source}{Data.frame of records}
 
 \item{msg}{Message to be appended to the end of warning}
 }
 \description{
 Function will check the number of rows of the table and return
-warning message \code{msg} if there are no sequences
+warning message \code{msg} if there are no records
 }
+\keyword{internal}

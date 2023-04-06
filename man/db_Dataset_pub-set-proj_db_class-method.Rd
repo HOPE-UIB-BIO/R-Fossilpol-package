@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{theObject}{object of proj_db_class class}
+
+\item{value}{object to assign}
 }
 \description{
 New data will be added but duplicates will be removed

@@ -8,7 +8,13 @@ proc_save_references(
   data_source,
   project_database,
   user_sel_variables = c(),
-  dir
+  selected_outputs = c("meta_table", "author_table", "affiliation_table",
+    "graphical_summary", "reproducibility_bundle"),
+  dir,
+  image_width = 20,
+  image_height = 12,
+  image_units = c("in", "cm", "mm", "px"),
+  ...
 )
 }
 \arguments{
@@ -16,10 +22,32 @@ proc_save_references(
 
 \item{project_database}{Project dataset database}
 
-\item{user_sel_variables}{Vector with variables, which have to be present in the
-final data assembly}
+\item{user_sel_variables}{Vector with variables, which have to be present in
+the final table with meta data}
+
+\item{selected_outputs}{Character. Vector with selected outputs.
+Currently available:
+\itemize{
+\item \code{"meta_table"} - table with all sequences in the final dataset
+compilation with their meta information
+\item \code{"author_table"} - table containing information about the datasets
+used, the main data contributor, and their contact information
+\item \code{"affiliation_table"} - table linking affiliations and their authors.
+This is currently NOT available for Neotoma data.
+\item \code{"graphical_summary"} -
+\item \code{"reproducibility_bundle"} - a zip file of the Config file, all
+"stop-checks" CSV tables, and all shapefiles
+}}
 
 \item{dir}{Path to the data storage folder}
+
+\item{image_width, image_height}{Numeric. Define size properties of figures
+produced in \code{graphical_summary}}
+
+\item{image_units}{Character. The units in which the figure should be
+measured.}
+
+\item{...}{addtition parameters passed to \code{\link[=plot_graphical_summary]{plot_graphical_summary()}}}
 }
 \description{
 Save all the reference tables of the data assembly

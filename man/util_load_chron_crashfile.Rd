@@ -12,3 +12,4 @@ util_load_chron_crashfile(dir)
 \description{
 Load last Crash file or create dummy if not present
 }
+\keyword{internal}

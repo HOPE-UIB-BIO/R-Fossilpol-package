@@ -4,25 +4,25 @@
 #' @export
 chron_load_data_for_ad_modelling <-
   function(dir) {
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
     chron_tables_prepared <-
-      util_load_latest_file(
+      RUtilpol::get_latest_file(
         file_name = "chron_tables_prepared",
         dir = paste0(
           dir, "/Data/Processed/Chronology/Chron_tables_prepared"
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "chron_tables_prepared",
       env = current_env
     )
 
-    util_check_class("chron_tables_prepared", "data.frame")
+    RUtilpol::check_class("chron_tables_prepared", "data.frame")
 
     crash_file <-
       util_load_chron_crashfile(dir)
@@ -30,11 +30,11 @@ chron_load_data_for_ad_modelling <-
     if (
       nrow(crash_file) > 0
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         paste(
-          "Filtering out sequences from 'Crash File'", "\n",
+          "Filtering out records from 'Crash File'", "\n",
           "The following sites are curently filtered out:", "\n",
-          util_paste_as_vector(crash_file$dataset_id)
+          RUtilpol::paste_as_vector(crash_file$dataset_id)
         )
       )
 

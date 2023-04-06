@@ -12,5 +12,6 @@ util_extract_var_safe(var, dataset)
 \item{dataset}{list of lists}
 }
 \description{
-Helper function to extract data safely
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
+\keyword{internal}

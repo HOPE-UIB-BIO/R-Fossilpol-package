@@ -2,11 +2,10 @@
 % Please edit documentation in R/chron_recalibrate_individual.R
 \name{chron_recalibrate_individual}
 \alias{chron_recalibrate_individual}
-\title{Recalibrate age-depth models for individual sequences}
+\title{Recalibrate age-depth models for individual records}
 \usage{
 chron_recalibrate_individual(
   data_source_chron,
-  data_source_batch,
   n_iterations = 10000,
   n_burn = 2000,
   n_thin = 8,
@@ -17,21 +16,18 @@ chron_recalibrate_individual(
 \arguments{
 \item{data_source_chron}{Data.frame containing \code{dataset_id} and \code{chron_control_format}}
 
-\item{data_source_batch}{Data.frame with the description of the status
-of the individual batches}
+\item{n_iterations}{Numeric. The number of iterations used by Bchron}
 
-\item{n_iterations}{The number of iterations used by Bchron}
+\item{n_burn}{Numeric. The number of starting iterations to discard used by Bchron}
 
-\item{n_burn}{The number of starting iterations to discard used by Bchron}
-
-\item{n_thin}{he step size for every iteration to keep beyond
+\item{n_thin}{Numeric. The step size for every iteration to keep beyond
 the burnin used by Bchron}
 
-\item{time_to_stop}{Time to wait until saving the sequence's \code{dataset_id} into
+\item{time_to_stop}{Numeric. Time to wait until saving the record's \code{dataset_id} into
 \code{Crash_file}as unsuccessfully, due to freeze of calculation}
 
-\item{dir}{Path to the data storage folder}
+\item{dir}{Character. Path to the data storage folder}
 }
 \description{
-Recalibrate age-depth models for individual sequences
+Recalibrate age-depth models for individual records
 }

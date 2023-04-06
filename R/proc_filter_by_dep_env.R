@@ -1,25 +1,26 @@
 #' @title Filter data by the depositional environments
 #'
-#' @param data_source Data.frame with sequences to be filtered
+#' @param data_source Data.frame with records to be filtered
 #' @param selection_data Data.frame with depositional environments presented in the data
 #' @param data_storage_path Path to the data storage folder
 #' @param dir_spec Specification of the folder name
 #' @description Use "stop-check" (see `stopcheck_table` function) to load/create
-#'  the table defined by the user. Next, it will filter the sequences in
+#'  the table defined by the user. Next, it will filter the records in
 #'  `data_source` based on the selected depositional environments.
+#' @keywords internal
 proc_filter_by_dep_env <-
   function(data_source, selection_data, data_storage_path, dir_spec) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "depositionalenvironment")
+    RUtilpol::check_col_names("data_source", "depositionalenvironment")
 
-    util_check_class("selection_data", "data.frame")
+    RUtilpol::check_class("selection_data", "data.frame")
 
-    util_check_col_names("selection_data", "depositionalenvironment")
+    RUtilpol::check_col_names("selection_data", "depositionalenvironment")
 
-    util_check_class("data_storage_path", "character")
+    RUtilpol::check_class("data_storage_path", "character")
 
-    util_check_class("dir_spec", "character")
+    RUtilpol::check_class("dir_spec", "character")
 
     folder_dir <-
       paste0(
@@ -43,7 +44,7 @@ proc_filter_by_dep_env <-
       purrr::pluck("depositionalenvironment")
 
 
-    util_open_dir_if_not(
+    RUtilpol::open_dir_if_not(
       length(dep_envt_types_transform_filter) > 0,
       dir = folder_dir,
       msg = paste(
@@ -53,11 +54,11 @@ proc_filter_by_dep_env <-
       )
     )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "There has been", length(dep_envt_types_transform_filter),
         "selected depositional environments:",
-        util_paste_as_vector(dep_envt_types_transform_filter)
+        RUtilpol::paste_as_vector(dep_envt_types_transform_filter)
       )
     )
 

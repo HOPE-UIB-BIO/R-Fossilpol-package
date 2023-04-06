@@ -4,14 +4,15 @@
 #' @return Logical
 #' @description Test if chronology control table has a potential candidate
 #' of Percentage modern carbon
+#' @keywords internal
 chron_decimal_ages_detect <-
   function(data_source,
            rc_control_types = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
+    RUtilpol::check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
 
-    util_check_class("rc_control_types", c("character", "NULL"))
+    RUtilpol::check_class("rc_control_types", c("character", "NULL"))
 
     marked_points <-
       chron_decimal_ages_mark(

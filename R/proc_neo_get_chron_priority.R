@@ -5,17 +5,18 @@
 #' @return Data.frame with the selected chronology
 #' @description Look into all chronologies, select the best one
 #' by the `chron_order`
+#' @keywords internal
 proc_neo_get_chron_priority <-
   function(data_source,
            dataset_name,
            chron_order_table) {
-    util_check_class("data_source", "list")
+    RUtilpol::check_class("data_source", "list")
 
-    util_check_class("dataset_name", "character")
+    RUtilpol::check_class("dataset_name", "character")
 
-    util_check_class("chron_order_table", "data.frame")
+    RUtilpol::check_class("chron_order_table", "data.frame")
 
-    util_check_col_names("chron_order_table", c("order", "type"))
+    RUtilpol::check_col_names("chron_order_table", c("order", "type"))
 
     # extract the chronology list
     chronology_list <-
@@ -26,15 +27,20 @@ proc_neo_get_chron_priority <-
     if (
       is.null(chronology_list[[1]]$chronologyid) == FALSE
     ) {
-
       # create table with the chronology type and id and join the chron_order
       chron_table <-
         tibble::tibble(
           type = chronology_list %>%
             purrr::map("chronology") %>%
-            purrr::map_chr("modelagetype"),
+            purrr::map_chr(
+              .f = ~ .x[["modelagetype"]] %>%
+                as.character()
+            ),
           chronology_id = chronology_list %>%
-            purrr::map_chr("chronologyid")
+            purrr::map_chr(
+              .f = ~ .x[["chronologyid"]] %>%
+                as.character()
+            )
         ) %>%
         dplyr::mutate(index = dplyr::row_number()) %>%
         dplyr::left_join(
@@ -42,7 +48,7 @@ proc_neo_get_chron_priority <-
           by = "type"
         )
 
-      util_check_col_names(
+      RUtilpol::check_col_names(
         "chron_table",
         c("type", "chronology_id")
       )
@@ -72,39 +78,39 @@ proc_neo_get_chron_priority <-
         tibble::tibble(
           depth = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("depth", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("depth", .x) %>%
+              as.numeric()
+          ),
           thickness = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("thickness", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("thickness", .x) %>%
+              as.numeric()
+          ),
           chroncontrolage = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("chroncontrolage", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontrolage", .x) %>%
+              as.numeric()
+          ),
           agelimitolder = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("agelimitolder", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("agelimitolder", .x) %>%
+              as.numeric()
+          ),
           agelimityounger = purrr::map_dbl(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("agelimityounger", .x)
-          ) %>%
-            as.numeric(),
+            .f = ~ RUtilpol::extract_var_from_list("agelimityounger", .x) %>%
+              as.numeric()
+          ),
           chroncontrolid = purrr::map_chr(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("chroncontrolid", .x)
-          ) %>%
-            as.character(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontrolid", .x) %>%
+              as.character()
+          ),
           chroncontroltype = purrr::map_chr(
             .x = selected_chronology,
-            .f = ~ util_extract_var_safe("chroncontroltype", .x)
-          ) %>%
-            as.character(),
+            .f = ~ RUtilpol::extract_var_from_list("chroncontroltype", .x) %>%
+              as.character()
+          ),
           dataset_id = dataset_name,
           age_type = selected_type
         ) %>%

@@ -9,11 +9,11 @@ proc_neo_update_project_database <-
   function(neotoma_sites_authors,
            neotoma_meta_samples,
            dir) {
-    util_check_class("neotoma_sites_authors", "data.frame")
+    RUtilpol::check_class("neotoma_sites_authors", "data.frame")
 
-    util_check_class("neotoma_meta_samples", "data.frame")
+    RUtilpol::check_class("neotoma_meta_samples", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "neotoma_sites_authors",
       c(
         "dataset_id",
@@ -24,9 +24,9 @@ proc_neo_update_project_database <-
       )
     )
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Adding author information to the project database"
     )
 

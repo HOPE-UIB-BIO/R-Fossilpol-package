@@ -12,3 +12,4 @@ List with all the important data-related settings
 \description{
 Gather information about current setting config.
 }
+\keyword{internal}

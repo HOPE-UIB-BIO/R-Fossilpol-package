@@ -13,5 +13,6 @@ util_paste_as_vector(var_list, sep = "'")
 the \code{var_list}}
 }
 \description{
-Paste any list of values as a vector
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
+\keyword{internal}

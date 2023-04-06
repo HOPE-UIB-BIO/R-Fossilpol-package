@@ -1,14 +1,22 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.qmd. Please edit that file -->
 
-# Fossilpol-R-package:package:
+# RFossilpol package:package:<img src="man/figures/fossilpol_logo.png" align="right" width="400" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of RFossilpol:package: is to provide tools for **FOSSILPOL
-workflow**. See more information about in on dedicated [FOSSILPOL
-website](https://hope-uib-bio.github.io/FOSSILPOL-website/)
+This repo is a part of the **FOSSILPOL** project. Learn more about the
+project on the [project websites](https://hope-uib-bio.github.io/FOSSILPOL-website/)
+
+The goal of the {`RFossilpol`}:package: is to provide functions for
+**FOSSILPOL workflow**.
+
+## Curent Version: 0.0.2
+
+## NEWS
+
+Check the recent package updates on the [NEWS page](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/blob/main/NEWS.md)
 
 ## Installation
 
@@ -16,6 +24,6 @@ You can install the development version of RFossilpol:package: from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("HOPE-UIB-BIO/R-Fossilpol-package")
+# install.packages("remotes")
+remotes::install_github("HOPE-UIB-BIO/R-Fossilpol-package")
 ```

@@ -9,28 +9,29 @@
 #' @description Select only levels, which has the age (our quantiles)
 #'   younger than last chron.control point + `maximum_age_extrapolation` &
 #'   older than first chron.control point - `maximum_age_extrapolation`
+#' @keywords internal
 proc_get_sampleid_extrapol <-
   function(data_level,
            data_chron_control_limits,
            maximum_age_extrapolation,
            test_quantiles = FALSE) {
-    util_check_class("data_level", "data.frame")
+    RUtilpol::check_class("data_level", "data.frame")
 
-    util_check_class("data_chron_control_limits", "numeric")
+    RUtilpol::check_class("data_chron_control_limits", "numeric")
 
     assertthat::assert_that(
       length(data_chron_control_limits) == 2,
       msg = "'data_chron_control_limits' must be a vector of two (min, max)"
     )
 
-    util_check_class("test_quantiles", "logical")
+    RUtilpol::check_class("test_quantiles", "logical")
 
     if (
       test_quantiles == TRUE
     ) {
-      util_check_col_names("data_level", c("upper", "lower"))
+      RUtilpol::check_col_names("data_level", c("upper", "lower"))
     } else {
-      util_check_col_names("data_level", "age")
+      RUtilpol::check_col_names("data_level", "age")
     }
 
     assertthat::assert_that(
@@ -38,7 +39,7 @@ proc_get_sampleid_extrapol <-
       msg = "'data_chron_control_limits' has to have 2 values"
     )
 
-    util_check_class("maximum_age_extrapolation", "numeric")
+    RUtilpol::check_class("maximum_age_extrapolation", "numeric")
 
     if (
       test_quantiles == FALSE

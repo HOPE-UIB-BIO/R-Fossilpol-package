@@ -10,6 +10,7 @@
 #' @description Exclude levels which are beyond the `age_limit`
 #' User can use age quantiles instead of set ages using `test_quantiles` or
 #' keep one level beyond the age extra i.e. `bookend`
+#' @keywords internal
 proc_get_sampleid_age_lim <-
   function(data_source,
            age_limit,
@@ -21,35 +22,35 @@ proc_get_sampleid_age_lim <-
 
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("age_limit", "numeric")
+    RUtilpol::check_class("age_limit", "numeric")
 
-    util_check_class("test_quantiles", "logical")
+    RUtilpol::check_class("test_quantiles", "logical")
 
     if (
       test_quantiles == TRUE
     ) {
-      util_check_col_names("data_source", "upper")
+      RUtilpol::check_col_names("data_source", "upper")
     } else {
-      util_check_col_names("data_source", "age")
+      RUtilpol::check_col_names("data_source", "age")
     }
 
-    util_check_class("current_year_cuttof", "logical")
+    RUtilpol::check_class("current_year_cuttof", "logical")
 
     if (
       current_year_cuttof == TRUE
     ) {
-      util_check_class("current_year_cuttof_value", "numeric")
+      RUtilpol::check_class("current_year_cuttof_value", "numeric")
 
       if (
         test_quantiles == TRUE
       ) {
-        util_check_col_names("data_source", "lower")
+        RUtilpol::check_col_names("data_source", "lower")
       }
     }
 
-    util_check_class("bookend", "logical")
+    RUtilpol::check_class("bookend", "logical")
 
     if (
       test_quantiles == TRUE

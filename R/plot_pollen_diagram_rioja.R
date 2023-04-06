@@ -2,7 +2,7 @@
 #' @param data_percentages Data.frame pollen percentages
 #' @param levels Data.frame with level information
 #' @param y_var The name of the variable to be used as Y-axis in the chart
-#' @param dataset_id Unique ID of the sequences
+#' @param dataset_id Unique ID of the records
 #' @param min_n_occur Min occurrence of taxa to be displayed
 #' @param max_taxa Number of taxa to plotted per one page
 #' @param dir Folder to save the figure to
@@ -15,13 +15,13 @@ plot_pollen_diagram_rioja <-
            min_n_occur = 3,
            max_taxa = 20,
            dir) {
-    util_check_class("data_percentages", "data.frame")
+    RUtilpol::check_class("data_percentages", "data.frame")
 
-    util_check_col_names("data_percentages", "sample_id")
+    RUtilpol::check_col_names("data_percentages", "sample_id")
 
-    util_check_class("levels", "data.frame")
+    RUtilpol::check_class("levels", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "levels",
       c(
         "sample_id",
@@ -32,19 +32,19 @@ plot_pollen_diagram_rioja <-
       )
     )
 
-    util_check_class("y_var", "character")
+    RUtilpol::check_class("y_var", "character")
 
-    util_check_the_latest_file("y_var", c("depth", "age"))
+    RUtilpol::check_vector_values("y_var", c("depth", "age"))
 
     y_var <- match.arg(y_var)
 
-    util_check_class("dataset_id", "character")
+    RUtilpol::check_class("dataset_id", "character")
 
-    util_check_class("min_n_occur", "numeric")
+    RUtilpol::check_class("min_n_occur", "numeric")
 
-    util_check_class("max_taxa", "numeric")
+    RUtilpol::check_class("max_taxa", "numeric")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     data_percentages_work <-
       data_percentages %>%
@@ -56,7 +56,7 @@ plot_pollen_diagram_rioja <-
     if (
       ncol(data_percentages_work) < 1
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0("WARNING: Dataset ", dataset_id, " not valid - not saved")
       )
 
@@ -73,7 +73,7 @@ plot_pollen_diagram_rioja <-
     if (
       nrow(data_percentages_sel) < 0 | ncol(data_percentages_sel) < 1
     ) {
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = paste0("WARNING: Dataset ", dataset_id, " not valid - not saved")
       )
 

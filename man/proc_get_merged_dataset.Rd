@@ -2,15 +2,15 @@
 % Please edit documentation in R/proc_get_merged_dataset.R
 \name{proc_get_merged_dataset}
 \alias{proc_get_merged_dataset}
-\title{Merge data from Neotoma and Private source}
+\title{Merge data from Neotoma and Other source}
 \usage{
-proc_get_merged_dataset(data_storage_path, private_data = FALSE)
+proc_get_merged_dataset(data_storage_path, other_data = FALSE)
 }
 \arguments{
 \item{data_storage_path}{Path to the data storage folder}
 
-\item{private_data}{Logical value if to include private source of data}
+\item{other_data}{Logical value if to include other source of data}
 }
 \description{
-Merge data from Neotoma and Private source
+Merge data from Neotoma and Other source
 }

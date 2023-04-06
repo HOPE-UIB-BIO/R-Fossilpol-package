@@ -8,9 +8,9 @@
 #' @export
 proc_clean_column_names <-
   function(data_source, additional_patterns = NULL) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_class("additional_patterns", c("NULL", "character"))
+    RUtilpol::check_class("additional_patterns", c("NULL", "character"))
 
     col_names_fresh <-
       data_source %>%

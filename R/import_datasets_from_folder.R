@@ -11,94 +11,93 @@
 #' @return Data.frame with all data from the folder formatted in a
 #' Neotoma-processed style data.
 #' @export
-import_datasets_from_folder <-
-  function(dir_files,
-           dir,
-           suffix = "private") {
+import_datasets_from_folder <- function(dir_files,
+                                        dir,
+                                        suffix = "other") {
 
-    # safety tests
-    util_check_class("dir_files", "character")
-    util_check_class("dir", "character")
-    util_check_class("suffix", "character")
+  # safety tests
+  RUtilpol::check_class("dir_files", "character")
+  RUtilpol::check_class("dir", "character")
+  RUtilpol::check_class("suffix", "character")
 
-    # Get the vector of all files in focal dir_files
-    sites_list <-
-      list.files(
-        path = dir_files,
-        pattern = ".xlsx"
-      ) %>%
-      sort()
+  # Get the vector of all files in focal dir_files
+  sites_list <-
+    list.files(
+      path = dir_files,
+      pattern = ".xlsx"
+    ) %>%
+    sort()
 
-    n_sites <- length(sites_list)
+  n_sites <- length(sites_list)
 
-    # Check if there are some files
-    util_stop_if_not(
-      n_sites >= 1,
-      true_msg = paste(
-        "There are", n_sites, "xlsx files detected."
-      ),
-      false_msg = paste("There are no 'xlsx' file in", dir_files)
+  # Check if there are some files
+  RUtilpol::stop_if_not(
+    n_sites >= 1,
+    true_msg = paste(
+      "There are", n_sites, "xlsx files detected."
+    ),
+    false_msg = paste("There are no 'xlsx' file in", dir_files)
+  )
+
+  # for each file
+  for (i in seq_along(sites_list)) {
+    # load project dataset database
+    try(
+      project_db <-
+        readr::read_rds(
+          paste0(
+            dir,
+            "/Data/Personal_database_storage/project_dataset_database.rds"
+          )
+        )
     )
 
-    # for each file
-    for (i in seq_along(sites_list)) {
-      # load project dataset database
-      try(
-        project_db <-
-          readr::read_rds(
-            paste0(
-              dir,
-              "/Data/Personal_database_storage/project_dataset_database.rds"
-            )
-          )
+    RUtilpol::check_class("project_db", "proj_db_class")
+
+    RUtilpol::output_comment(
+      msg = paste0("Extracting file ", i, " out of ", n_sites)
+    )
+
+    # select one site
+    selected_file <- sites_list[i]
+
+    cat(paste("Extracting file", selected_file), "\n")
+
+    # apply custom function to extract site
+    site_result <-
+      extract_dataset_from_excel(
+        selected_file = selected_file,
+        dir = dir_files,
+        suffix = suffix,
+        project_db = project_db
       )
 
-      util_check_class("project_db", "proj_db_class")
-
-      util_output_comment(
-        msg = paste0("Extracting file ", i, " out of ", n_sites)
-      )
-
-      # select one site
-      selected_file <- sites_list[i]
-
-      cat(paste("Extracting file", selected_file), "\n")
-
-      # apply custom function to extract site
-      site_result <-
-        extract_dataset_from_excel(
-          selected_file = selected_file,
-          dir = dir_files,
-          suffix = suffix,
-          project_db = project_db
-        )
-
-      # save single site
-      if (
-        i == 1
-      ) {
-        result_table <-
-          site_result %>%
-          purrr::pluck("data")
-      } else {
-        result_table <-
-          dplyr::bind_rows(
-            result_table,
-            site_result %>%
-              purrr::pluck("data")
-          )
-      }
-
-      # save database
-      readr::write_rds(
+    # save single site
+    if (
+      i == 1
+    ) {
+      result_table <-
         site_result %>%
-          purrr::pluck("db"),
-        paste0(
-          dir,
-          "/Data/Personal_database_storage/project_dataset_database.rds"
-        ),
-        compress = "gz"
-      )
+        purrr::pluck("data")
+    } else {
+      result_table <-
+        dplyr::bind_rows(
+          result_table,
+          site_result %>%
+            purrr::pluck("data")
+        )
     }
-    return(result_table)
+
+    # save database
+    readr::write_rds(
+      site_result %>%
+        purrr::pluck("db"),
+      paste0(
+        dir,
+        "/Data/Personal_database_storage/project_dataset_database.rds"
+      ),
+      compress = "gz"
+    )
   }
+  return(result_table)
+}

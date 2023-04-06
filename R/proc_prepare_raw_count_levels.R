@@ -1,4 +1,3 @@
-utils::globalVariables("where")
 #' @title Format count and depth data
 #' @param data_source Data.frame with `raw_counts` and `sample_depth`
 #' @description `sample_depth` Data.frame will be sorted by `depth` and then
@@ -6,9 +5,9 @@ utils::globalVariables("where")
 #' @export
 proc_prepare_raw_count_levels <-
   function(data_source) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("raw_counts", "sample_depth"))
+    RUtilpol::check_col_names("data_source", c("raw_counts", "sample_depth"))
 
     current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
@@ -17,7 +16,7 @@ proc_prepare_raw_count_levels <-
     # 1. Fixing sample_id name -----
     #--------------------------------------------------#
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Fixing issue with sample_id type"
     )
 
@@ -31,7 +30,7 @@ proc_prepare_raw_count_levels <-
         ),
         raw_counts = purrr::map(
           .x = raw_counts,
-          .f = ~ proc_rename_column(
+          .f = ~ RUtilpol::rename_column(
             data_source = .x,
             old_name = "sample.id",
             new_name = "sample_id"
@@ -44,7 +43,7 @@ proc_prepare_raw_count_levels <-
         ),
         sample_depth = purrr::map(
           .x = sample_depth,
-          .f = ~ proc_rename_column(
+          .f = ~ RUtilpol::rename_column(
             data_source = .x,
             old_name = "sample.id",
             new_name = "sample_id"
@@ -52,10 +51,10 @@ proc_prepare_raw_count_levels <-
         )
       )
 
-    util_check_col_names("data_sample_id_fix", c("raw_counts", "sample_depth"))
+    RUtilpol::check_col_names("data_sample_id_fix", c("raw_counts", "sample_depth"))
 
     # test if all data has been fixed
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       purrr::map_lgl(
         .x = data_sample_id_fix$raw_counts,
         .f = ~ any(names(.x) %in% "sample_id")
@@ -69,7 +68,7 @@ proc_prepare_raw_count_levels <-
     # 2. Fixing sample_id type ----
     #--------------------------------------------------#
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Making all 'sample_id' as 'character'"
     )
 
@@ -78,42 +77,42 @@ proc_prepare_raw_count_levels <-
       data_sample_id_fix %>%
       dplyr::mutate(
         sample_depth = purrr::map(
+          .progress = "Making all 'sample_id' as 'character' in 'sample_depth'",
           .x = sample_depth,
           .f = ~ .x %>%
             dplyr::mutate(sample_id = as.character(sample_id))
         ),
         raw_counts = purrr::map(
+          .progress = "Making all 'sample_id' as 'character' in 'raw_counts'",
           .x = raw_counts,
           .f = ~ .x %>%
             dplyr::mutate(sample_id = as.character(sample_id))
         )
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_sample_id",
       env = current_env
     )
 
-    util_check_class("data_sample_id", "data.frame")
+    RUtilpol::check_class("data_sample_id", "data.frame")
 
-    util_check_col_names("data_sample_id", c("raw_counts", "sample_depth"))
+    RUtilpol::check_col_names("data_sample_id", c("raw_counts", "sample_depth"))
 
-    util_output_comment("All issues with 'sample_id' were fixed")
+    RUtilpol::output_comment("All issues with 'sample_id' were fixed")
 
 
     #--------------------------------------------------#
     # 3. Sorting the levels ----
     #--------------------------------------------------#
 
-    util_output_comment(
-      msg = "Sorting levels by depth"
-    )
 
     # sort sample_depth by depth and drop NA
     data_sample_depth_sort <-
       data_sample_id %>%
       dplyr::mutate(
         sample_depth = purrr::map(
+          .progress = "Sorting levels by depth",
           .x = sample_depth,
           .f = ~ .x %>%
             dplyr::arrange(depth) %>%
@@ -121,7 +120,7 @@ proc_prepare_raw_count_levels <-
         )
       )
 
-    util_check_col_names("data_sample_depth_sort", "sample_depth")
+    RUtilpol::check_col_names("data_sample_depth_sort", "sample_depth")
 
     # make a vector of sample_ids
     data_raw_counts_valid_id <-
@@ -133,7 +132,7 @@ proc_prepare_raw_count_levels <-
         )
       )
 
-    util_check_col_names("data_raw_counts_valid_id", "valid_id")
+    RUtilpol::check_col_names("data_raw_counts_valid_id", "valid_id")
 
     # subset
     data_raw_counts_filtered <-
@@ -144,7 +143,7 @@ proc_prepare_raw_count_levels <-
       )
 
     # test if all datasets have same number of levels between counts and depth
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       data_raw_counts_filtered %>%
         dplyr::mutate(
           n_counts = purrr::map_dbl(raw_counts, nrow),
@@ -160,10 +159,6 @@ proc_prepare_raw_count_levels <-
     #--------------------------------------------------#
     # 4. Replace NA with zeros  ----
     #--------------------------------------------------#
-
-    util_output_comment(
-      msg = "Replacing 'NA' with '0' for all taxa"
-    )
 
     suppressWarnings(
       data_raw_counts_all_numeric <-
@@ -186,31 +181,29 @@ proc_prepare_raw_count_levels <-
       data_raw_counts_all_numeric %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Replacing 'NA' with '0' for all taxa",
           .x = raw_counts,
           .f = ~ .x %>%
             dplyr::mutate(
               dplyr::across(
-                where(is.numeric),
+                tidyselect::where(is.numeric),
                 ~ tidyr::replace_na(.x, 0)
               )
             )
         )
       )
 
-    util_check_col_names("data_raw_counts_no_NA", "raw_counts")
+    RUtilpol::check_col_names("data_raw_counts_no_NA", "raw_counts")
 
     #--------------------------------------------------#
     # 5. Sum taxa together and drop empty rows and columns  ----
     #--------------------------------------------------#
 
-    util_output_comment(
-      msg = "Filtering out 'empty' taxa and levels"
-    )
-
     data_raw_counts_no_empty_taxa <-
       data_raw_counts_no_NA %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Filtering out 'empty' taxa and levels",
           .x = raw_counts,
           .f = ~ {
             counts <-
@@ -240,7 +233,7 @@ proc_prepare_raw_count_levels <-
         )
       )
 
-    util_check_col_names("data_raw_counts_no_empty_taxa", "raw_counts")
+    RUtilpol::check_col_names("data_raw_counts_no_empty_taxa", "raw_counts")
 
     # get the valid sample id
     #   This is important because they could have dropped from the empt rows
@@ -261,16 +254,16 @@ proc_prepare_raw_count_levels <-
         variable_vec = "sample_depth"
       )
 
-    util_check_if_loaded(
+    RUtilpol::check_if_loaded(
       file_name = "data_raw_counts_res",
       env = current_env
     )
 
-    util_check_class("data_raw_counts_res", "data.frame")
+    RUtilpol::check_class("data_raw_counts_res", "data.frame")
 
-    util_check_col_names("data_raw_counts_res", "sample_depth")
+    RUtilpol::check_col_names("data_raw_counts_res", "sample_depth")
 
-    util_output_comment("All datasets hav been prepared")
+    RUtilpol::output_comment("All datasets hav been prepared")
 
     util_check_data_table(data_raw_counts_res)
 

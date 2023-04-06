@@ -3,18 +3,23 @@
 #' @param dir Directory path
 #' @param folder `TRUE` if looking for folder names
 #' @return Object name of the most recent file
-#' @description look into the folder and find the version of the file
+#' @keywords internal
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#' look into the folder and find the version of the file
 #' with the most recent name
-#' @export
 util_check_the_latest_file <-
   function(file_name,
            dir,
            folder = FALSE) {
-    util_check_class("file_name", c("character", "logical"))
+     lifecycle::deprecate_warn(
+      "0.0.2", "util_check_the_latest_file()", "RUtilpol::get_latest_file_name()"
+    )
+    RUtilpol::check_class("file_name", c("character", "logical"))
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("folder", "logical")
+    RUtilpol::check_class("folder", "logical")
 
     file_full_list <- list.files(dir)
 

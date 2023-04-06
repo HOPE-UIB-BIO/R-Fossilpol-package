@@ -7,11 +7,12 @@
 #' @param set_postbomb_age Age determining the start of period using postbomb
 #' curves. Default value is  199 as all postbomb curves are able to handle
 #' values younger than 199
+#' @keywords internal
 chron_fix_postbomb <-
   function(data_source, chron_control_types, set_postbomb_age = 199) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -20,9 +21,9 @@ chron_fix_postbomb <-
       )
     )
 
-    util_check_class("chron_control_types", "list")
+    RUtilpol::check_class("chron_control_types", "list")
 
-    util_check_class("set_postbomb_age", "numeric")
+    RUtilpol::check_class("set_postbomb_age", "numeric")
 
     # check if any radiocarbon is younger than the limitation of post-bomb
     #   curve
@@ -30,6 +31,7 @@ chron_fix_postbomb <-
       data_source %>%
       dplyr::mutate(
         need_to_correct = purrr::map_lgl(
+          .progress = "Checking potential candidates for postbomb",
           .x = chron_control_format,
           .f = ~ chron_check_negative_rc_ages(
             data_source = .x,
@@ -39,7 +41,7 @@ chron_fix_postbomb <-
         )
       )
 
-    util_check_col_names("data_post_bomb", "need_to_correct")
+    RUtilpol::check_col_names("data_post_bomb", "need_to_correct")
 
     # check which datasets should be adjusted
     dataset_with_potential_postbomb <-
@@ -56,7 +58,7 @@ chron_fix_postbomb <-
         dplyr::filter(chroncontroltype %in% chron_control_types$radiocarbon_control_types &
           chroncontrolage < set_postbomb_age)
 
-      util_output_comment(
+      RUtilpol::output_comment(
         msg = "Showing datasets that need post-bomb curve"
       )
 
@@ -64,13 +66,14 @@ chron_fix_postbomb <-
       utils::View(dataset_with_potential_postbomb)
     }
 
-    # add postbomb curve to chron control points which needed it
+    # add a postbomb curve to chron control points which needed it
     data_post_bomb_fixed <-
       data_post_bomb %>%
       dplyr::mutate(
         chron_control_format = ifelse(
           need_to_correct == TRUE,
           purrr::map2(
+            .progress = "Adding a postbomb curve",
             .x = chron_control_format,
             .y = postbomb_curve_name,
             .f = ~ chron_add_postbomb_curve(
@@ -85,7 +88,7 @@ chron_fix_postbomb <-
       ) %>%
       dplyr::select(-need_to_correct)
 
-    util_check_col_names("data_post_bomb_fixed", "chron_control_format")
+    RUtilpol::check_col_names("data_post_bomb_fixed", "chron_control_format")
 
     return(data_post_bomb_fixed)
   }

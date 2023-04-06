@@ -1,13 +1,14 @@
-#' @title Get coordinates of sequences from Neotoma list
+#' @title Get coordinates of records from Neotoma list
 #' @param datasets List of lists with Neotoma datasets
+#' @keywords internal
 proc_neo_get_coord <-
   function(datasets) {
-    util_check_class("datasets", "list")
+    RUtilpol::check_class("datasets", "list")
 
-    purrr::map_dfr(
+    purrr::map(
+      .progress = "Extracting coordinates for all records",
       .x = datasets,
       .f = ~ {
-
         # get all dataset_ids
         datase_id_table <-
           .x$site$datasets %>%
@@ -42,5 +43,7 @@ proc_neo_get_coord <-
         ) %>%
           return()
       }
-    )
+    ) %>%
+      purrr::list_rbind() %>%
+      return()
   }

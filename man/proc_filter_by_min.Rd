@@ -2,7 +2,7 @@
 % Please edit documentation in R/proc_filter_by_min.R
 \name{proc_filter_by_min}
 \alias{proc_filter_by_min}
-\title{Filter sequences by minimal value}
+\title{Filter records by minimal value}
 \usage{
 proc_filter_by_min(data_source, var_name, min_n)
 }
@@ -14,5 +14,6 @@ proc_filter_by_min(data_source, var_name, min_n)
 \item{min_n}{Criterion to be evaluated against}
 }
 \description{
-Filter sequences by minimal value
+Filter records by minimal value
 }
+\keyword{internal}

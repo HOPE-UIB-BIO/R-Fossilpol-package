@@ -15,3 +15,4 @@ List of lists with all site information
 \description{
 Obtain sites information from Neotoma download
 }
+\keyword{internal}

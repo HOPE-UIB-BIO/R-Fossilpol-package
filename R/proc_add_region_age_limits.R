@@ -4,13 +4,13 @@
 #' @export
 proc_add_region_age_limits <-
   function(data_source, dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "region")
+    RUtilpol::check_col_names("data_source", "region")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Checking regional age-limit definition"
     )
 
@@ -31,13 +31,13 @@ proc_add_region_age_limits <-
         sel_method = "age_limits",
         msg = paste(
           "Adjust age limits for each region.",
-          "'young_age' = the youngest age the sequence has to have.",
-          "'old_age' = the oldest age the the sequence has to have.",
+          "'young_age' = the youngest age the record has to have.",
+          "'old_age' = the oldest age the the record has to have.",
           "'end_of_interest_period' = levels beyond this age will be omitted."
         )
       )
 
-    util_open_dir_if_not(
+    RUtilpol::open_dir_if_not(
       c(
         regional_age_limits$young_age,
         regional_age_limits$old_age
@@ -67,7 +67,7 @@ proc_add_region_age_limits <-
 
     util_check_data_table(res)
 
-    util_check_col_names("res", c("young_age", "old_age", "end_of_interest_period"))
+    RUtilpol::check_col_names("res", c("young_age", "old_age", "end_of_interest_period"))
 
     return(res)
   }

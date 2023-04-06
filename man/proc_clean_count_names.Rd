@@ -4,13 +4,15 @@
 \alias{proc_clean_count_names}
 \title{Clean names for count datasets}
 \usage{
-proc_clean_count_names(data_source, additional_patterns = NULL)
+proc_clean_count_names(data_source, additional_patterns = NULL, dir)
 }
 \arguments{
 \item{data_source}{Data.frame containing \code{raw_counts} column which contains
 raw counts}
 
 \item{additional_patterns}{User defined patterns to be used for name changes}
+
+\item{dir}{Path to the data_storage folder}
 }
 \description{
 Clean names for count datasets

@@ -21,7 +21,7 @@ plot_pollen_diagram_rioja(
 
 \item{y_var}{The name of the variable to be used as Y-axis in the chart}
 
-\item{dataset_id}{Unique ID of the sequences}
+\item{dataset_id}{Unique ID of the records}
 
 \item{min_n_occur}{Min occurrence of taxa to be displayed}
 

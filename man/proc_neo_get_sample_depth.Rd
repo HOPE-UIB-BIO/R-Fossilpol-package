@@ -9,7 +9,7 @@ proc_neo_get_sample_depth(data_source, min_n_levels = 1)
 \arguments{
 \item{data_source}{Data.frame with samples saved as nested information}
 
-\item{min_n_levels}{Minimal number of levels for sequences to be included}
+\item{min_n_levels}{Minimal number of levels for records to be included}
 }
 \description{
 Get sample depth data from samples

@@ -4,19 +4,23 @@
 \alias{chron_predict_all_ages}
 \title{Predict ages for the selected data assembly}
 \usage{
-chron_predict_all_ages(data_source, dir, date)
+chron_predict_all_ages(data_source, dir, predict_ages_denovo, sites_to_rerun)
 }
 \arguments{
-\item{data_source}{Data.frame with \code{dataset_id} and \code{bchron_mod}}
+\item{data_source}{Data.frame with \code{dataset_id} and \code{sample_depth}}
 
 \item{dir}{Path to the data storage folder}
 
-\item{date}{Date to named the files with}
+\item{predict_ages_denovo}{Setting to define if ages should be predicted from
+last models 'de novo'}
+
+\item{sites_to_rerun}{Vector with \code{dataset_id}s of records to rerun even
+if previous results are present}
 }
 \value{
 Data with \code{levels}, which contains \code{depth} and predicted \verb{age, and }age_uncertainty`, which contains age uncertainty matrix.
 }
 \description{
 Load the depth information from the last saved data assembly,
-then predict the ages using the age-depth models in \code{data_source}.
+then predict the ages using the age-depth models.
 }

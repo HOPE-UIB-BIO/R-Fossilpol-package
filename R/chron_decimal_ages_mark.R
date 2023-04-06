@@ -8,16 +8,17 @@
 #' marking ages with place
 #' @description Detect ages or radiocarbon control points, which have
 #' decimal places are are between 80 and 120.
+#' @keywords internal
 chron_decimal_ages_mark <-
   function(data_source,
            only_rc = TRUE,
            rc_control_types = NULL,
            age_range = c(80, 120)) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
+    RUtilpol::check_col_names("data_source", c("chroncontroltype", "chroncontrolage"))
 
-    util_check_class("rc_control_types", c("character", "NULL"))
+    RUtilpol::check_class("rc_control_types", c("character", "NULL"))
 
     if (
       only_rc
@@ -61,7 +62,7 @@ chron_decimal_ages_mark <-
         )
       )
 
-    util_check_col_names("data_marked", "fulfil_criteria")
+    RUtilpol::check_col_names("data_marked", "fulfil_criteria")
 
     return(data_marked)
   }

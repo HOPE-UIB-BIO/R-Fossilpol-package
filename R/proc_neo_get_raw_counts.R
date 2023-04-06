@@ -5,17 +5,17 @@
 #' @export
 proc_neo_get_raw_counts <-
   function(data_source, sel_var_element = "pollen") {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "samples")
+    RUtilpol::check_col_names("data_source", "samples")
 
-    util_check_class("sel_var_element", "character")
+    RUtilpol::check_class("sel_var_element", "character")
 
     # get ecological groups
     eco_group_data <-
       proc_neo_get_samples_eco_group(data_source)
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Checking ecological groups"
     )
 
@@ -40,7 +40,7 @@ proc_neo_get_raw_counts <-
       dplyr::filter(include == TRUE) %>%
       purrr::pluck("ecologicalgroup")
 
-    util_open_dir_if_not(
+    RUtilpol::open_dir_if_not(
       length(sel_eco_group) > 0,
       dir = eco_group_path,
       msg = paste(
@@ -54,16 +54,12 @@ proc_neo_get_raw_counts <-
       )
     )
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = paste(
         "There has been", length(sel_eco_group), "selected",
         "ecological groups:",
-        util_paste_as_vector(sel_eco_group)
+        RUtilpol::paste_as_vector(sel_eco_group)
       )
-    )
-
-    util_output_comment(
-      msg = "Extracting raw counts"
     )
 
     # extract raw counts
@@ -72,6 +68,7 @@ proc_neo_get_raw_counts <-
       data_source %>%
       dplyr::mutate(
         raw_counts = purrr::map(
+          .progress = "Extracting raw counts",
           .x = samples,
           .f = ~ proc_neo_extract_counts(
             data_source = .x,
@@ -87,7 +84,7 @@ proc_neo_get_raw_counts <-
 
     util_check_data_table(sample_counts)
 
-    util_check_col_names("sample_counts", c("raw_counts", "n_sample_counts"))
+    RUtilpol::check_col_names("sample_counts", c("raw_counts", "n_sample_counts"))
 
     return(sample_counts)
   }

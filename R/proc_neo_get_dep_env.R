@@ -1,4 +1,5 @@
 #' @title Obtain the table of depositional environments from Neotoma
+#' @keywords internal
 proc_neo_get_dep_env <-
   function() {
     # Get relevant tables with information from Neotoma API
@@ -10,7 +11,7 @@ proc_neo_get_dep_env <-
         )
       )
 
-    util_stop_if_not(
+    RUtilpol::stop_if_not(
       dep_envt_types_dwn$status_code == 200, # status 200 = success
       false_msg = "List of all depositional environments was NOT downloaded from Neotoma",
       true_msg = "List of all depositional environments was downloaded from Neotoma"

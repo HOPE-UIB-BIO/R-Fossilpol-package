@@ -11,9 +11,9 @@ chron_run_bchron <-
            n_iterations = 10e3,
            n_burn = 2e3,
            n_thin = 8) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "chroncontrolid",
@@ -25,11 +25,11 @@ chron_run_bchron <-
       )
     )
 
-    util_check_class("n_iterations", "numeric")
+    RUtilpol::check_class("n_iterations", "numeric")
 
-    util_check_class("n_burn", "numeric")
+    RUtilpol::check_class("n_burn", "numeric")
 
-    util_check_class("n_thin", "numeric")
+    RUtilpol::check_class("n_thin", "numeric")
 
     current_frame <- sys.nframe()
 

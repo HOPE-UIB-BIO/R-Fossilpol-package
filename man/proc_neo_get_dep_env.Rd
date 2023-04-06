@@ -9,3 +9,4 @@ proc_neo_get_dep_env()
 \description{
 Obtain the table of depositional environments from Neotoma
 }
+\keyword{internal}

@@ -15,28 +15,28 @@ proc_filter_out_duplicates <-
            filter_var,
            n_subgroups = NULL,
            max_degree_distance = 1) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", c("long", "lat", eval(filter_var)))
+    RUtilpol::check_col_names("data_source", c("long", "lat", eval(filter_var)))
 
-    util_check_class("data_storage_path", "character")
+    RUtilpol::check_class("data_storage_path", "character")
 
-    util_check_class("filter_var", "character")
+    RUtilpol::check_class("filter_var", "character")
 
     if (
       is.null(n_subgroups)
     ) {
-      n_subgroups <- max(round(nrow(data_source) / 100), 1) # set 1 group per 100 sequences
+      n_subgroups <- max(round(nrow(data_source) / 100), 1) # set 1 group per 100 records
     }
 
-    util_check_class("n_subgroups", "numeric")
+    RUtilpol::check_class("n_subgroups", "numeric")
 
     assertthat::assert_that(
       n_subgroups > 0,
       msg = "'n_subgroups' must be larger than 0"
     )
 
-    util_check_class("max_degree_distance", "numeric")
+    RUtilpol::check_class("max_degree_distance", "numeric")
 
     assertthat::assert_that(
       max_degree_distance > 0,
@@ -147,7 +147,7 @@ proc_filter_out_duplicates <-
     # 5. Filter out unwanted datasets  -----
     #----------------------------------------------------------#
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Filtering out unwanted datasets"
     )
 

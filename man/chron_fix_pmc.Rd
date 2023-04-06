@@ -20,3 +20,4 @@ chron_fix_pmc(data_source, chron_control_types, dir)
 Detect potential chronology control points saved as Percentage
 modern carbon and let user decide, which should be back-transformed
 }
+\keyword{internal}

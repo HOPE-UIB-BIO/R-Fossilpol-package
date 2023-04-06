@@ -23,9 +23,9 @@ chron_prepare_for_ad_modelling <-
            guess_depth,
            min_n_of_control_points = 2,
            dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "chron_control",
@@ -33,11 +33,11 @@ chron_prepare_for_ad_modelling <-
       )
     )
 
-    util_check_class("chron_control_types", "list")
+    RUtilpol::check_class("chron_control_types", "list")
 
-    util_check_class("default_thickness", "numeric")
+    RUtilpol::check_class("default_thickness", "numeric")
 
-    util_check_class("default_error", "numeric")
+    RUtilpol::check_class("default_error", "numeric")
 
     if (
       missing(max_age_error)
@@ -45,7 +45,7 @@ chron_prepare_for_ad_modelling <-
       max_age_error <- Inf
     }
 
-    util_check_class("max_age_error", "numeric")
+    RUtilpol::check_class("max_age_error", "numeric")
 
     if (
       missing(guess_depth)
@@ -53,9 +53,9 @@ chron_prepare_for_ad_modelling <-
       guess_depth <- -Inf
     }
 
-    util_check_class("guess_depth", "numeric")
+    RUtilpol::check_class("guess_depth", "numeric")
 
-    util_check_class("min_n_of_control_points", "numeric")
+    RUtilpol::check_class("min_n_of_control_points", "numeric")
 
     assertthat::assert_that(
       min_n_of_control_points >= 2,
@@ -65,7 +65,7 @@ chron_prepare_for_ad_modelling <-
 
     # Format the chronology control tables  -----
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Start formatting chron control tables"
     )
 
@@ -82,7 +82,7 @@ chron_prepare_for_ad_modelling <-
 
     # Post bomb adjustment  -----
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Start adjusting for postbomb ages"
     )
 
@@ -96,7 +96,7 @@ chron_prepare_for_ad_modelling <-
 
     # Percentage modern carbon   -----
 
-    util_output_message(
+    RUtilpol::output_heading(
       msg = "Start adjusting Percentage Modern Carbon"
     )
 
@@ -109,7 +109,7 @@ chron_prepare_for_ad_modelling <-
 
     # Chronology limits   -----
 
-    util_output_comment(
+    RUtilpol::output_comment(
       msg = "Adding limits of chronology"
     )
 

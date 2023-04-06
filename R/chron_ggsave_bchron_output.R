@@ -8,6 +8,7 @@
 #' @param image_height Height of image
 #' @param image_units Units to measure image
 #' @param image_format Format of figure
+#' @param verbose Should a message be output?
 chron_ggsave_bchron_output <-
   function(data_source,
            dataset_id,
@@ -17,39 +18,50 @@ chron_ggsave_bchron_output <-
            image_width,
            image_height,
            image_units = c("in", "cm", "mm", "px"),
-           image_format = ".pdf") {
-    current_frame <- sys.nframe()
+           image_format = ".pdf",
+           verbose = FALSE) {
+    assertthat::assert_that(
+      requireNamespace("Bchron"),
+      msg = "Please attach Bchron by `library(Bchron)`"
+    )
 
+    current_frame <- sys.nframe()
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "BchronologyRun")
+    RUtilpol::check_class("data_source", "BchronologyRun")
 
-    util_check_class("dataset_id", "character")
+    RUtilpol::check_class("dataset_id", "character")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
-    util_check_class("text_size", "numeric")
+    RUtilpol::check_class("text_size", "numeric")
 
-    util_check_class("line_size", "numeric")
+    RUtilpol::check_class("line_size", "numeric")
 
-    util_check_class("image_width", "numeric")
+    RUtilpol::check_class("image_width", "numeric")
 
-    util_check_class("image_height", "numeric")
+    RUtilpol::check_class("image_height", "numeric")
 
-    util_check_vector_values("image_units", c("in", "cm", "mm", "px"))
+    RUtilpol::check_vector_values("image_units", c("in", "cm", "mm", "px"))
 
     image_units <- match.arg(image_units)
 
-    util_check_class("image_units", "character")
+    RUtilpol::check_class("image_units", "character")
 
-    util_check_class("image_format", "character")
+    RUtilpol::check_class("image_format", "character")
+
+    RUtilpol::check_class("verbose", "logical")
 
     site_name <- paste0("dataset_", dataset_id, image_format)
     site_title <- paste0("dataset_id = ", dataset_id)
 
-    cat(
-      paste(" - - saving file", site_name), "\n"
-    )
+    if (
+      isTRUE(verbose)
+    ) {
+      cat(
+        paste(" - - saving file", site_name), "\n"
+      )
+    }
 
     Bchron_plot <-
       plot(data_source) +

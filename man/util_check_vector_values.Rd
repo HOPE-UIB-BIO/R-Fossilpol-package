@@ -12,6 +12,8 @@ util_check_vector_values(data_source, var_list)
 \item{var_list}{Vector with names}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Function will test the presence of ANY values from \code{var_list}
 within the \code{data_source} vector and return error message
 }
+\keyword{internal}

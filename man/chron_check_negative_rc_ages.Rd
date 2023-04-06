@@ -23,3 +23,4 @@ Logical
 \description{
 Detect radiocarbon ages with negative values
 }
+\keyword{internal}

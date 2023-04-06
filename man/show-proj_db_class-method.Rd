@@ -7,7 +7,7 @@
 \S4method{show}{proj_db_class}(object)
 }
 \arguments{
-\item{theObject}{object of proj_db_class class}
+\item{object}{object of proj_db_class class}
 }
 \description{
 Show summary of the database

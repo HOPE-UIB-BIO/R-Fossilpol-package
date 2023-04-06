@@ -12,27 +12,27 @@ proc_detect_duplicates(
 )
 }
 \arguments{
-\item{data_source}{Data.frame with sequences}
+\item{data_source}{Data.frame with records}
 
 \item{source_var}{Character. Name of a column that indicates source of data}
 
 \item{n_subgroups}{Number of subgroups to split the data based on the
-geography. Sequences within subgroup will be tested only if subgroup
-contains sequences form different \code{source_var}}
+geography. Records within subgroup will be tested only if subgroup
+contains records form different \code{source_var}}
 
-\item{maximal_distance}{Maximal Euclidean distance between two sequences to
+\item{maximal_distance}{Maximal Euclidean distance between two records to
 consider them as material for comparison}
 }
 \value{
-Data.frame with the suggested duplicates of sequences
-\code{distance} = Euclidean distance between sequences
+Data.frame with the suggested duplicates of records
+\code{distance} = Euclidean distance between records
 \code{similarity} = mean number of the exactly same columns
 }
 \description{
-Function will split sequences based on their geographic
+Function will split records based on their geographic
 location into \code{n_subgroups}. If subgroup contains data from multiple sources,
-Euclidean \code{distance} between all sequences combination will be calculated.
+Euclidean \code{distance} between all records combination will be calculated.
 Only combination with the distance up to \code{maximal_distance} will be kept.
-Next, selected columns will be compared between sequences and the average number of
+Next, selected columns will be compared between records and the average number of
 the exact same columns is returned \code{similarity}.
 }

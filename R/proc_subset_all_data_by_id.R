@@ -3,6 +3,7 @@
 #' by `variable_vec`and `valid_id`.
 #' @param variable_vec Vector with names of columns which should be filtered
 #' @return Data assembly with all level-related columns filtered by `valid_id`
+#' @keywords internal
 proc_subset_all_data_by_id <-
   function(data_source,
            variable_vec = c(
@@ -11,9 +12,9 @@ proc_subset_all_data_by_id <-
              "counts_harmonised",
              "age_uncertainty"
            )) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         variable_vec,
@@ -42,7 +43,7 @@ proc_subset_all_data_by_id <-
             )
           )
 
-        util_check_col_names("res", "age_uncertainty")
+        RUtilpol::check_col_names("res", "age_uncertainty")
       } else {
         res <-
           res %>%
@@ -57,7 +58,7 @@ proc_subset_all_data_by_id <-
             )
           )
 
-        util_check_col_names("res", eval(sel_var))
+        RUtilpol::check_col_names("res", eval(sel_var))
       }
     }
 

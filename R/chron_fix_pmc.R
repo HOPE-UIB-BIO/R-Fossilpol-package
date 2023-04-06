@@ -5,11 +5,12 @@
 #' @param chron_control_types Named list with `chroncontrol_included_types` and
 #' `radiocarbon_control_types`
 #' @param dir Path to the data storage folder
+#' @keywords internal
 chron_fix_pmc <-
   function(data_source, chron_control_types, dir) {
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names(
+    RUtilpol::check_col_names(
       "data_source",
       c(
         "dataset_id",
@@ -18,9 +19,9 @@ chron_fix_pmc <-
       )
     )
 
-    util_check_class("chron_control_types", "list")
+    RUtilpol::check_class("chron_control_types", "list")
 
-    util_check_class("dir", "character")
+    RUtilpol::check_class("dir", "character")
 
     # detected datasets should be adjusted
     potential_pmc_test <-
@@ -36,7 +37,7 @@ chron_fix_pmc <-
         )
       )
 
-    util_check_col_names("potential_pmc_test", "potential_need_to_correct")
+    RUtilpol::check_col_names("potential_pmc_test", "potential_need_to_correct")
 
     # if there is any potential chron control point to have percentage modern carbon
     if (
@@ -56,6 +57,7 @@ chron_fix_pmc <-
           ),
           # mark those points which are potential percentage radiocarbon
           pmc_marked = purrr::map(
+            .progress = "Flagging potential percentage radiocarbon",
             .x = chron_control_merge,
             .f = ~ chron_decimal_ages_mark(
               data_source = .x,
@@ -101,11 +103,11 @@ chron_fix_pmc <-
           dplyr::filter(include == TRUE) %>%
           dplyr::distinct(dataset_id, chroncontrolid)
 
-        util_output_comment(
+        RUtilpol::output_comment(
           msg = paste(
             "There has been", nrow(potential_pmc), "selected",
             "chronology control points to fix pmc:",
-            util_paste_as_vector(pmc_to_backtransform$chroncontrolid)
+            RUtilpol::paste_as_vector(pmc_to_backtransform$chroncontrolid)
           )
         )
 
@@ -135,15 +137,16 @@ chron_fix_pmc <-
             )
           )
 
-        util_check_col_names("potential_pmc_marked", "need_to_correct")
+        RUtilpol::check_col_names("potential_pmc_marked", "need_to_correct")
 
-        # back-transform  points which are marked as percentage carbon
+        # back-transform points which are marked as percentage carbon
         potential_pmc_fixed <-
           potential_pmc_marked %>%
           dplyr::mutate(
             chron_control_format = ifelse(
               need_to_correct == TRUE,
               purrr::map(
+                .progress = "back-transform points which are marked as percentage carbon",
                 .x = chron_control_format,
                 .f = ~ chron_change_pmc_to_ages(
                   data_source = .x
@@ -153,7 +156,7 @@ chron_fix_pmc <-
             )
           )
 
-        util_check_col_names("potential_pmc_fixed", "chron_control_format")
+        RUtilpol::check_col_names("potential_pmc_fixed", "chron_control_format")
       }
     } else {
       potential_pmc_fixed <-

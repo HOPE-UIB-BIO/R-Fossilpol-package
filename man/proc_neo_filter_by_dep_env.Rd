@@ -2,17 +2,17 @@
 % Please edit documentation in R/proc_neo_filter_by_dep_env.R
 \name{proc_neo_filter_by_dep_env}
 \alias{proc_neo_filter_by_dep_env}
-\title{Filter Neotoma sequences by the selected depositional environments}
+\title{Filter Neotoma records by the selected depositional environments}
 \usage{
 proc_neo_filter_by_dep_env(data_source, data_storage_path)
 }
 \arguments{
-\item{data_source}{Data.frame with sequences and their depositional environments}
+\item{data_source}{Data.frame with records and their depositional environments}
 
 \item{data_storage_path}{Path to the data storage folder}
 }
 \description{
 The function will obtain all the depositional environments from
-Neotoma. Next, it will filter the sequences based on the selected
+Neotoma. Next, it will filter the records based on the selected
 depositional environments.
 }

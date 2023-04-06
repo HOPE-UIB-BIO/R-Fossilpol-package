@@ -24,5 +24,7 @@ util_compare_files(
 Logical. Are those file the same?
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Compare the two files and return if same
 }
+\keyword{internal}

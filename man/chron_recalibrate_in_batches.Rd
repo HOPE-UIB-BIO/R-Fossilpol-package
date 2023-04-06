@@ -2,12 +2,13 @@
 % Please edit documentation in R/chron_recalibrate_in_batches.R
 \name{chron_recalibrate_in_batches}
 \alias{chron_recalibrate_in_batches}
-\title{Recalibrate the selected sequences in defined batches using parallel
+\title{Recalibrate the selected records in defined batches using parallel
 computation}
 \usage{
 chron_recalibrate_in_batches(
   data_source_chron,
-  data_source_batch,
+  batch_size = 1,
+  time_per_record = 120,
   dir,
   n_iterations = 10000,
   n_burn = 2000,
@@ -20,29 +21,37 @@ chron_recalibrate_in_batches(
 \arguments{
 \item{data_source_chron}{Data.frame containing \code{dataset_id} and \code{chron_control_format}}
 
-\item{data_source_batch}{Data.frame with the description of the status
-of the individual batches}
+\item{batch_size}{Numeric. Number of individual records re-calibrate in a single
+batch using parallel computation}
 
-\item{dir}{Path to the data storage folder}
+\item{time_per_record}{Time (in sec) dedicated for each record to estimate
+age-depth model. If it takes computer longer that selected value, estimation
+is considered as unsuccessful and skipped. The time value is multiplied by
+\code{iteration_multiplier} as more iteration required more time. Time for whole
+batch is calculated as \code{time_per_record} multiplied by
+\code{iteration_multiplier} multiplied by the number of records per batch
+(which is estimated based on \code{number_of_cores})}
 
-\item{n_iterations}{The number of iterations used by Bchron}
+\item{dir}{Character. Path to the data storage folder}
 
-\item{n_burn}{The number of starting iterations to discard used by Bchron}
+\item{n_iterations}{Numeric. The number of iterations used by Bchron}
 
-\item{n_thin}{The step size for every iteration to keep beyond
+\item{n_burn}{Numeric. The number of starting iterations to discard used by Bchron}
+
+\item{n_thin}{Numeric. The step size for every iteration to keep beyond
 the burnin used by Bchron}
 
-\item{number_of_cores}{Number of CPU cores to use in parallel computation}
+\item{number_of_cores}{Numeric. Number of CPU cores to use in parallel computation}
 
-\item{set_seed}{User-defined seed for randomisations}
+\item{set_seed}{Numeric. User-defined seed for randomisations}
 
-\item{maximum_number_of_loops}{Number of tries each batch should be considered
+\item{maximum_number_of_loops}{Numeric. Number of tries each batch should be considered
 before skipping it}
 }
 \value{
-Named list with \code{bchron_output}, \code{batch_success_table}
+Vector with names of records which failed to estimate
 }
 \description{
-Recalibrate the selected sequences in defined batches using parallel
+Recalibrate the selected records in defined batches using parallel
 computation
 }

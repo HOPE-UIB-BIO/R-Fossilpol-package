@@ -4,6 +4,7 @@
 #' @return Vector with valid sample_ids
 #' @description Calculates pollen sum and test if each level has more pollen
 #' sum than `min_n_grains`.
+#' @keywords internal
 proc_get_sampleid_rowsums <-
   function(data_source,
            min_n_grains) {
@@ -11,11 +12,11 @@ proc_get_sampleid_rowsums <-
 
     current_env <- sys.frame(which = current_frame)
 
-    util_check_class("data_source", "data.frame")
+    RUtilpol::check_class("data_source", "data.frame")
 
-    util_check_col_names("data_source", "sample_id")
+    RUtilpol::check_col_names("data_source", "sample_id")
 
-    util_check_class("min_n_grains", "numeric")
+    RUtilpol::check_class("min_n_grains", "numeric")
 
     data_strip <-
       data_source %>%

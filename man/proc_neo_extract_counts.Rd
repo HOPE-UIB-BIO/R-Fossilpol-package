@@ -21,3 +21,4 @@ Will create data set with count data that should
 contain pollen types within \code{sel_eco_group}. The default provide
 the counts for the pollen data.
 }
+\keyword{internal}

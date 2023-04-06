@@ -18,3 +18,4 @@ Logical
 Test if chronology control table has a potential candidate
 of Percentage modern carbon
 }
+\keyword{internal}
