@@ -48,7 +48,7 @@
 
 ## Package documentation and UI
 
-- update `DESCRIPTION` ([#19](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/19))
+- update `DESCRIPTION` ([#19](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/19), [#55](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/55))
 - add package `CITATION` ([#22](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/22))
 - add project logo ([#43](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/43))
 - add onAttach message with version ([#20](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/20))
