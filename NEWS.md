@@ -56,6 +56,7 @@
 - check and clean namespace dependency ([#45](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/45))
 - add NEWS to the REAMDE file ([#56](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/56))
 
+
 # RFossilpol 0.0.1
 
 - release of the package
