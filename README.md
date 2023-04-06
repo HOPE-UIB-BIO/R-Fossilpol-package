@@ -7,11 +7,12 @@
 <!-- badges: end -->
 
 This repo is a part of the **FOSSILPOL** project. Learn more about the
-project on the [project
-websites](https://hope-uib-bio.github.io/FOSSILPOL-website/)
+project on the [project websites](https://hope-uib-bio.github.io/FOSSILPOL-website/)
 
 The goal of the {`RFossilpol`}:package: is to provide functions for
 **FOSSILPOL workflow**.
+
+## Curent Version: 0.0.2
 
 ## NEWS
 
