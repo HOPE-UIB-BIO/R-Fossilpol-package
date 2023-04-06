@@ -18,6 +18,7 @@
 
 - save age-depth models as individual files ([#21](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/21))
   - each AD model file carries information about chron.control table used for its creation ([#32](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/32), [#29](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/29), [#31](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/31), [#33](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/33))
+- `chron_add_postbomb_curve`: remove "&&" from multiple logical vector ([#52](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/52))
 
 ### Harmonisation
 
