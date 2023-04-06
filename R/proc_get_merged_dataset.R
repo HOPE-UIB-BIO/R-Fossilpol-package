@@ -61,7 +61,7 @@ proc_get_merged_dataset <- function(data_storage_path, other_data = FALSE) {
       ) %>%
       dplyr::mutate(
         # mark everything as public, if it is not other
-        data_publicity = ifelse(data_publicity != "open",
+       data_publicity = ifelse(data_publicity != "open",
           "other", "public"
         ),
         # detect if data is in pollen percentages
