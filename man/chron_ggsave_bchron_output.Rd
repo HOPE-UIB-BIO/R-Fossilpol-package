@@ -13,7 +13,8 @@ chron_ggsave_bchron_output(
   image_width,
   image_height,
   image_units = c("in", "cm", "mm", "px"),
-  image_format = ".pdf"
+  image_format = ".pdf",
+  verbose = FALSE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ chron_ggsave_bchron_output(
 \item{image_units}{Units to measure image}
 
 \item{image_format}{Format of figure}
+
+\item{verbose}{Should a message be output?}
 }
 \description{
 Save chronology as ggplot
