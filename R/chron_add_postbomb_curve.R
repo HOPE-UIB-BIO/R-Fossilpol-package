@@ -28,7 +28,7 @@ chron_add_postbomb_curve <-
       data_source %>%
       dplyr::mutate(
         cal_curves = ifelse(
-          chroncontroltype %in% rc_control_types &&
+          chroncontroltype %in% rc_control_types &
             chroncontrolage < postbomb_age,
           post_bomb_cal_curve,
           cal_curves
