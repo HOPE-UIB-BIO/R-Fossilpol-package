@@ -1,3 +1,17 @@
+# RFossilpol 1.0.0
+
+- A general description of all changes can be found in [#57](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/57)
+
+## README
+
+- remove .qmd (use only .md)
+- add version badge,
+- remove the logo file (use a link to the website instead)
+
+## Deprecated functions
+
+- remove all deprecated functions (moved to [{RUtilpol}](https://github.com/HOPE-UIB-BIO/R-Utilpol-package)) ([#58](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/58))
+
 # RFossilpol 0.0.2
 
 - A general description of all changes can be found in [#13](https://github.com/HOPE-UIB-BIO/R-Fossilpol-package/pull/13)
